@@ -6,21 +6,23 @@
 
 \documentclass[msc, a4paper, classic, pt]{ufbathesis}
 \usepackage[utf8]{inputenc}
+\usepackage[super]{nth}
 
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
 %% (re)definições de macros, medidas, etc.
 
-\title{<TÍTULO DA OBRA>}
-\date{<DATA DA DEFESA>}
-\author{<NOME DO AUTOR>}
-\adviser{<NOME DO(DA) ORIENTADOR(A)>}
-\coadviser{<NOME DO(DA) CO-ORIENTADOR(A)>}
+\title{A multi-view environment for markless augmented reality}
+\date{December \nth{15}, 2014}
+\author{Caio Sacramento de Britto Almeida}
+\adviser{Antônio Lopes Apolinário Júnior}
+% \coadviser{<NOME DO(DA) CO-ORIENTADOR(A)>}
 
 \begin{document}
 
 % Folha de rosto
-\dmccfrontpage{MMCC-Msc-XXXX}
+% FIXME: Check if 0007 is the right sequential number
+\dmccfrontpage{MMCC-Msc-0007}
 % Se seu trabalho não for uma tese de doutorado do DMCC, apague a linha
 % acima e use \frontpage
 
@@ -35,44 +37,41 @@
 % acima e use \presenationpage
 
 % Ficha catalográfica
-\authorcitationname{<SEU NOME EM CITAÇÕES>} % e.g. Terceiro, Antonio Soares de Azevedo
-\advisercitationname{<NOME DO SEU ORIENTADOR EM CITAÇÕES>} % e.g. Chavez, Christina von Flach Garcia
-\coadvisercitationname{<NOME DO SEU CO-ORIENTADOR EM CITAÇÕES>} % e.g. Mendonca, Manoel Gomes de
-\catalogtype{<TIPO DE TRABALHO>} % e.g. ``Tese (doutorado)''
-\catalogtopics{<TOPICOS PARA FICHA CATALOGRAFICA>} % e.g. ``1. Complexidade Estrutural. 2. Engenharia de Software''
-\catalogcdd{<NUMERO CDD>} % e.g. ``CDD 20.ed. XXX.YY'' (esse número vai lhe ser dado pela biblioteca)
+\authorcitationname{Sacramento de Britto Almeida, Caio} % e.g. Terceiro, Antonio Soares de Azevedo
+\advisercitationname{Apolinário Jr., Antônio Lopes} % e.g. Chavez, Christina von Flach Garcia
+\catalogtype{Thesis (master)} % e.g. ``Tese (doutorado)''
+\catalogtopics{1. Multi-view environment. 2. Augmented reality. 3. Computer Graphics} % e.g. ``1. Complexidade Estrutural. 2. Engenharia de Software''
+% FIXME: Check the CDD
+\catalogcdd{CDD 20.ed. 123.45} % e.g. ``CDD 20.ed. XXX.YY'' (esse número vai lhe ser dado pela biblioteca)
 \catalogingsheet
 
 % Termo de aprovação - exemplo
 % Modifique com os membros da sua banca
-\approvalsheet{Salvador, <DIA> de <MÊS> de <ANO>}{
-  \comittemember{Profa. Dra. Professora 1}{Universidade XYZ}
-  \comittemember{Prof. Dr. Professor 2}{Universidade 123}
-  \comittemember{Profa. Dra. Professora 3}{Universidade ABC}
-  \comittemember{Prof. Dr. Professor 4}{Universidade HJKL}
-  \comittemember{Profa. Dra. Professora 5}{Universidade QWERTY}
+\approvalsheet{Salvador, December \nth{15}, 2014}{
+  \comittemember{Prof. Dr. Antônio Lopes Apolinário Júnior 1}{Federal University of Bahia - Brazil}
+  \comittemember{Prof. Dr. Michelle Ângelo 2}{State University of Feira de Santana - Brazil}
+  \comittemember{Prof. Dr. Rodrigo Silva 3}{Federal University of Juiz de Fora - Brazil}
 }
 
 % Agradecimentos
 % Se preferir, crie um arquivo à parte e o inclua via \include{}
 \acknowledgements
-<DIGITE OS AGRADECIMENTOS AQUI>
+I would like to thank my family, friends and specially my advisor Antônio Apolinário.
+Well, need to complete this part... but it can be the last thing.
 
 % Resumo em Português
 % Se preferir, crie um arquivo à parte e o inclua via \include{}
-\resumo
-<DIGITE O RESUMO AQUI>
+%\resumo
 % Palavras-chave do resumo em Português
-\begin{keywords}
-<DIGITE AS PALAVRAS-CHAVE AQUI>
-\end{keywords}
+%\begin{keywords}
+%\end{keywords}
 
 % Resumo em Inglês
 % Se preferir, crie um arquivo à parte e o inclua via \include{}
 \abstract
-% Palavras-chave do resumo em Inglês
+Augmented reality is a technology which allows 2D and 3D computer graphics to be aligned or registered with scenes of the real-world in real-time. This projection of virtual images requires a reference in the captured real image, which is often achieved by using one or more markers. But, there are situations where using markers can be unsuitable, like medical applications, for example. In this work, we present a multi-view environment, composed by augmented reality glasses and two Kinect devices, which doesn't use fiducial markers in order to run augmented reality applications. All devices are calibrated according to a common reference system, and then the virtual models are transformed accordingly too. In order to achieve that, two approaches were specified and implemented: one based on one Kinect plus optical flow and accelerometer data from augmented reality glasses, and another one based purely on two Kinect devices. The results regarding quality and performance achieved by these two approaches are presented and discussed, as well as a comparison between them.
 \begin{keywords}
-<DIGITE AS PALAVRAS-CHAVE AQUI>
+augmented reality, augmented reality glasses, kinect, transformation, optical flow, markerless
 \end{keywords}
 
 % Sumário
@@ -102,14 +101,59 @@
 %
 % Importante: Use \xchapter ao invés de \chapter, conforme exemplo abaixo.
 
-\xchapter{Introdução}{Este é o primeiro capítulo, onde eu conto toda a
-história deste trabalho}
+\xchapter{Introduction}{In this chapter I present the motivation, objectives and overview of this work.}
+\section{Motivation}
+\section{Objectives}
+Here we show the diagram with the overview, for example.
+\section{Thesis overview}
 
-Texto do capítulo \ldots
+\xchapter{Conceptual primer}{In this chapter I present the main concepts behind this work.}
+\section{Augmented reality}
+\subsection{Fiducial markers}
+\subsection{Markerless}
+\subsection{Direct or indirect vision}
+\section{Cameras}
+\subsection{Calibration}
+\subsection{Parameters}
+\subsection{Multi-view}
+\section{Sensor-based registration approach}
+\subsection{Kinect}
+\subsection{Registration}
+\subsection{Transformation}
+\section{Vision-based registration approach}
+\subsection{Optical flow}
+\subsection{Lucas-Kanade algorithm}
 
-\xchapter{Revisão Bibliográfica}{Neste capítulo eu apresento todo o material que eu estudei durante a elaboração do trabalho}
+\xchapter{Related work}{In this chapter I present some related works.}
+Cover all the related works, with multiple Kinects, optical flow, markerless augmented reality, medical applications, multi-view environment, reconstruction, etc.
 
-Texto do capítulo \ldots
+\xchapter{Procedure}{In this chapter I explain in details the steps performed in order to implement the objective of this work.}
+\section{Environment}
+Technologies, machines, SOs, etc.
+\section{Calibration}
+\subsection{Augmented reality glasses calibration}
+\subsection{Initial calibration between Kinects}
+\subsection{Initial calibration between Kinect and glasses}
+\section{Communication}
+Network, sockets, etc.
+\section{Transformations}
+\section{Method 1: Glasses accelerometer and one Kinect}
+Cover Lucas-Kanade algorithm, etc.
+\section{Method 2: Two Kinects}
+Talk about performance of two Kinfus fighting for a single GPU.
+\section{Hybrid approach}
+When optical flow has just a few feature points, we switch to the second Kinect.
+
+\xchapter{Result}{In this chaper I present the results of the procedure explained in the previous chapter.}
+\section{Limitations}
+Talk about error propagation.
+\section{Analysis}
+Talk about performance and alignment results.
+\section{Comparison}
+Compare methods 1 and 2 with regards to performance and quality.
+
+\xchapter{Conclusions}{In this chapter I discuss the conclusions of this work and list some possibilities of future works.}
+\section{Future work}
 
 \backmatter
 
