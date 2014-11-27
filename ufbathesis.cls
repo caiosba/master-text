@@ -127,34 +127,33 @@
 
 %% Language Independent
 
-\gdef\@maleadvisertitle{Orientador}
-\gdef\@femaleadvisertitle{Orientadora}
+\gdef\@maleadvisertitle{Advisor}
+\gdef\@femaleadvisertitle{Advisor}
 \gdef\@malecoadvisertitle{Co-orientador}
 \gdef\@femalecoadvisertitle{Co-orientadora}
 \gdef\@bachelordissertation{Trabalho de Gradua\c{c}\~{a}o}
-\gdef\@mastersdissertation{Disserta\c{c}\~{a}o de Mestrado}
+\gdef\@mastersdissertation{Master Thesis}
 \gdef\@phdqualifying{Monografia de Qualifica\c{c}\~{a}o}
 \gdef\@phdproposal{Proposta de Tese de Doutorado}
 \gdef\@phdthesis{Tese de Doutorado}
 \gdef\@bachelordegree{Bacharel}
-\gdef\@mastersdegree{Mestre}
+\gdef\@mastersdegree{Master}
 \gdef\@phddegree{Doutor}
 \gdef\@presentationtext{%
-Trabalho apresentado ao
-\@program\ do \if\@showdepartment1\@department\ \else\@institute\ \fi
-da \@university\ como requisito parcial para obten\c{c}\~{a}o do
-grau de \@degree\ em \@majorfield.}
-\gdef\resumoname{Resumo}
+Work submitted to
+\@program\ of \if\@showdepartment1\@department\ \else\@institute\ \fi
+from \@university\ in partial fullfillment of the requirements for the degree of \@degree\ on \@majorfield.}
+\gdef\resumoname{Abstract}
 \gdef\abstrname{Abstract}
-\gdef\keywordsnamePT{Palavras-chave}
+\gdef\keywordsnamePT{Keywords}
 \gdef\keywordsnameEN{Keywords}
 
 %% Language Dependent
 
 % Portuguese
 \if\@language0
-  \gdef\@notdefined{N\~{A}O DEFINIDO}
-  \gdef\acknowledgementsname{Agradecimentos}
+  \gdef\@notdefined{Undefined}
+  \gdef\acknowledgementsname{Acknowledgement}
   \gdef\@axiomname{Axioma}
   \gdef\@conjecturename{Conjectura}
   \gdef\@defname{Defini\c{c}\~{a}o}
@@ -214,29 +213,29 @@ grau de \@degree\ em \@majorfield.}
 
 \def\university#1{%
   \gdef\@university{#1}}
-\def\@university{Universidade Federal da Bahia}
+\def\@university{Federal University of Bahia}
 
 \let\@showinstitute=0
 \def\institute#1{%
   \let\@showinstitute=1
   \gdef\@institute{#1}}
-\institute{Instituto de Matem\'{a}tica}
+\institute{Institute of Mathematics}
 
 \let\@showdepartment=0
 \def\department#1{%
   \let\@showdepartment=1
   \gdef\@department{#1}}
-\department{Departamento de Ci\^{e}ncia da Computa\c{c}\~{a}o}
+\department{Department of Computer Science}
 
 \def\program#1{%
   \gdef\@program{#1}}
 \def\@program{\@notdefined}
-\program{Mestrado em Ci\^{e}ncia da Computa\c{c}\~{a}o}
+\program{Masters Program in Computer Science}
 
 \def\majorfield#1{%
   \gdef\@majorfield{#1}}
 \def\@majorfield{\@notdefined}
-\majorfield{Ci\^{e}ncia da Computa\c{c}\~{a}o}
+\majorfield{Computer Science}
 
 \def\address#1{%
   \gdef\@address{#1}}
@@ -326,7 +325,7 @@ grau de \@degree\ em \@majorfield.}
 
 \def\library#1{%
   \gdef\@library{#1}}
-\library{Biblioteca Reitor Macedo Costa}
+\library{Library Reitor Macedo Costa}
 \def\authorcitationname#1{%
   \gdef\@authorcitationname{#1}}
 \def\advisercitationname#1{%
@@ -345,7 +344,7 @@ grau de \@degree\ em \@majorfield.}
 
     \hspace{1cm}
     \vfill
-    Ficha catalogr\'{a}fica.
+    Index card.
 
     \fbox{
       \hspace{1.75cm}
@@ -374,7 +373,7 @@ grau de \@degree\ em \@majorfield.}
           IV. T\'{i}tulo.
         \else
           II. \@university. \@institute.
-          III T\'{i}tulo.
+          III A multi-view environment for markerless augmented reality.
         \fi
 
         \hspace{8.5cm}\@catalogcdd
@@ -392,7 +391,7 @@ grau de \@degree\ em \@majorfield.}
 \def\approvalsheet#1#2{%
   \newpage
   \begin{center}
-    {\sf\large \textbf{TERMO DE APROVA\c{C}\~{A}O}}
+    {\sf\large \textbf{APPROVAL SHEET}}
 
     \vspace{2em}
     {\sf\large\textbf{\MakeUppercase{\@author}}}
@@ -406,10 +405,9 @@ grau de \@degree\ em \@majorfield.}
     \vspace{2em}
     \begin{flushright}
       \begin{minipage}{0.5\textwidth}
-        Esta disserta\c{c}\~{a}o foi julgada adequada \`{a} obten\c{c}\~{a}o do t\'{i}tulo
-        de Mestre em Ci\^{e}ncia da Computa\c{c}\~{a}o e aprovada em sua
-        forma final pelo Mestrado em Ci\^{e}ncia da Computa\c{c}\~{a}o da
-        UFBA-UEFS.
+        This thesis was considered worthy of acceptance of the master's degree
+        in Computer Science and approved on its final form by the UFBA-UEFS
+        Master Program in Computer Science.
       \end{minipage}
     \end{flushright}
 
@@ -487,9 +485,9 @@ grau de \@degree\ em \@majorfield.}
     \\
   \sf\large
   \textbf{%
-  Universidade Federal da Bahia
+  Federal University of Bahia
   %\\Universidade Salvador
-  \\Universidade Estadual de Feira de Santana}
+  \\State University of Feira de Santana}
   \vskip 25mm
   \textbf{\MakeTextUppercase{\@texttype}}
   \vskip 25mm
@@ -499,7 +497,7 @@ grau de \@degree\ em \@majorfield.}
       \vskip\baselineskip
       \@author
       \vskip 45mm
-      \textbf{Mestrado em Ci\^{e}ncia da Computa\c{c}\~{a}o -- MMCC}
+      \textbf{Master in Computer Science -- MMCC}
       \\
       \vskip\baselineskip
       \@address\\
@@ -562,12 +560,9 @@ grau de \@degree\ em \@majorfield.}
   \vskip 45mm
   \begin{flushright}
     \begin{minipage}{0.5\textwidth}
-    Disserta\c{c}\~{a}o apresentada ao Mestrado
-    em Ci\^{e}ncia da Computa\c{c}\~{a}o da
-    Universidade Federal da Bahia e Universidade Estadual de Feira de
-    Santana, como requisito parcial para
-    obten\c{c}\~{a}o do grau de Mestre em Ci\^{e}ncia da
-    Computa\c{c}\~{a}o.
+    Thesis submitted to the Master Program in Computer Science from
+    Federal University of Bahia and State University of Feira de Santana,
+    in partial fullfillment of the requirements for the degree of Master in Computer Science.
     \end{minipage}
   \end{flushright}
   \begin{center}
