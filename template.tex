@@ -181,19 +181,177 @@ The next chapter "Conceptual primer" describes some basic theory needed. It also
 
 \xchapter{Conceptual primer}{In this chapter I present the main concepts behind this work.}
 \section{Augmented reality}
-\subsection{Fiducial markers}
-\subsection{Markerless}
+
+Augmented reality was born on the decade of 1990, to merge a virtual image or virtual environment with a real image or real environment. But only from the 2000s it became more popular, due to lower costs of hardware and software devices, and ready to be used on tangible and multimodal (voice, touch, gesture, etc.) applications \cite{4}. It can be considered the mixing of real and virtual worlds at some point of the continuum reality-virtuality, that connects completely virtual environments to completely real environments \cite{5}, like shown on Figure \ref{fig:cont}. It can also be considered a system that completes the real world with virtual objects, in a way that they seem to exist on the same space, respecting the following features:
+
+\begin{figure}
+\label{fig:cont}
+\centering
+\includegraphics[width=0.5\textwidth]{images/cont.png}
+\caption{The augmented reality is localized between the extremes of the reality-virtuality continuum}
+\end{figure}
+
+\begin{itemize}
+  \item Real objects are mixed with virtual objects;
+  \item Execution is interactive and on real time;
+  \item Virtual and real objects are aligned;
+  \item Applicable to all human sensory systems, including auditory, olfactory and somatosensory \cite{8}.
+\end{itemize}
+
+From a human-computer interaction perspective, the augmented reality can be considered a new way of interaction between humans and computers, and, on this aspect, it can be classified as direct vision or indirect vision.
+
 \subsection{Direct or indirect vision}
+
+Augmented reality is classified as \textit{direct vision} or \textit{immersive} when the user sees the mixed world pointing his eyes straight to the real position of the objects of interest, like shown on Figure \ref{fig:direct}.
+
+\begin{figure}
+\label{fig:direct}
+\centering
+\includegraphics[width=0.5\textwidth]{images/direct.png}
+\caption{Immersive augmented reality}
+\end{figure}
+
+On the direct vision, images from the real world can be seen with the naked eye ou brought by video, while the generated virtual images can be projected on the eyes, on the real scenario or mixed with the real world video. Immersive augmented reality can be implemented with optical helmets, for example \cite{1}.
+
+\begin{figure}
+\label{fig:indirect}
+\centering
+\includegraphics[width=0.5\textwidth]{images/indirect.png}
+\caption{Non-immersive augmented reality}
+\end{figure}
+
+On the other hand, non-immersive augmented reality (indirect vision), happens when the user sees the mixed world through other output device, like a monitor screen, for example, not aligned with the real positions, as shown on Figure \ref{fig:indirect}. On this kind of vision, real and virtual images are merged and displayed as video to the user. It can be achieved by using cameras and projectors \cite{1}.
+
+\subsection{Markers}
+
+In order to identify the position where a virtual image should be rendered, two main approaches can be applied by augmented reality applications: one is to use fiducial markers, the other is not use them.
+
+\subsubsection{Fiducial markers}
+
+Fiducial markers are often implemented as square white cards with a black symbol printed (or drawn) on it, easy to be recognized, working like a barcode or QR code. Computer vision techniques are used to calculate the position of the real camera and its orientation relative to the markers, in a way that virtual objects can be projected over them.
+
+Fiducial markers can assume other shapes besides a square card. The Figure \ref{fig:sticker} shows an example of a fiducial marker used on medical applications, similar to a sticker, which is fixed on the patient's skin. On these applications, augmented reality can be used for visualization and training on surgeries. It's possible to collect patient's data in real time, by using non-invasive sensors as the ones used for magnetic ressonance imaging and computed tomography. This dataset can be merged in real time with the real image of the patient \cite{12}.
+
+\begin{figure}
+\label{fig:sticker}
+\centering
+\includegraphics[width=0.5\textwidth]{images/sticker.png}
+\caption{Example of fiducial marker used by medical applications}
+\end{figure}
+
+On motion capture systems, other kinds of markers can also be used, like, for example, the one described on \cite{24} and represented on Figure \ref{fig:helmet}. In order to estimate the pose, it uses a single camera and three spherical fiducial markers, which are also reflexive. Two of those markers are placed at the left and right sides of the actor, perpendicular to his ears. The third marker is placed on the same height as the other two, but in front of the actor. The markers have a color close to orange for high reflectance (in order to be easily recognized) and are supported by a structure made of carbon fiber (which is light).
+
+\begin{figure}
+\label{fig:helmet}
+\centering
+\includegraphics[width=0.5\textwidth]{images/helmet.png}
+\caption{Example of fiducial marker for motion capture}
+\end{figure}
+
+Disadvantages of fiducial markers are listed on \cite{39}, for example, they are invasive (need to be placed on the scene or fixed on the target object), they have limited interaction (can't be moved around so much because it needs to still be visible and recognizable) and need to be printed or drawn before using and stored for future usage.
+
+\subsubsection{Markerless}
+
+Markerless augmented reality means that fiducial markers are not used on the scene. Instead, features from the target scene need to be used in order to estimate the camera pose and objects orientations.
+
+Target detection based on computer vision has been extensively studied e successfully applied on augmented reality applications. On related computer vision literature, geometric primitives can be used for pose estimation, on most cases, points, segments, lines, edges of edge points, cones, cylinders, or a combination of two or more of those features.
+
+Markerless augmented reality has the advantage of using parts of the real environment as targets and can even extract information from the environment to be used by the augmented reality system \cite{39}.
+
+Avoiding markers leads to a much more effective augmented reality experience, but requires the implementation of several image processing or sensor function techniques, resulting in more complex algorithms and in higher computational resources \cite{shumaker2011virtual}.
+
 \section{Cameras}
+
+Many tasks on augmented reality deal with an imaging device. Usually this imaging device is a camera, which performs a mapping from a 3D world to a 2D image \cite{hanning2011high}. The problem called \textit{camera calibration} is the one handles the determination of the parameters for this mapping.
+
 \subsection{Calibration}
+
+Camera calibration means to determine the camera model parameters which fit best to the observed behavior of the actual camera \cite{hanning2011high}. So, it's necessary to measure the the distance of an observation to a given camera model. The determination of the optimal camera mapping concerning each of these distance functions defines a non-linear optimization problem, and as such, it depends on the initial value.
+
+Ordinary cameras are very often modelled as pinhole cameras. A pinhole is an imaginary wall with a tiny hole in the center that blocks all rays except the ones that pass through this tiny center hole \cite{bradski2008learning}. Unfortunately, a real pinhole is not a good way to make images because it does not gather enough light for rapid exposure. This is why human eyes and cameras use lenses to gather more light than what would be available at a single point. This way, the simple geometry of the pinhole camera model is not enough and it also introduces distortion of the lens itself.
+
+The camera coordinate system (CCS) is a Cartesian coordinate system defined by the principal plane: The x-axis and y-axis of the CCS determine the principal plane, the z-axis is given by the optical axis. The optical center of the lens determines the origin (0, 0, 0) of the CCS. Thus, in the camera coordinate system, the principal plane becomes ${ z = 0 }$ \cite{hanning2011high}.
+
+Camera calibration is usually split up into two distinct parts, the intrinsic and extrinsic parameters, which will be covered on the following section.
+
 \subsection{Parameters}
+
+The process of camera calibration gives us both a model of the camera's geometry and a distortion model of the lens. Both compose the intrinsic parameters of the camera.
+
+\subsubsection{Intrinsic parameters}
+
+The intrinsic parameters are those that describe the internal workings  of the camera and consist of the focal length, the principal point, the skew coefficients and radial and tangential distortions \cite{tillapaugh2008indirect}. These values are needed to help to describe imperfections in the lens of the camera and give a mapping from camera reference frame to the image plane. The intrinsic parameters depend only on the camera itself, and so they just need to be found once, regardless the environment changes or not.
+
+\subsubsection{Extrinsic parameters}
+
+The extrinsic parameters, on the other hand, represent the viewpoint of the camera by a rigid transformation, which describes its position and orientation \cite{bajramovic2010self}. This part of the model is independent of the camera itself. The according parameters are called extrinsic, as they describe the relation between the camera and the world.
+
+According to \cite{tillapaugh2008indirect}, the extrinsic parameters are those that are dependent on the environment. To relate an object's coordinate system to the world's coordinate system, a translation and a rotation matrix are needed. Therefore, the extrinsic parameters consist of these two matrices, so that a mapping from the world coordinate system to the camera reference frame can be found. Since the extrinsic parameters for the camera explain how the camera relates to the environment, if the camera changes position, the parameters have to be recalculated (differently from the intrinsic parameters as explained on the previous section).
+
+The relation between world coordinate system and the camera reference frame can be described by the equation:
+
+\begin{center}
+$X_c = R_c \times X + T_c$
+\end{center}
+
+Where $X$ is a 3x1 vector that represents a point on the world coordinate space, $R_c$ is the extrinsic rotation matrix, $T_c$ is the extrinsic translation matrix and $X_c$ is a 3x1 vector in the camera reference frame. The rotation matrix is build from the combination of three single-axis rotation matrices:
+
+\begin{center}
+
+$R_{x}(\theta) =
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & cos(\theta) & sin(\theta) \\
+0 & -sin(\theta) & cos(\theta) \\
+\end{bmatrix}$
+
+\vspace{10mm}
+
+$R_{y}(\phi) =
+\begin{bmatrix}
+cos(\phi) & 0 & -sin(\phi) \\
+0 & 1 & 0 \\
+sin(\phi) & 0 & cos(\phi) \\
+\end{bmatrix}$
+
+\vspace{10mm}
+
+$R_{z}(\omega) =
+\begin{bmatrix}
+cos(\omega) & sin(\omega) & 0 \\
+-sin(\omega) & cos(\omega) & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}$
+
+\end{center}
+
+The extrinsic parameters can be represented by a final matrix called \textit{homegenous matrix}. It looks as follows:
+
+\begin{center}
+$\begin{bmatrix}
+R & t \\
+0 & 1 \\
+\end{bmatrix}$
+\end{center}
+
+So, in order to convert from a world origin coordinate to a camera orientation coordinate system, only a single homogenous matrix needs to be used.
+
 \subsection{Multi-view}
+
+Calibrating a multi-camera system accordingly means estimating the intrinsic and extrinsic parameters of all cameras \cite{bajramovic2010self}. Actually it is mainly concerned with estimating extrinsic parameters, since most approaches first compute intrinsic parameters individually for each camera. Extrinsic parameters are subsequently estimated given the intrinsic parameters.
+
 \section{Sensor-based registration approach}
+
 \subsection{Kinect}
+
 \subsection{Registration}
+
 \subsection{Transformation}
+
 \section{Vision-based registration approach}
+
 \subsection{Optical flow}
+
 \subsection{Lucas-Kanade algorithm}
 
 \xchapter{Related work}{In this chapter I present some related works.}
@@ -250,7 +408,7 @@ Compare methods 1 and 2 with regards to performance and quality.
 % Para ajuda na criação do arquivo .bib e utilização do BibTeX, recorra ao
 % BibTeXpress em www.cin.ufpe.br/~paguso/bibtexpress
 \bibliographystyle{abnt-alf}
-\bibliography{biblio}
+\bibliography{template}
 
 %% Fim do documento
 \end{document}
