@@ -372,7 +372,11 @@ According to \cite{hanning2011high}, the calibration of a stereo camera system i
 
 So, in theory, calibration of a multi-camera system is possible by individually calibrating intrinsic and extrinsic parameters of all cameras involved with respect to the same world coordinate system using classical calibration methods. This just requires that all cameras observe a common calibration object or that a calibration object is moved to precisely known positions such that every camera can observe it. The first approach imposes very strict limitations on the allowable relative camera poses (relative orientation and position) or requires a very large calibration object, which is generally complicated \cite{Chen00widearea}.
 
+Once cameras are calibrated, they are ready to register objects from a mixed reality scene. In general, traditional methods can be classified into three types: sensor-based methods, image-based methods and hybrid methods \cite{shumaker2011virtual}. The first two will be covered in the next sections; thr third, which is also applied by this work, won't be covered here since it's basically a combination of the first two methods.
+
 \section{Sensor-based registration approach}
+
+Three-dimensional (3D) reconstruction of an environment is an important problem that has received much attention in past decades. It can be defined as the process of capturing the shape and appearance of real objects \cite{chandra20123}. Recovering 3D surface structure of an object has been a central issue in computer vision. On the last years, with the launch of inexpensive RGBD sensors (notably the Kinect), applications based on sensor registration became cheaper and more feasible.
 
 \subsection{Kinect}
 
