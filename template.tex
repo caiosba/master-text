@@ -262,9 +262,11 @@ Avoiding markers leads to a much more effective augmented reality experience, bu
 
 \section{Cameras}
 
-Many tasks on augmented reality deal with an imaging device. Usually this imaging device is a camera, which performs a mapping from a 3D world to a 2D image \cite{hanning2011high}. The problem called \textit{camera calibration} is the one handles the determination of the parameters for this mapping.
+Many tasks on augmented reality deal with an imaging device. Usually this imaging device is a camera, which performs a mapping from a 3D world to a 2D image \cite{hanning2011high}. The problem called \textit{camera calibration} is the one that handles the determination of the parameters for this mapping.
 
 \subsection{Calibration}
+
+Camera calibration is a necessary step in 3D computer vision in order to extract metric information from 2D images. Much work has been done, by both the photogrammetry community and the computer vision community. Those techniques can be divided roughly into two categories: photogrammetric calibration (performed by observing a calibration object whose geometry in a 3-D space is known with very good precision) and self-calibration (does not use a calibration object, just move the camera in a scene and get its parameters) \cite{zhang2000flexible}.
 
 Camera calibration means to determine the camera model parameters which fit best to the observed behavior of the actual camera \cite{hanning2011high}. So, it's necessary to measure the the distance of an observation to a given camera model. The determination of the optimal camera mapping concerning each of these distance functions defines a non-linear optimization problem, and as such, it depends on the initial value.
 
@@ -325,6 +327,10 @@ cos(\omega) & sin(\omega) & 0 \\
 
 \end{center}
 
+The rotation matrix $R$ has the property that its inverse is its transpose, hence $R^TR = RR^T = I$, where $I$ is the identity matrix consisting of 1s along the diagonal and 0s everywhere else.
+
+The translation vector $T$ is how it's possible to represent a shift from one coordinate system to another system whose origin is displaced to another location; in other words, the translation vector is just the offset from the origin of the first coordinate system to the origin of the second coordinate system \cite{bradski2008learning}. So, in order to shift from a coordinate system centered on an object to one centered at the camera, the appropriate translation vector is simply $T = origin_{object} - origin_{camera}$. Thus, a point in the object (or world) coordinate frame $P_o$ has coordinates $P_c$ in the camera coordinate frame: $P_c = R(P_o - T)$.
+
 The extrinsic parameters can be represented by a final matrix called \textit{homegenous matrix}. It looks as follows:
 
 \begin{center}
@@ -336,9 +342,35 @@ R & t \\
 
 So, in order to convert from a world origin coordinate to a camera orientation coordinate system, only a single homogenous matrix needs to be used.
 
+\subsection{Calibration approaches}
+
+There are multiple ways to calibrate cameras. The most common way to perform the calibration is to have multiple points that have known relationship to each other in the world's coordinate system captured in an image from the camera \cite{tillapaugh2008indirect}. As explained previously, for the intrinsic parameters it does not matter how the points are related to the world coordinates, it's only important how they relate to each other. Such parameters consist of the horizontal and vertical focal lengths and the principal point of the camera and the skew. The skew is generally assumed to be zero \cite{furht2011handbook} for many cameras.
+
+Various techniques were created to obtain accurate mappings, including vanishing points for orthogonal directions and calibration from rotation purely \cite{Medioni:2004:ETC:993884}, features extraction which can be lines or points, single-image or multiple-images configurations, different camera models, linear and non-linear algorithms, among many others \cite{Armangue00acomparative} \cite{clarke98}. Self-calibration is indeed feasible with simple image correspondences among frames, yet the participation of control points produces more robust calibration results, in closer agreement with object space constraints \cite{Douskos_automaticcalibration}.
+
+The works by \cite{Tsai86} and \cite{zhang2000flexible} are extensively referenced and propose closed form solutions for the estimation of intrinsic and extrinsic parameters using 3D and 2D calibration patterns respectively. Camera calibration is a much discussed topic but the lack of robust algorithms for features detection difficults the construction of automatic calibration process \cite{gustavo}. Calibration pattern recognition is a hard task, where the lighting problems and high level of ambiguities are the principal challenges. For this reason, the algorithms often require user intervention for a reliable detection of the calibration points.
+
+There are some tools available for automatic camera calibration. Two of the most popular ones are The Bouguet MatLab Toolbox \cite{matlab} and the OpenCV library \cite{opencv}. The former is an application that asks the user to define four extreme points that represent the area where an algorithm searches for the calibration points, given the number of rows and columns of the pattern. The latter is a very popular computer vision library that offers an automatic way to detect chessboard patterns in images by the \textit{findChessboardCorners()} function. The method performs successive morphological operators until a number of black and white contours are identified, subsequently the corners of the contours make up the calibration point set. The pattern is recognized only if all rectangles are identified. Figure \ref{fig:chessboard} shows how a person can use a chessboard in order to calibrate a camera using the OpenCV library.
+
+\begin{figure}
+\label{fig:chessboard}
+\centering
+\includegraphics[width=0.5\textwidth]{images/chessboard.png}
+\caption{Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the
+camera) and the camera intrinsics \cite{bradski2008learning}}
+\end{figure}
+
+As stated by \cite{arca}, the well-known algorithms for chessboard detection proposed by \cite{Tsai86} and \cite{zhang2000flexible} can achieve good calibration results since both of them are based on an initialization procedure that requires the precise corners positions of a calibration pattern (a chessboard, for example). Although the pattern to be detected is generally a simple object, the detection of its corners at subpixel precision is a very difficult task to be solved under uncontrolled acquisition conditions. At the state of art, most of the presented methods determine the positions of the chessboard corners by means of a two step processing scheme. At first the corners are detected with pixel precision, by means of edge detection methods; to increase the detection accuracy, the second step modifies their positions by the interpolation of the found borders. Those methods rarely reach a high accuracy, since the interpolation provides just a guess about the precise corners positions. Some authors try to improve the accuracy in the later steps of camera calibration, which increases computational cost, while others, like \cite{arca}, does not make any assumption on the orientation and scale of the chessboard and try to first find the chessboard, then determine the size of the squares and later on find the corners by using a simple statistical model.
+
 \subsection{Multi-view}
 
 Calibrating a multi-camera system accordingly means estimating the intrinsic and extrinsic parameters of all cameras \cite{bajramovic2010self}. Actually it is mainly concerned with estimating extrinsic parameters, since most approaches first compute intrinsic parameters individually for each camera. Extrinsic parameters are subsequently estimated given the intrinsic parameters.
+
+The calibration task is usually formulated such that the world coordinate system may be chosen arbitrarily, which amounts to calibrate up to a rigid transformation of the whole system. Furthermore, if no metric measurements are used, the scale of the multi-camera system cannot be determined. This is the case if only correspondences between the cameras are used as input (of the extrinsic calibration) \cite{bajramovic2010self}.
+
+According to \cite{hanning2011high}, the calibration of a stereo camera system is more than calibrating two camera separately: An additional constraint for the stereo camera system can be applied, since a calibration target is observed by both cameras.
+
+So, in theory, calibration of a multi-camera system is possible by individually calibrating intrinsic and extrinsic parameters of all cameras involved with respect to the same world coordinate system using classical calibration methods. This just requires that all cameras observe a common calibration object or that a calibration object is moved to precisely known positions such that every camera can observe it. The first approach imposes very strict limitations on the allowable relative camera poses (relative orientation and position) or requires a very large calibration object, which is generally complicated \cite{Chen00widearea}.
 
 \section{Sensor-based registration approach}
 
@@ -350,11 +382,96 @@ Calibrating a multi-camera system accordingly means estimating the intrinsic and
 
 \section{Vision-based registration approach}
 
+Registration based on sensors relies solely upon geometric information, for example, the spatial coordinates of the points in two clouds. As a result, environments that don't provide high geometric texture (for example, plane surfaces like a wall) can cause sensor tracking to fail. For such cases, a vision-based registration approach can be applied, by using the RGB information from the images \cite{kinectkanade}. 
 \subsection{Optical flow}
+
+Optical flow is a pattern that describes the apparent motion of objects, edges or surfaces on a visual scene caused by the relative motion between that object and an observer (a camera or the human eye) \cite{burton1978thinking}. This concept was first introduced by the psychology in order to describe the visual stimulus provided to animals moving on the world \cite{gibson1950perception}.
+
+A fundamental problem in the processing of image sequences is the measure of the optical flow (or image velocity). The main objective is to compute an approximation to the 2D motion field - a projection of the 3D velocities of surface points onto the imaging surface - from spatiotemporal patterns of image density. Once computed, the measurements of image velocity can be used for many purposes, including object tracking \cite{opticalflow}.
+
+The field of optical flow estimation is making big progresses as evidenced by the increasing accuracy of current methods on the Middlebury optical flow benchmark \cite{Scharstein:2002:TED:598429.598475}. After almost 30 years of research, these methods have obtained an impressive level of reliability and accuracy, by combining a data term that assumes constancy of some image property with a spatial term that models how the flow is expected to vary across the image \cite{opticalflow14}.
+
+Differential methods belong to the most widely used techniques for optic flow computation in image sequences. They can be classified into local methods such as Lucas-Kanade technique or Bigun's structure tensor method, and into global methods such as the Horn/Schunck approach and its extensions. Often local methods are more robust under noise, while global techniques yield dense flow fields \cite{lkhs}.
+
+Despite their differences, many of these techniques can be viewed conceptually in terms of three stages of processing \cite{opticalflow}:
+
+\begin{itemize}
+  \item Prefiltering or smoothing with low-pass/band-pass filter in order to extract signal structure of interest and to enhance the signal-to-noise ratio;
+  \item The extraction of basic measurements, such as spatiotemporal derivatives (to measure normal components of velocity) or local correlation surfaces;
+  \item The integration f these measurements to produce a 2D flow field, which often involves assumptions about the smoothness of the underlying flow field.
+\end{itemize}
+
+One of the most popular methods for computing the optical flow of an image is the Lucas-Kanade algorithm, which will be explained on the following section.
 
 \subsection{Lucas-Kanade algorithm}
 
-\xchapter{Related work}{In this chapter I present some related works.}
+The Lucas-Kanade \cite{lk} algorithm is a differential method for computing the optical flow of an image \cite{kinectkanade}. The goal of Lucas-Kanade is to align a template image $T(x)$ to an input image $I(x)$ where $x = (x, y)^T$ is a column vector containing the pixel coordinates. If the Lucas-Kanade algorithm is being used to compute optical flow or to track an image from time $t = 1$ to time $t = 2$, the template $T(x)$ is an extracted sub-region (a window) of the image at $t = 1$ and $I(x)$ is the image at $t = 2$. Applications of the Lucas-Kanade algorithm range from optical flow and tracking to layered motion, mosaic construction and face coding. Numerous variations has been made to the original algorithm \cite{lk20}.
+
+The basic idea of the Lucas-Kanade algorithm is based on three assumptions \cite{bradski2008learning}:
+
+\begin{itemize}
+  \item Brightness constancy: a pixel from the image of an object in the scene does not change in appearance as it (possibly) moves from frame to frame. For grayscale images (although Lucas-Kanade can also be done in color) this means that it's assumed that the brightness of a pixel does not change as it is tracked from frame to frame;
+  \item Temporal persistence: the image motion of a surface patch changes slowly in time. In practice, this means the temporal increments are fast enough relative to the scale of motion in the image that the object does not move much from frame to frame;
+  \item Spatial coherence: neighboring points in a scene belong to the same surface, have similar motion, and project to nearby points on the image plane.
+\end{itemize}
+
+Mathematically, the goal of the Lucas-Kanade is to minimize the sum of squared error between the two images, the template $T$ and the image $I$ warped back onto the coordinate frame of the template \cite{lk20}:
+
+\begin{center}
+  $\sum_{x}{[I(W(x;p))-T(x)]^2}$
+\end{center}
+
+Where $W(x;p)$ denote the parametrized set of allowed warps, where $p = (p_1,...,p_n)^T$ is a vector of parameters. The warp $W(w;p)$ takes the pixel $x$ in the coordinate frame of the template $T$ and maps it to the sub-pixel location $W(x;p)$ in the coordinate frame of the image $I$. In this context of optical flow computation, the warps $W(w;p)$ are the translations:
+
+\begin{center}
+$W(w;p) = \begin{matrix}
+          x + p_1 \\
+          y + p_2 \\
+          \end{matrix}$
+\end{center}
+
+Where the vector of parameters $p = (p_1, p_2)^T$ is then the optical flow.
+
+Warping $I$ back to compute $I(W(x;p))$ requires interpolating the image $I$ at the sub-pixel locations $W(x;p)$. The minimization is performed with respect to $p$ and the sum is performed over all of the pixels $x$ in the template image $T(x)$. Minimizing the expression is a non-linear optimization task even if $W(w;p)$ is linear in $p$ because the pixel values $I(x)$ are, in general, non-linear in $x$. In fact, the pixel values $I(x)$ are essentially un-related to the pixel coordinates $x$. To optimize the expression, the Lucas-Kanade algorithm assumes that a current estimate of $p$ is known and then iteratively solves for increments to the parameters $\Delta{p}$, so the expression is (approximately) minimized:
+
+\begin{center}
+  $\sum_{x}{[I(W(x;p + \Delta{p}))-T(x)]^2}$
+\end{center}
+
+With respect to $\Delta{p}$, and then the parameters are updated:
+
+\begin{center}
+  $p \gets p + \Delta{p}$
+\end{center}
+
+These steps are iterated until the estimates for the parameters $p$ converge.
+
+The result of the algorithm is a set of optical flow vectors distributed over the image which give an estimation idea of the movement of objects in the scene, although some of those vectors will be erroneous \cite{raul}.
+
+The Lucas-Kanade method can be applied in a sparse context because it relies only on local information that is derived from some small window surrounding each of the points of interest. The disadvantage of using small local windows in Lucas-Kanade is that large motions can move points outside of the local window and thus become impossible for the algorithm to find, which led to the development of the "pyramidal" Lucas-Kanade algorithm \cite{Bouguet00}, one of many approaches that have been used to improve the convergence rate and reduce the likelihood of falling into a local minimum.
+
+One component in many algorithms is a coarse-to-fine strategy. The most common approach is to build image pyramids by repeated blurring and downsampling. So, optical flow is first computed on the top level (fewest pixels) and then upsampled and used to initialize the estimate at the next level \cite{dblk}, as shown on Figure \ref{fig:plk}. Computation at the higher levels in the pyramid involves far fewer unknowns and so is far faster. The initialization at each level from the previous level also means that far fewer interations are required at each level. Due to this, pyramid algorithms are usually faster than a single solution at the bottom level.
+
+\begin{figure}
+\label{fig:plk}
+\centering
+\includegraphics[width=0.5\textwidth]{images/plk.png}
+\caption{Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first
+mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite{bradski2008learning}}
+\end{figure}
+
+The features to be tracked by the Lucas-Kanade algorithm can be manually defined or identified from an algorithm, like the popular one proposed by Shi and Tomasi \cite{shi}, called "good features to track", and implemented by the OpenCV library \cite{opencv}. The idea of this algorithm is a modification of the Harris Corner Detection \cite{harris}, which basically replaces Harris' scoring function. Figure \ref{fig:shi-harris} shows the feature points on the same input image as identified by both algorithms.
+
+\begin{figure}
+\label{fig:shi-harris}
+\centering
+\includegraphics[width=0.5\textwidth]{images/shi-harris.png}
+\caption{The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)}
+\end{figure}
+
+So, the Lucas-Kanade algorithm, applied over a good set of feature points, is an efficient method for obtaining optical flow information at interesting points in an image and works for moderate object speeds.
+
+\xchapter{Related works}{In this chapter I present some related works.}
 Cover all the related works, with multiple Kinects, optical flow, markerless augmented reality, medical applications, multi-view environment, reconstruction, etc.
 \section{Markerless augmented reality}
 \section{Multiple Kinects}
