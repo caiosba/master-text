@@ -1,6 +1,6 @@
 \select@language {english}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Fiducial marker used to represent a tridimensional model over it \cite {artoolkit}}}{2}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Fiducial marker used to represent a three-dimensional model over it \cite {artoolkit}}}{2}
 \contentsline {figure}{\numberline {1.2}{\ignorespaces Global vision}}{3}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces The augmented reality is localized between the extremes of the reality-virtuality continuum}}{7}
@@ -9,8 +9,8 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Example of fiducial marker used by medical applications}}{9}
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Example of fiducial marker for motion capture}}{10}
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the camera) and the camera intrinsics \cite {bradski2008learning}}}{14}
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}}}{18}
-\contentsline {figure}{\numberline {2.8}{\ignorespaces The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)}}{19}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}}}{21}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)}}{21}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

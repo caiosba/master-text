@@ -117,16 +117,16 @@ merging virtual images with images captured from a real environment.
 
 One of the greatest challenges on the field of augmented reality is to determine, in real time, which virtual image to be displayed,
 in which position and how it should be represented. In order to obtain an integration illusion between real objects and virtual objects,
-the generated object should be aligned with the tridimensional position and orientation of the real objects \cite{gallo11}. This can be achieved
+the generated object should be aligned with the three-dimensional position and orientation of the real objects \cite{gallo11}. This can be achieved
 by estimating the camera position.
 
-On many situations, fiducial markers\footnote{A fiducial marker or fiducial is an object placed in the field of view of an imaging system which appears in the image produced, for use as a point of reference or a measure.} are used (often this is due to the real time requirements of the augmented reality applications) \cite{azuma} and are drawn in a way that they can be easily identified. Those markers need to be placed on the target scene and can achieve great results using just a few computational resources. Figure \ref{fig:fiducial_marker} shows the usage of a fiducial marker and a tridimensional object being projected over it.
+On many situations, fiducial markers\footnote{A fiducial marker or fiducial is an object placed in the field of view of an imaging system which appears in the image produced, for use as a point of reference or a measure.} are used (often this is due to the real time requirements of the augmented reality applications) \cite{azuma} and are drawn in a way that they can be easily identified. Those markers need to be placed on the target scene and can achieve great results using just a few computational resources. Figure \ref{fig:fiducial_marker} shows the usage of a fiducial marker and a three-dimensional object being projected over it.
 
 \begin{figure}
 \label{fig:fiducial_marker}
 \centering
 \includegraphics[width=0.3\textwidth]{images/fiducial_marker.png}
-\caption{Fiducial marker used to represent a tridimensional model over it \cite{artoolkit}}
+\caption{Fiducial marker used to represent a three-dimensional model over it \cite{artoolkit}}
 \end{figure}
 
 However, besides requiring human interference on the scene, there situations where the usage of fiducial markers is not possible, feasible or comfortable for the target model. That is the case, for example, of medical applications on which this model is a patient. It's also possible to cite other limitations of fiducial markers, like, for example, occlusion (a virtual image could be not projected if the marker is not completely visible) and illumination (the intensity of light reflected by the marker could make it hard to be identified). Less common, there are approaches that replace fiducial markers \cite{carmigniani} \cite{gallo09} by GPS, gyroscopes, accelerometers, cameras, among others \cite{azuma} \cite{azuma01}. These approaches have the advantage of not requiring human interference on the scene (to put a marker or to move it around).
@@ -165,7 +165,7 @@ The elements presented on this environment are the following:
 
 \begin{itemize}
   \item Observer - He is the user of the system that wears a pair of augmented reality glasses and is positioned in front of the target model (which can be a human being, for example, or a static object). On a medical context, the observer would be a medical specialist, responsible for observing the patient and responsible for analyzing the combination of the real image (part of the patient body) with a virtual image (from magnetic resonance imaging or computed tomography). The observer is able to move his head.
-  \item Augmented reality glasses - The augmented reality glasses are wore by the observer and have two cameras. The images captured from the target model will be merged with virtual images and displayed on the two lenses of these glasses. On one of the approches implemented by this work, the observer movimentation is determined from sensors present on the glasses: acceletometer, magnetometer and gyroscopes. Based on sensor data, it's possible to determine the variation on the orientation of the glasses, and so it's possible to know how much the observer has moved his head. This calculation returns values that define moviments on longitudinal axis, vertical axis and lateral axis. The virtual image should be reprojected in real time according to those movements.
+  \item Augmented reality glasses - The augmented reality glasses are wore by the observer and have two cameras. The images captured from the target model will be merged with virtual images and displayed on the two lenses of these glasses. On one of the approaches implemented by this work, the observer motion is determined from sensors present on the glasses: accelerometer, magnetometer and gyroscopes. Based on sensor data, it's possible to determine the variation on the orientation of the glasses, and so it's possible to know how much the observer has moved his head. This calculation returns values that define motion on longitudinal axis, vertical axis and lateral axis. The virtual image should be reprojected in real time according to those movements.
   \item Target model - The target model (a human being, for example), is placed in front of the observer and doesn't use any kind of fiducial marker. The main goal is that the virtual image is placed over the target model. In order to calculate where and how the virtual image should be displayed, it's necessary to identify the position and orientation of the real object relative to the observer. This is done based on two sensors placed on the environment, where the first one captures data from the observer and the second one captures data from the target model.
   \item Sensors - Two sensors are placed on the environment and capture data from the observer and the target model (one for each). The information captured by the target model's sensor contains its model, that will be merged with the virtual image.
 \end{itemize}
@@ -211,7 +211,7 @@ Augmented reality is classified as \textit{direct vision} or \textit{immersive} 
 \caption{Immersive augmented reality}
 \end{figure}
 
-On the direct vision, images from the real world can be seen with the naked eye ou brought by video, while the generated virtual images can be projected on the eyes, on the real scenario or mixed with the real world video. Immersive augmented reality can be implemented with optical helmets, for example \cite{tori2006fundamentos}.
+On the direct vision, images from the real world can be seen with the naked eye or brought by video, while the generated virtual images can be projected on the eyes, on the real scenario or mixed with the real world video. Immersive augmented reality can be implemented with optical helmets, for example \cite{tori2006fundamentos}.
 
 \begin{figure}
 \label{fig:indirect}
@@ -230,7 +230,7 @@ In order to identify the position where a virtual image should be rendered, two 
 
 Fiducial markers are often implemented as square white cards with a black symbol printed (or drawn) on it, easy to be recognized, working like a barcode or QR code. Computer vision techniques are used to calculate the position of the real camera and its orientation relative to the markers, in a way that virtual objects can be projected over them.
 
-Fiducial markers can assume other shapes besides a square card. The Figure \ref{fig:sticker} shows an example of a fiducial marker used on medical applications, similar to a sticker, which is fixed on the patient's skin. On these applications, augmented reality can be used for visualization and training on surgeries. It's possible to collect patient's data in real time, by using non-invasive sensors as the ones used for magnetic ressonance imaging and computed tomography. This dataset can be merged in real time with the real image of the patient \cite{azuma}.
+Fiducial markers can assume other shapes besides a square card. The Figure \ref{fig:sticker} shows an example of a fiducial marker used on medical applications, similar to a sticker, which is fixed on the patient's skin. On these applications, augmented reality can be used for visualization and training on surgeries. It's possible to collect patient's data in real time, by using non-invasive sensors as the ones used for magnetic resonance imaging and computed tomography. This dataset can be merged in real time with the real image of the patient \cite{azuma}.
 
 \begin{figure}
 \label{fig:sticker}
@@ -254,7 +254,7 @@ Disadvantages of fiducial markers are listed on \cite{dolz}, for example, they a
 
 Markerless augmented reality means that fiducial markers are not used on the scene. Instead, features from the target scene need to be used in order to estimate the camera pose and objects orientations.
 
-Target detection based on computer vision has been extensively studied e successfully applied on augmented reality applications. On related computer vision literature, geometric primitives can be used for pose estimation, on most cases, points, segments, lines, edges of edge points, cones, cylinders, or a combination of two or more of those features.
+Target detection based on computer vision has been extensively studied and successfully applied on augmented reality applications. On related computer vision literature, geometric primitives can be used for pose estimation, on most cases, points, segments, lines, edges of edge points, cones, cylinders, or a combination of two or more of those features.
 
 Markerless augmented reality has the advantage of using parts of the real environment as targets and can even extract information from the environment to be used by the augmented reality system \cite{dolz}.
 
@@ -268,7 +268,7 @@ Many tasks on augmented reality deal with an imaging device. Usually this imagin
 
 Camera calibration is a necessary step in 3D computer vision in order to extract metric information from 2D images. Much work has been done, by both the photogrammetry community and the computer vision community. Those techniques can be divided roughly into two categories: photogrammetric calibration (performed by observing a calibration object whose geometry in a 3-D space is known with very good precision) and self-calibration (does not use a calibration object, just move the camera in a scene and get its parameters) \cite{zhang2000flexible}.
 
-Camera calibration means to determine the camera model parameters which fit best to the observed behavior of the actual camera \cite{hanning2011high}. So, it's necessary to measure the the distance of an observation to a given camera model. The determination of the optimal camera mapping concerning each of these distance functions defines a non-linear optimization problem, and as such, it depends on the initial value.
+Camera calibration means to determine the camera model parameters which fit best to the observed behavior of the actual camera \cite{hanning2011high}. So, it's necessary to measure the distance of an observation to a given camera model. The determination of the optimal camera mapping concerning each of these distance functions defines a non-linear optimization problem, and as such, it depends on the initial value.
 
 Ordinary cameras are very often modelled as pinhole cameras. A pinhole is an imaginary wall with a tiny hole in the center that blocks all rays except the ones that pass through this tiny center hole \cite{bradski2008learning}. Unfortunately, a real pinhole is not a good way to make images because it does not gather enough light for rapid exposure. This is why human eyes and cameras use lenses to gather more light than what would be available at a single point. This way, the simple geometry of the pinhole camera model is not enough and it also introduces distortion of the lens itself.
 
@@ -331,7 +331,7 @@ The rotation matrix $R$ has the property that its inverse is its transpose, henc
 
 The translation vector $T$ is how it's possible to represent a shift from one coordinate system to another system whose origin is displaced to another location; in other words, the translation vector is just the offset from the origin of the first coordinate system to the origin of the second coordinate system \cite{bradski2008learning}. So, in order to shift from a coordinate system centered on an object to one centered at the camera, the appropriate translation vector is simply $T = origin_{object} - origin_{camera}$. Thus, a point in the object (or world) coordinate frame $P_o$ has coordinates $P_c$ in the camera coordinate frame: $P_c = R(P_o - T)$.
 
-The extrinsic parameters can be represented by a final matrix called \textit{homegenous matrix}. It looks as follows:
+The extrinsic parameters can be represented by a final matrix called \textit{homogeneous matrix}. It looks as follows:
 
 \begin{center}
 $\begin{bmatrix}
@@ -340,7 +340,7 @@ R & t \\
 \end{bmatrix}$
 \end{center}
 
-So, in order to convert from a world origin coordinate to a camera orientation coordinate system, only a single homogenous matrix needs to be used.
+So, in order to convert from a world origin coordinate to a camera orientation coordinate system, only a single homogeneous matrix needs to be used.
 
 \subsection{Calibration approaches}
 
@@ -348,7 +348,7 @@ There are multiple ways to calibrate cameras. The most common way to perform the
 
 Various techniques were created to obtain accurate mappings, including vanishing points for orthogonal directions and calibration from rotation purely \cite{Medioni:2004:ETC:993884}, features extraction which can be lines or points, single-image or multiple-images configurations, different camera models, linear and non-linear algorithms, among many others \cite{Armangue00acomparative} \cite{clarke98}. Self-calibration is indeed feasible with simple image correspondences among frames, yet the participation of control points produces more robust calibration results, in closer agreement with object space constraints \cite{Douskos_automaticcalibration}.
 
-The works by \cite{Tsai86} and \cite{zhang2000flexible} are extensively referenced and propose closed form solutions for the estimation of intrinsic and extrinsic parameters using 3D and 2D calibration patterns respectively. Camera calibration is a much discussed topic but the lack of robust algorithms for features detection difficults the construction of automatic calibration process \cite{gustavo}. Calibration pattern recognition is a hard task, where the lighting problems and high level of ambiguities are the principal challenges. For this reason, the algorithms often require user intervention for a reliable detection of the calibration points.
+The works by \cite{Tsai86} and \cite{zhang2000flexible} are extensively referenced and propose closed form solutions for the estimation of intrinsic and extrinsic parameters using 3D and 2D calibration patterns respectively. Camera calibration is a much discussed topic but the lack of robust algorithms for features detection makes harder the construction of automatic calibration process \cite{gustavo}. Calibration pattern recognition is a hard task, where the lighting problems and high level of ambiguities are the principal challenges. For this reason, the algorithms often require user intervention for a reliable detection of the calibration points.
 
 There are some tools available for automatic camera calibration. Two of the most popular ones are The Bouguet MatLab Toolbox \cite{matlab} and the OpenCV library \cite{opencv}. The former is an application that asks the user to define four extreme points that represent the area where an algorithm searches for the calibration points, given the number of rows and columns of the pattern. The latter is a very popular computer vision library that offers an automatic way to detect chessboard patterns in images by the \textit{findChessboardCorners()} function. The method performs successive morphological operators until a number of black and white contours are identified, subsequently the corners of the contours make up the calibration point set. The pattern is recognized only if all rectangles are identified. Figure \ref{fig:chessboard} shows how a person can use a chessboard in order to calibrate a camera using the OpenCV library.
 
@@ -360,7 +360,7 @@ There are some tools available for automatic camera calibration. Two of the most
 camera) and the camera intrinsics \cite{bradski2008learning}}
 \end{figure}
 
-As stated by \cite{arca}, the well-known algorithms for chessboard detection proposed by \cite{Tsai86} and \cite{zhang2000flexible} can achieve good calibration results since both of them are based on an initialization procedure that requires the precise corners positions of a calibration pattern (a chessboard, for example). Although the pattern to be detected is generally a simple object, the detection of its corners at subpixel precision is a very difficult task to be solved under uncontrolled acquisition conditions. At the state of art, most of the presented methods determine the positions of the chessboard corners by means of a two step processing scheme. At first the corners are detected with pixel precision, by means of edge detection methods; to increase the detection accuracy, the second step modifies their positions by the interpolation of the found borders. Those methods rarely reach a high accuracy, since the interpolation provides just a guess about the precise corners positions. Some authors try to improve the accuracy in the later steps of camera calibration, which increases computational cost, while others, like \cite{arca}, does not make any assumption on the orientation and scale of the chessboard and try to first find the chessboard, then determine the size of the squares and later on find the corners by using a simple statistical model.
+As stated by \cite{arca}, the well-known algorithms for chessboard detection proposed by \cite{Tsai86} and \cite{zhang2000flexible} can achieve good calibration results since both of them are based on an initialization procedure that requires the precise corners positions of a calibration pattern (a chessboard, for example). Although the pattern to be detected is generally a simple object, the detection of its corners at sub-pixel precision is a very difficult task to be solved under uncontrolled acquisition conditions. At the state of art, most of the presented methods determine the positions of the chessboard corners by means of a two step processing scheme. At first the corners are detected with pixel precision, by means of edge detection methods; to increase the detection accuracy, the second step modifies their positions by the interpolation of the found borders. Those methods rarely reach a high accuracy, since the interpolation provides just a guess about the precise corners positions. Some authors try to improve the accuracy in the later steps of camera calibration, which increases computational cost, while others, like \cite{arca}, does not make any assumption on the orientation and scale of the chessboard and try to first find the chessboard, then determine the size of the squares and later on find the corners by using a simple statistical model.
 
 \subsection{Multi-view}
 
@@ -372,17 +372,63 @@ According to \cite{hanning2011high}, the calibration of a stereo camera system i
 
 So, in theory, calibration of a multi-camera system is possible by individually calibrating intrinsic and extrinsic parameters of all cameras involved with respect to the same world coordinate system using classical calibration methods. This just requires that all cameras observe a common calibration object or that a calibration object is moved to precisely known positions such that every camera can observe it. The first approach imposes very strict limitations on the allowable relative camera poses (relative orientation and position) or requires a very large calibration object, which is generally complicated \cite{Chen00widearea}.
 
-Once cameras are calibrated, they are ready to register objects from a mixed reality scene. In general, traditional methods can be classified into three types: sensor-based methods, image-based methods and hybrid methods \cite{shumaker2011virtual}. The first two will be covered in the next sections; thr third, which is also applied by this work, won't be covered here since it's basically a combination of the first two methods.
+Once cameras are calibrated, they are ready to register objects from a mixed reality scene. In general, traditional methods can be classified into three types: sensor-based methods, image-based methods and hybrid methods \cite{shumaker2011virtual}. The first two will be covered in the next sections; the third, which is also applied by this work, won't be covered here since it's basically a combination of the first two methods.
 
 \section{Sensor-based registration approach}
 
-Three-dimensional (3D) reconstruction of an environment is an important problem that has received much attention in past decades. It can be defined as the process of capturing the shape and appearance of real objects \cite{chandra20123}. Recovering 3D surface structure of an object has been a central issue in computer vision. On the last years, with the launch of inexpensive RGBD sensors (notably the Kinect), applications based on sensor registration became cheaper and more feasible.
+Three-dimensional (3D) reconstruction of an environment is an important problem that has received much attention in past decades. It can be defined as the process of capturing the shape and appearance of real objects \cite{chandra20123}. Recovering 3D surface structure of an object has been a central issue in computer vision, however due to high precision requirements of the registration process, no sensing device, alone, in the past, has achieved the results required by most augmented reality applications \cite{vall98}. But on the last years, with the launch of inexpensive RGBD sensors (notably the Kinect), applications based on sensor registration became cheaper and more feasible. In the past, most augmented reality applications relied on sensors, such as magnetic, mechanical or inertial, but on the next sections only the Kinect will be covered.
 
 \subsection{Kinect}
 
+Kinect \cite{kinect} is a new and widely-available sensor platform that incorporates a structured light based depth sensor. It can be classified as an RGB-D camera, since it comes with not only an RGB camera, but also a depth sensor. While the quality of this depth map is generally remarkable given the cost of the device, a number of challenges still remains \cite{kinfu2}: the depth images can contain a number of "holes", when depth reading was not possible, due to certain materials or scene objects that don't reflect infra-red (IR) light, very thin or small structures or surfaces at glancing incident angles. Data can also be missed if the device is moved fast.
+
+The depth sensing system of Kinect consists of two parts: the IR laser emitter (which creates a known noisy pattern of structured IR light) and the IR camera. The depth sensing works on a principle of structured light. There's a known pseudo-random pattern of dots being pushed out from the camera. These dots are recorded by the IR camera and then compared to a known pattern \cite{hackingkinect}. The disturbances are known to be variations in the surface and can be detected as closer or further away. The fact that light matters brings three main problems:
+
+\begin{itemize}
+  \item The wavelength must be constant (Kinect handles it internally)
+  \item Ambient light can cause issues
+  \item Distante is limited by the emitter strength
+\end{itemize}
+
+Within the sensor, there is a small heater/cooler that keeps the laser diode at a constant temperature. This ensures that the output wavelength remains as constant as possible, given variations on power and temperature. Ambient light is the bane of structured light sensors, but there are measures to mitigate this. One is an IR-pass filter that prevents stray IR in other ranges from blinding the sensor. However, Kinect doesn't work well in places with strong sunlight. Sunlight's wide band IR has enough power on Kinect's IR sensor range in order to blind it \cite{hackingkinect}.
+
+The RGB camera collects 30 frames per second of actual real time events at a 640x480 resolution \cite{kinecthacks}. The Kinect also has the option to switch the camera to high resolution, running at 15 frames per second (fps), which in reality is more
+like 10 fps at 1280x1024 pixels. Of course, the former is reduced slightly to match the depth camera;
+640x480 pixels and 1280x1024 pixels are the outputs that are sent over USB. The camera itself possesses
+an excellent set of features including automatic white balancing, black reference, flicker avoidance, color
+saturation, and defect correction \cite{hackingkinect}.
+
+All the information gathered by the RGB camera and the IR camera are available in two data streams provided by Kinect. One data stream makes it possible to build an RGB map and the other data stream makes it possible to build a depth map. Both maps without any calibration are useless, so it's necessary to perform a calibration called \textit{depth registration} in order to get the correspondences between a pixel on the RGB map with another pixel on the depth map, which can be done by software but using built-in data stored on Kinect's firmware.
+
 \subsection{Registration}
 
-\subsection{Transformation}
+The depth maps generated by the Kinect contain discrete range measurements of the physical scene, thus this data can be reprojected as a set of discrete 3D points (or point cloud). Point clouds are sets of data containing collections of 3D vertices, often derived from an observation of a real world scene \cite{price2012}. At a first glance, point clouds can be divided into two main classes: unorganized or organized. If the dataset is organized, it can be directly indexed or searched in a tree-basis in order to find an specific point and also its neighbors. This is very important because most of the point clouds operations depends on being able to compute properties of a point based on its neighborhood (or k-closest points). So, an unorganized point cloud should be first parsed into a tree structure in order to allow faster computations. This tree structure can be, for example, an array, an octree or a KD-tree.
+
+Once a point cloud is organized, operations can be performed over it. Measure error is expected in any conversion from the real world to a digital structure. As stated previously, variations on the surface or scene objects materials or shapes, lighting, edges, among others, can lead to noisy point clouds, giving an inaccurate result. The next sections will cover three common operations over point clouds.
+
+\subsubsection{Filtering}
+
+So, filtering is one of the first tasks to be performed over an early fetched point cloud. There are many filtering algorithms for this, but one of most powerful ones is the statistical outlier filter, which can solve these irregularities by performing a statistical analysis on the neighborhood of each point, and by discarding the ones that don't meet an specific criteria. In the one implemented by the Point Cloud Library \cite{pclstatout}, the outliers removal is based on the computation of the distribution of points to neighbors distances in the input dataset. For each point, the mean distance from it to all the neighbors is computed, and by assuming that the resulted distribution is Gaussian (with a mean and standard deviation), all points whose mean distances are outside the interval defined by the global distances mean and standard deviation can be considered outliers and removed from the dataset.
+
+\subsubsection{Normal estimation}
+
+The normal vector, often simply called the "normal" to a surface is a vector perpendicular to it \cite{normalwolf}. Given a geometric surface, this is easy to be determined, however, this is not straightforward for point clouds, where estimation is necessary. Normal estimation at a point is an important task in order to determine whether points are part of the same object. There are many different methods for normal estimation, and one of the simplest ones is the one that approximates this problem by the problem of estimating the normal of a plane tangent to the surface, which becomes a problem of estimating the least-square plane fitting \cite{pclnormal}. Therefore the problem is reduced to an analysis of eigenvalues and eigenvectors of a covariance matrix generated from the nearest neighbors of the target point. Another simple method, given a point and its neighborhood, is to just average the normals created from the cross products of the vectors to all of the other points on the neighborhood \cite{price2012}.
+
+\subsubsection{Segmentation}
+
+Segmentation is the process that separates a set of points into the different objects that they represent. For example, if the point cloud is acquired from a room, the segmentation would determine which sub-sets of points from this point cloud represent a chair, a desk, and any other object present in the captured room. Approaches for this include derivative computation of the normal field (in order to determine when one object ends and another starts) or even pattern matching.
+
+On Kinect, these operations can be performed in the following way:
+
+\begin{itemize}
+  \item Each point $P$ at position $(m, n)$ on the point cloud can be computed by $P_{m, n}(t) = D_{m, n}(t) \times K_{m, n}$, where $D$ is the depth array given by Kinect and $K$ is the intrinsic field-of-view tensor;
+  \item Normal vector at any point $(m, n)$ is an approximation of $(P_{m+1, n} - P_{m,n}) \times (P_{m, n+1} - P_{m,n})$;
+  \item Segmentation can be done based on color values (from RGB map) or depth values (from depth map)
+\end{itemize}
+
+Two consecutive point clouds, scanned at different times, can be aligned in order to calculate the transformation of the captured object.
+
+\subsection{Alignment}
 
 \section{Vision-based registration approach}
 
@@ -400,7 +446,7 @@ Differential methods belong to the most widely used techniques for optic flow co
 Despite their differences, many of these techniques can be viewed conceptually in terms of three stages of processing \cite{opticalflow}:
 
 \begin{itemize}
-  \item Prefiltering or smoothing with low-pass/band-pass filter in order to extract signal structure of interest and to enhance the signal-to-noise ratio;
+  \item Pre-filtering or smoothing with low-pass/band-pass filter in order to extract signal structure of interest and to enhance the signal-to-noise ratio;
   \item The extraction of basic measurements, such as spatiotemporal derivatives (to measure normal components of velocity) or local correlation surfaces;
   \item The integration f these measurements to produce a 2D flow field, which often involves assumptions about the smoothness of the underlying flow field.
 \end{itemize}
@@ -436,7 +482,7 @@ $W(w;p) = \begin{matrix}
 
 Where the vector of parameters $p = (p_1, p_2)^T$ is then the optical flow.
 
-Warping $I$ back to compute $I(W(x;p))$ requires interpolating the image $I$ at the sub-pixel locations $W(x;p)$. The minimization is performed with respect to $p$ and the sum is performed over all of the pixels $x$ in the template image $T(x)$. Minimizing the expression is a non-linear optimization task even if $W(w;p)$ is linear in $p$ because the pixel values $I(x)$ are, in general, non-linear in $x$. In fact, the pixel values $I(x)$ are essentially un-related to the pixel coordinates $x$. To optimize the expression, the Lucas-Kanade algorithm assumes that a current estimate of $p$ is known and then iteratively solves for increments to the parameters $\Delta{p}$, so the expression is (approximately) minimized:
+Warping $I$ back to compute $I(W(x;p))$ requires interpolating the image $I$ at the sub-pixel locations $W(x;p)$. The minimization is performed with respect to $p$ and the sum is performed over all of the pixels $x$ in the template image $T(x)$. Minimizing the expression is a non-linear optimization task even if $W(w;p)$ is linear in $p$ because the pixel values $I(x)$ are, in general, non-linear in $x$. In fact, the pixel values $I(x)$ are essentially unrelated to the pixel coordinates $x$. To optimize the expression, the Lucas-Kanade algorithm assumes that a current estimate of $p$ is known and then iteratively solves for increments to the parameters $\Delta{p}$, so the expression is (approximately) minimized:
 
 \begin{center}
   $\sum_{x}{[I(W(x;p + \Delta{p}))-T(x)]^2}$
@@ -454,7 +500,7 @@ The result of the algorithm is a set of optical flow vectors distributed over th
 
 The Lucas-Kanade method can be applied in a sparse context because it relies only on local information that is derived from some small window surrounding each of the points of interest. The disadvantage of using small local windows in Lucas-Kanade is that large motions can move points outside of the local window and thus become impossible for the algorithm to find, which led to the development of the "pyramidal" Lucas-Kanade algorithm \cite{Bouguet00}, one of many approaches that have been used to improve the convergence rate and reduce the likelihood of falling into a local minimum.
 
-One component in many algorithms is a coarse-to-fine strategy. The most common approach is to build image pyramids by repeated blurring and downsampling. So, optical flow is first computed on the top level (fewest pixels) and then upsampled and used to initialize the estimate at the next level \cite{dblk}, as shown on Figure \ref{fig:plk}. Computation at the higher levels in the pyramid involves far fewer unknowns and so is far faster. The initialization at each level from the previous level also means that far fewer interations are required at each level. Due to this, pyramid algorithms are usually faster than a single solution at the bottom level.
+One component in many algorithms is a coarse-to-fine strategy. The most common approach is to build image pyramids by repeated blurring and downsampling. So, optical flow is first computed on the top level (fewest pixels) and then upsampled and used to initialize the estimate at the next level \cite{dblk}, as shown on Figure \ref{fig:plk}. Computation at the higher levels in the pyramid involves far fewer unknowns and so is far faster. The initialization at each level from the previous level also means that far fewer interactions are required at each level. Due to this, pyramid algorithms are usually faster than a single solution at the bottom level.
 
 \begin{figure}
 \label{fig:plk}
@@ -498,7 +544,7 @@ Talk about performance of two Kinfus fighting for a single GPU.
 \section{Hybrid approach}
 When optical flow has just a few feature points, we switch to the second Kinect.
 
-\xchapter{Result}{In this chaper I present the results of the procedure explained in the previous chapter.}
+\xchapter{Result}{In this chapter I present the results of the procedure explained in the previous chapter.}
 \section{Scope}
 Talk about error propagation.
 \section{Analysis}
