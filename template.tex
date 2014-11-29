@@ -282,7 +282,14 @@ The process of camera calibration gives us both a model of the camera's geometry
 
 \subsubsection{Intrinsic parameters}
 
-The intrinsic parameters are those that describe the internal workings  of the camera and consist of the focal length, the principal point, the skew coefficients and radial and tangential distortions \cite{tillapaugh2008indirect}. These values are needed to help to describe imperfections in the lens of the camera and give a mapping from camera reference frame to the image plane. The intrinsic parameters depend only on the camera itself, and so they just need to be found once, regardless the environment changes or not.
+The intrinsic parameters are those that describe the internal geometry of the camera and consist of the focal length, the location of image center in pixel space, the pixel size in the horizontal and vertical directions and radial and tangential distortions \cite{malik2002}. These values are needed to help to describe imperfections in the lens of the camera and give a mapping from camera reference frame to the image plane. The intrinsic parameters depend only on the camera itself, and so they just need to be found once, regardless the environment changes or not (no need for recalibration due to environmental changes). The location of the image center and the pixel size make it possible to link image coordinates $(x_{im}, y_{im})$ in pixels, to the respective coordinates $(x, y)$ in the camera coordinate system \cite{malik2002}:
+
+\begin{center}
+$x = -(x_{im} - o_x)s_x$
+$y = -(y_{im} - o_y)s_y$
+\end{center}
+
+Where $(o_x, o_y)$ define the pixel coordinates of the principal point and $(s_x, s_y)$ define the size of pixels in the horizontal and vertical directions, respectively.
 
 \subsubsection{Extrinsic parameters}
 
@@ -398,6 +405,8 @@ like 10 fps at 1280x1024 pixels. Of course, the former is reduced slightly to ma
 an excellent set of features including automatic white balancing, black reference, flicker avoidance, color
 saturation, and defect correction \cite{hackingkinect}.
 
+The Kinect is calibrated at factory and has built in numbers for converting the disparity values to depth values, and also for mapping 3D points to the color camera. However, the calibration from factory uses a simple model where depth values are fast enough to be computed, but its accuracy can be improved by using other calibration methods \cite{magnus2013}.
+
 All the information gathered by the RGB camera and the IR camera are available in two data streams provided by Kinect. One data stream makes it possible to build an RGB map and the other data stream makes it possible to build a depth map. Both maps without any calibration are useless, so it's necessary to perform a calibration called \textit{depth registration} in order to get the correspondences between a pixel on the RGB map with another pixel on the depth map, which can be done by software but using built-in data stored on Kinect's firmware.
 
 \subsection{Registration}
@@ -429,6 +438,22 @@ On Kinect, these operations can be performed in the following way:
 Two consecutive point clouds, scanned at different times, can be aligned in order to calculate the transformation of the captured object.
 
 \subsection{Alignment}
+
+There also many methods for aligning two point clouds, but the Iterative Closest Point (ICP) \cite{icp} is far the most implemented one, proposed on 1992 for the registration of 3D shapes, but it's also used to reconstruct surfaces of different scans, gather optimal path planning, and so on. The main goal of the algorithm is to minimize the difference between two point clouds, one called the \textit{target} and another one called the \textit{source}. The target point cloud is kept fixed, while the source point cloud is transformed in order to best match the fixed target point cloud. The algorithm iteratively revises the transformation (composed by rotation and translation) in order to minimize the difference between the source point cloud and the target point cloud, until it reaches a local minimum.
+
+On this context, the interest is on applying the algorithm to point sets, however it was originally designed to also work with six other structures: line segment sets, implicit curves, parametric curves, triangle sets, implicit surfaces and parametric surfaces \cite{hajnal2014medical}.
+
+The algorithm has only two stages, and then iterates. On the first stage, the closest target point for each source point is identified. The second stage tries to find the least square rigid body transformation that relates these two point sets. The algorithm then iterates to redetermine the closest point set and continues until it reaches the local minimum match between the source and target surfaces, as determined by some threshold.
+
+Regardless the representation of the source surface $P$, it is first converted to a set of points ${p_i}$. The target data remains in its original representation. As explained, the first stage means identifying the closest point on the target surface $T$ for each point $p_i$ on the source surface $P$. This is the point $x$ in $T$ where the distance between $p_i$ and $x$ is minimum:
+
+\begin{center}
+  $d(p_i, x) = min_{x \in T} \Vert x - p_i \Vert$
+\end{center}
+
+All the closest points (one for each $p_i$) are returned as new a set ${q_i}$. A least squares registration between the points $p_i$ and $q_i$ can be performed and so the set of source points $p_i$ can be transformed to a set of points $p'_i$ using the rigid body transformations (composed by a rotation and a translation) that was calculated, and then the closest points can be identified again. The algorithm stops when the change in mean square error between two iterations goes below a threshold. Since the algorithm iterates to a local minimum closest to the starting point, it may not find the best solution, that's why the original authors propose to start the algorithm multiple times and then choose the minimum of the minima obtained \cite{icp}.
+
+The algorithm can be optimized by storing the solutions at each iteration, for example. Actually many variations were proposed to the original version, mainly focused on performance improvements, like using KD-trees \cite{zhang1994}, Lie group representation \cite{Dong201467} or expectation maximization estimation for point set registration with noise \cite{6957732}.
 
 \section{Vision-based registration approach}
 
