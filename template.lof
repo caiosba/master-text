@@ -9,9 +9,16 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Example of fiducial marker used by medical applications}}{9}
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Example of fiducial marker for motion capture}}{10}
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the camera) and the camera intrinsics \cite {bradski2008learning}}}{14}
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}}}{22}
-\contentsline {figure}{\numberline {2.8}{\ignorespaces The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)}}{22}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces A multi-resolution pyramid with three levels \cite {michele}}}{20}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}}}{24}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)}}{25}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces ARBioMed running, with three fiducial markers \cite {arbiomed}}}{28}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces User under augmented virtual therapy \cite {fisio}}}{28}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Patient with stroke performing an exercise to reach melody boxes \cite {stroke}}}{29}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Difference between using a single Kinect and more than one Kinects}}{31}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Three Kinect devices being used for a full scan of the human body with minimum overlapping \cite {tong}}}{32}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Calibrating Kinect using toolbox from \cite {herrera}}}{33}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

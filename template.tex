@@ -7,6 +7,7 @@
 \documentclass[msc, a4paper, classic, en]{ufbathesis}
 \usepackage[utf8]{inputenc}
 \usepackage[super]{nth}
+\usepackage[english]{babel}
 
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
@@ -61,8 +62,9 @@ not only the time spent on the master program, but also during all my graduation
 Namely, first I would like to thank my brother, Rodrigo, for being my inspiration on following this career;
 my twin sister, Thalita, for being my support of all times;
 my parents, for the great education that was given to me;
-my grandmother Lourdes; my girlfriend Jéssica; my friends; and specially my advisor Antônio Apolinário
-for relying on me to make this work happen.
+my grandmother Lourdes for everything I learned from her all these years;
+my girlfriend Jéssica, for giving a new meaning to my life;
+and specially my advisor Antônio Apolinário, for trusting on me to make this work happen.
 
 % Resumo em Português
 % Se preferir, crie um arquivo à parte e o inclua via \include{}
@@ -455,6 +457,33 @@ All the closest points (one for each $p_i$) are returned as new a set ${q_i}$. A
 
 The algorithm can be optimized by storing the solutions at each iteration, for example. Actually many variations were proposed to the original version, mainly focused on performance improvements, like using KD-trees \cite{zhang1994}, Lie group representation \cite{Dong201467} or expectation maximization estimation for point set registration with noise \cite{6957732}.
 
+\subsection{Reconstruction}
+
+KinectFusion \cite{kinfu} \cite{kinfu2} is probably the most famous algorithm for reconstructing objects using the Kinect device. It is the state-of-art algorithm for real-time reconstruction and rendering of a real world scene, and is implemented on the PCL \cite{pcl} library under the name of KinFu. In order for this implementation to work, a powerful processor and a graphics card with a CUDA-enabled Nvidia GPU are required, so it can run at at least 30 frames per second.
+
+The algorithm was originally developed by Microsoft Research in 2011. It allows a user to reconstruct a three-dimensional scene in real-time and with good level of details by just moving the Kinect sensor around the real scene.
+
+The input for the algorithm is a temporal sequence of depth maps as returned by the Kinect device. Since the original algorithm just uses depth maps and doesn't use any color information from the RGB sensor, it can in theory work in a completely dark environment. It runs in real-time, so it proceeds by using a frame per time as provided by the depth sensor. A surface representation is extracted from the current depth frame and a global model is refined by first aligning and then merging the new surface with it. The global model is obtained as a prediction of the global surface that is being reconstructed and refined at each iteration \cite{michele}.
+
+So, at each new frame, the new depth map obtained from the depth sensor is used as input for the algorithm. This depth map must be converted into a three-dimensional point cloud with vertex and normal information. This is done at different, layered resolutions, resulting in a number of images with different levels of details, which is originally defined in the algorithm as three. This is called \textit{multi-resolution pyramid} (see Figure \ref{fig:pyr}), on which the lower resolution layers are obtained by sub-sampling the higher resolution ones.
+
+\begin{figure}
+\label{fig:pyr}
+\centering
+\includegraphics[width=0.5\textwidth]{images/pyr.png}
+\caption{A multi-resolution pyramid with three levels \cite{michele}}
+\end{figure}
+
+The depth map is converted into a three-dimensional point cloud by back-projection. In order to do that, it's used the internal calibration matrix that is stored in Kinect, that matches depth values to actual 3D coordinates. The normal of each point is estimated through cross-product of two vectors: the vector joining the chosen point and the one above it, and the vector that pass through the chosen point and the one at its right. In other words, since the points are arranged as depth pixels, if point $(x, y, z)$ is picked up, points $(x, y+1, z)$ and $(x+1, y, z)$ will be used for normal estimation, where $x$ and $y$ are image coordinates and $z$ is the depth value at these coordinates. At this point, there is a point cloud with normal and vertex information for each point with three distinct levels of details. This cloud is considered ordered since the points are arranged according to the pixels on the depth map.
+
+The next stage is the alignment. The first point cloud is related to the model that was captured. From the second step on, the new point cloud is aligned to the current model and them merged to it in order to produce more refined model through iterative steps. The alignment is performed through the iterative closest point algorithm (ICP). A point-to-point approach is used here: for each point in the current point cloud, the closest one on the previous (global) point cloud is considered, and the distance between them is calculated. The final transformation at the step is the one that minimizes the total error between all point pairs. It's important to notice that KinectFusion doesn't use the standard ICP algorithm since it's too slow to be applied on a real-time context. The difference here is that is assumes that the changes between the current cloud and the previous one are small, which makes sense if the algorithm runs in real-time (for example, at 30 frames per second) and if the Kinect is moved slowly. The modified ICP back-projects the two clouds onto the camera image frame of the model and so they are considered to match if they fall on the same pixel. To make it even faster, the ICP iterations are performed at three resolutions. After a match is found, the modified ICP algorithm calculates the error between two points in a match by using a point-to-plane metric. Some iterations later, the modified ICP will generate a six degrees of freedom transformation matrix, composed by a rotation and a translation, which aligns the source point cloud with the target point cloud.
+
+After that, comes the reconstruction itself. Once the transformation is found and this the current pose of the camera can be estimated, the new cloud is ready to be merged with the current model. In order to avoid losing details, the raw depth data is used instead of the filtered one. This step is based on a Truncated Signed Distance Function (TSDF). What this function does is extract the surface of objects in the scene and assign negative numbers to pixels inside objects or inside an area not yet measured, and positive numbers to pixels outside the surface. For pixels on the surface, this number is zero, for pixels outside the surface, this value is greater for pixels far from the surface and lower for pixels near the surface. TSDF is computed for the new cloud and merged to the current model's TSDF.
+
+On the last step, the resulting TSDF is used to reconstruct the surface of the refined model, which is achieved through ray casting. It is performed from the global camera focal point by intersecting the zero level set of the TSDF. The refined ray-casted model will be used for the next step of the ICP alignment. The end result of the algorithm is a 3D surface representing the acquired scene.
+
+Since the ICP make assumptions about small changes between two point clouds, sudden movements can make it converge to a wrong match, and then break the tracking and consequently the reconstruction. On the other hand, the algorithm is very robust for presence of dynamic objects on the scene, given enough iterations of it. (for example, if a desk is being captured on a room and someone walks in, this person will be removed from the reconstruction). This is due to the weighted average used during merging the TSDFs \cite{michele}.
+
 \section{Vision-based registration approach}
 
 Registration based on sensors relies solely upon geometric information, for example, the spatial coordinates of the points in two clouds. As a result, environments that don't provide high geometric texture (for example, plane surfaces like a wall) can cause sensor tracking to fail. For such cases, a vision-based registration approach can be applied, by using the RGB information from the images \cite{kinectkanade}. 
@@ -473,7 +502,7 @@ Despite their differences, many of these techniques can be viewed conceptually i
 \begin{itemize}
   \item Pre-filtering or smoothing with low-pass/band-pass filter in order to extract signal structure of interest and to enhance the signal-to-noise ratio;
   \item The extraction of basic measurements, such as spatiotemporal derivatives (to measure normal components of velocity) or local correlation surfaces;
-  \item The integration f these measurements to produce a 2D flow field, which often involves assumptions about the smoothness of the underlying flow field.
+  \item The integration of these measurements to produce a 2D flow field, which often involves assumptions about the smoothness of the underlying flow field.
 \end{itemize}
 
 One of the most popular methods for computing the optical flow of an image is the Lucas-Kanade algorithm, which will be explained on the following section.
@@ -546,11 +575,114 @@ The features to be tracked by the Lucas-Kanade algorithm can be manually defined
 
 So, the Lucas-Kanade algorithm, applied over a good set of feature points, is an efficient method for obtaining optical flow information at interesting points in an image and works for moderate object speeds.
 
-\xchapter{Related works}{In this chapter I present some related works.}
-Cover all the related works, with multiple Kinects, optical flow, markerless augmented reality, medical applications, multi-view environment, reconstruction, etc.
+\xchapter{Related works}{In this chapter I present some related works. Since it hasn't been found any work that uses a multi-view markerless augmented reality environment based on hybrid reconstruction, this chapter is divided into subjects related to the this work: usage of multiple Kinects, optical flow, markerless augmented reality, medical applications, multi-view environment, reconstruction, etc.}
+
+\section{Augmented reality applications for medicine}
+
+On the field of augmented reality, one of the first approaches was to track known patterns, that's how much fiducial markers work. The traditional ARToolKit \cite{artoolkit} is probably the most famous of them and augments virtual objects onto black and white square markers. Its advantage is simplicity and performance, since it works also with modest computers and commodity cameras. However, it doesn't support any kind of occlusion, since its fitting process is based on a four-lines approach that requires the marker to be fully visible by the camera.
+
+Augmented reality has been widely implemented on medicine on the last years, for training, simulation, therapy and so on. Many works on this field are based on fiducial markers in order to calculate the camera's real position in relation to the marker's real position, like the system called ARBioMed \cite{arbiomed}. The idea of this system is to represent a virtual, three-dimensional heart over a marker placed on the target user's chest. This virtual heart has its pulsation simulated according to a received signal. From this system, the operator user can define, through a user interface, a fixed pulse rate to be simulated on the heart. In order to set the size of the heart based on the dimensions of the user chest, two other fiducial markers are used, as shown on Figure \ref{fig:arbiomed}. This architecture makes the implementation simpler, since it is based on ARToolKit \cite{artoolkit}, a popular and straightforward framework for augmented reality based on fiducial markers. However, the markers pollute the augmented reality scene and offers a less comfortable experience to the target user, since the markers are invasive.
+
+\begin{figure}
+\label{fig:arbiomed}
+\centering
+\includegraphics[width=0.5\textwidth]{images/arbiomed.png}
+\caption{ARBioMed running, with three fiducial markers \cite{arbiomed}}
+\end{figure}
+
+Another work on the medical field that is based on the traditional square fiducial markers is the motion capture system presented on \cite{fisio}, whose goal is to follow up physiotherapy exercises performed by patients. As shows on Figure \ref{fig:fisio}, fiducial markers are fixed on parts of the patient's body where motion will be captured. Based on trigonometric evaluation of the markers' position, it's possible to establish the range of motion that was executed.
+
+\begin{figure}
+\label{fig:fisio}
+\centering
+\includegraphics[width=0.5\textwidth]{images/fisio.png}
+\caption{User under augmented virtual therapy \cite{fisio}}
+\end{figure}
+
+Augmented reality applications on medicine are also applied for training, like the ANGELS system \cite{angels}. The main objective of this project is to test the utility of augmented reality to train in prevention of risks at work in the health care sector. After conducting a requirements analysis in order to obtain a general framework for the priority risks in safety at work within the health care, a pilot study was carried out and preliminary results showed a good opinion of the users as well as favorable usability of the system.
+
+Still on training, the work at \cite{endo} implemented augmented reality telementoring platform to overlay the instruments of a mentor onto the trainee's laparoscopic monitor, for surgical training. The study concluded that the designed platform was a more effective training technique in teaching laparoscopic skills to medical students compared to traditional methods, since it reduced the number of failed attempts and resulted in faster suture times.
+
+On the therapy side, there is a work that developed a low-cost spatial augmented reality system that allows individuals with stroke to practice hand and arm movement exercises at home or at a clinic with minimal support of the therapist \cite{stroke}. This setup uses a color marker, fixed on the patient's hand, to track his movement and check how accurate he performs. After that, a score is displayed to him. There are setups for some exercises, and one of them is displayed on Figure \ref{fig:stroke}.
+
+\begin{figure}
+\label{fig:stroke}
+\centering
+\includegraphics[width=0.5\textwidth]{images/stroke.png}
+\caption{Patient with stroke performing an exercise to reach melody boxes \cite{stroke}}
+\end{figure}
+
+This study of related works on the field of augmented reality applied on medicine showed that most of the works are still based on fiducial markers. Works related to markerless augmented reality approaches will be studied on the next section.
+
 \section{Markerless augmented reality}
+
+On the last years, alternatives to the traditional fiducial markers started to emerge. One of the common problems related to fiducial markers is that the marker needs to be located on the field of view of the camera. A possible solution for this is presented on \cite{5739718}, that is able to track a camera based on plane tracking algorithm. This technique has been applied mainly due to its simple geometry. Results also show that 3D objects can be used on augmented reality applications with primitive-based modeling \cite{KimLW10}.
+
+One of the first works to propose an algorithm for markerless object tracking was \cite{Comport03d}, that suggests a tracking algorithm based on 3D models to calculate the distance between the camera and the objects. Based on this calculation, objects can be placed on the scene. Though this method seemed to be robust on handling occlusion and luminosity issues, which are weak points of the fiducial markers, it still had some limitations. This is an example of an application based on models, that already uses geometric 3D data to identify where to place a virtual image on the real scene.
+
+Other alternatives to fiducial markers are proposed on \cite{wuest}, that uses an adaptive edge detector, \cite{ferrari}, that renders planar textures over planar fragments previously identified, and on \cite{klein}, which proposed a multi-thread system to track a camera and to compute a three-dimensional map of the available marks, using a hand-held camera.
+
+The system designed on \cite{ZhangL12} allows any object from the environment to be used as a marker, instead of using a fiducial marker. Besides that, the system was designed to work with low-contrast surfaces (like human hand marks). In order to place a three-dimensional object, the system uses salient points from the environment combined with a local texture, which turns the detection much more stable.
+
+Like that work, other works show that feature detection on the target scene can achieve good performance. Descriptors are usually computed from key-points of the scene, so, they don't reach great performance when dealing with objects without texture and/or with few key-points on their surfaces \cite{bay}.
+
+On the other hand, object recognition based on depth focuses on geometric properties of the target, like curves or edges. An object can be identified based on its depth map.
+
+\section{Sensors}
+
+Recently augmented reality works use sensors in order to capture scene data and use them for pose estimation, replacing the need for markers. Such sensors can capture real images from the scene in order to identify natural marks or features, or can even capture three-dimensional objects to be used as geometric markers.
+
+The study on \cite{Lee20125286} proposes a cranial augmented reality system which performs image-to-patient registration using only natural facial features. The hardware for this project is composed by three calibrated cameras and no fiducial markers. Two of the cameras are mounted together in order to form a stereo-vision system, while the third camera moves freely and captures real-time images for displaying with the virtual image. The patient's head is first reconstructed by stereo vision, while another surface is reconstructed from computed tomography images. An algorithm based on the iterative closest point (ICP) is then used to register the two facial data, which transfers the facial information from the computer tomography images to the physical space. The reconstruction, as expected, comes with noisy data, so the conventional ICP would suffer from the local-minimum problem of not reaching the best match. Therefore, the authors also propose an improvement to the ICP algorithm in order to increase robustness.
+
+An interesting approach that uses the human hand as a marker is proposed by \cite{4373785}. On the calibration stage, an algorithm based on computer vision detects the user's hand (by checking the contours of the fingers) and use them as a reference pattern, thus providing a virtual camera with six degrees of freedom on the user's hand, that's where virtual objects will be projected. On the next stage, the user can move his hand arbitrarily and so the virtual object projected on his hand will mode accordingly too. This is an example of augmented reality application that uses image analysis to identify where to project the virtual object.
+
+Another system that treats the user hand as a marker is presented on \cite{51078809}. On this implementation, the user can interact with menus and three-dimensional objects without using any fiducial marker. The system is activated from a specific motion performed by the user's hand, which is captured by a Kinect device. The interaction means selecting and controlling a set of virtual objects and buttons that are displayed in front of the user, which wears a pair of augmented reality glasses. 
+
 \section{Multiple Kinects}
-\section{Multi-view environment}
+
+More than one Kinect is needed when the use case is capturing a large volume, full 3D reconstruction, tracking or super resolution. 
+However, when more than one Kinect device is used, new challenges come in. Data captured from the overlapping region between two or more Kinects usually have poor quality due to the interference, since the depth sensing technology limits the use of multiple Kinects \cite{roy}. This noticed from the depth maps, which suffer major quality degradation in overlapping areas. In places of depth uncertainty, Kinect will place zero values, and so, holes will be created. The difference between using a single Kinect and multiple Kinects is represented on Figure \ref{fig:twokin}. 
+
+\begin{figure}
+\label{fig:twokin}
+\centering
+\includegraphics[width=0.5\textwidth]{images/twokin.png}
+\caption{Difference between using a single Kinect and more than one Kinects}
+\end{figure}
+
+On the other hand, multiple Kinects can result on better data quality for large objects or regions since each device can be responsible for capturing an specific part of an object or scene, resulting in more details for each component. Similar approach is implemented by the work at \cite{tong}, which aims to make a full three-dimensional scan of the human body by using three Kinects carefully positioned in order to avoid overlapping (and consequently, interference) between them as much as possible, as shown on Figure \ref{fig:3kin}.
+
+\begin{figure}
+\label{fig:3kin}
+\centering
+\includegraphics[width=0.5\textwidth]{images/3kin.jpg}
+\caption{Three Kinect devices being used for a full scan of the human body with minimum overlapping \cite{tong}}
+\end{figure}
+
+The main reason that made the authors decide for using multiple Kinects was because in order to capture a full human body, a single Kinect should be positioned around 3 meters away from the body, and the resolution would be very low, since little geometry information is captured on the depth map. Even using multiple frames to enhance the final resolution, the result wouldn't be acceptable.
+
+Not only multiple Kinects, but multi-camera environments are used for three-dimensional reconstruction, since a single camera can just capture a two-dimensional projection of the scene. Not many works were found with regards to calibrating multiple Kinects. The most notable way of calibrating many RGB cameras in relation to a common reference is by processing images captured from a chessboard. The approach at \cite{matlab} became popular by providing a straightforward way to find chessboard corners and that's still largely used.
+
+When multiple Kinects are present on a multi-camera configuration, the challenge is to develop methods that simultaneously calibrate the RGB sensor and depth sensors using a suitable calibration pattern. An approach to that is discussed on \cite{berger2011markerless}, which uses four Kinect devices for motion capture. This work investigates on reducing or mitigating the detrimental effects of multiple active light emitters, thereby allowing motion capture from all angles. The calibration approach used by the authors is to still use a chessboard pattern to calibrate the RGB and depth sensors simultaneously, but not a simple board printed on paper, instead they use a binary pattern consisting of diffuse and mirroring patches. The reflective patches act as mirrors and deflect the IR pattern to infinity while the diffuse patterns reflect the IR light and provide depth values in the captured image, which are finally used for calibration in the Matlab calibration toolbox \cite{matlab}. Many other studies for multiple Kinects are discussed on \cite{schroder2011multiple}.
+
+Besides calibrating the depth and RGB maps simultaneously, for some cases it's also important to calibrate one Kinect in relation to the other and so be able to determine the relative position between them. On \cite{magnus2013}, among other works, it's used a calibration process introduced by \cite{herrera}, which not only explains the approach, but also releases a toolbox to perform the calibration, which is represented on Figure \ref{fig:herrera}.
+
+\begin{figure}
+\label{fig:herrera}
+\centering
+\includegraphics[width=0.5\textwidth]{images/herrera.png}
+\caption{Calibrating Kinect using toolbox from \cite{herrera}}
+\end{figure}
+
+That algorithm simultaneously calibrates the color camera and the depth camera, as well as the relative position between them. The color camera intrinsics is based on the following model: a 3D point is transformed into image coordinates and a disparity value from the disparity map at these coordinates is transformed into a 3D point.
+
+\section{Hybrid-based tracking}
+
+Since sensor-based methods rely solely on geometric information, sometimes it can fail for planar or smooth surfaces. On such cases, the results can be improved by combining geometric data with visual data. Different methods can be employed to detect specific features or objects in the scene, such as point detection, background modeling, image segmentation or classifiers based on supervised learning.
+
+One approach to use visual information to improve geometric mapping is discussed on \cite{Hen10RGB}, which combines visual features with shape-based alignment. This paper introduces RGB-D mapping, a framework that can generate dense 3D maps of indoor environments despite the limited depth precision and field of view provided by RGB-D cameras. The core of this framework is a variant of the ICP algorithm, called RGBD-ICP, which uses the rich information contained in RGB-D data. First, the framework performs an initial estimate of the 3D camera transformation by applying RANSAC\footnote{Random sample consensus - an iterative method to estimate the parameters of a mathematical model} to SIFT\footnote{Scale invariant feature transform - an algorithm in computer vision to detect and describe local features in images} feature matches with depth values. The modified ICP algorithm combines these visual feature associations with dense point associations, and then the final transformations are used to create a pose graph, which at a final post-processing step is optimized in order to achieve a consistent map. Later on, the same authors released another paper \cite{Hen12RGB} where they avoid the expensive ICP step when enough features are identified on the image. Another work, at \cite{Engelhard11real-time3-d}, follows a similar approach but uses SURF \cite{bay} instead of SIFT features.
+
+The closest to what is done on this work is the work by \cite{kinectkanade}, which improves the KinectFusion algorithm by using the Lucas-Kanade algorithm in cases of low geometric features.
 
 \xchapter{Solution architecture}{In this chapter I explain in details the steps performed in order to implement the objective of this work.}
 \section{Environment}
