@@ -4,14 +4,15 @@
 \contentsline {figure}{\numberline {1.2}{\ignorespaces Global vision}}{3}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces The augmented reality is localized between the extremes of the reality-virtuality continuum}}{7}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Immersive augmented reality}}{8}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Non-immersive augmented reality}}{9}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Example of fiducial marker used by medical applications}}{9}
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of fiducial marker for motion capture}}{10}
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the camera) and the camera intrinsics \cite {bradski2008learning}}}{14}
-\contentsline {figure}{\numberline {2.7}{\ignorespaces A multi-resolution pyramid with three levels \cite {michele}}}{20}
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}}}{24}
-\contentsline {figure}{\numberline {2.9}{\ignorespaces The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)}}{25}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces The typical pipeline of an augmented reality application \cite {gallo11}}}{8}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Immersive augmented reality}}{8}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Non-immersive augmented reality}}{9}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of fiducial marker used by medical applications}}{10}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of fiducial marker for motion capture}}{10}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the camera) and the camera intrinsics \cite {bradski2008learning}}}{14}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces A multi-resolution pyramid with three levels \cite {michele}}}{21}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}}}{25}
+\contentsline {figure}{\numberline {2.10}{\ignorespaces The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)}}{25}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces ARBioMed running, with three fiducial markers \cite {arbiomed}}}{28}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces User under augmented virtual therapy \cite {fisio}}}{28}

@@ -8,6 +8,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[super]{nth}
 \usepackage[english]{babel}
+\usepackage[]{algpseudocode}
 
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
@@ -111,7 +112,7 @@ augmented reality, augmented reality glasses, kinect, transformation, optical fl
 \xchapter{Introduction}{In this chapter I present the motivation, objectives and overview of this work.}
 \section{Motivation}
 
-Augmented reality has taken advantage from the progresses on the fields of multimedia and virtual reality, making feasible new forms of
+Augmented reality has benefited from the progresses of multimedia and virtual reality, making feasible new forms of
 interaction between humans and machines. Differently from virtual reality, that takes the user to a virtual environment, the augmented
 reality keeps the user on his physical environment and takes the virtual environment to the user's space, allowing the interaction with
 the virtual world, in a more natural manner and without needing training or adaptation \cite{tori2006fundamentos}. Many times, this interaction means
@@ -135,7 +136,7 @@ However, besides requiring human interference on the scene, there situations whe
 
 Depending on the way that a user sees the mixed world, augmented reality can be classified on two ways. When the user sees the mixed world pointing his eyes straight to the real positions with optical scene or video, this augmented reality is called \textit{immersive} or of \textit{direct vision}. On the other hand, when the user sees the mixed world by some device, like a monitor screen or projector, not aligned with the real positions, this augmented reality is \textit{non-immersive} or of \textit{indirect vision} \cite{tori2006fundamentos}.
 
-This work proposes a multi-view environment for augmented reality, of direct vision, composed by two Kinects \cite{kinect} and augmented reality glasses, that allows a watcher visualize, in real time, virtual images merged with real images from the target model. In this approach, it's not intended to use any fiducial marker. Instead, it will be used a geometric approach based on the data captured by each Kinect. This proposed environment can be used, for example, on the medical field (real situations, education and training) or in other situation where a multi-view environment for markerless augmented reality is applicable. 
+This work proposes a multi-view environment for augmented reality, of direct vision, composed by two Kinects \cite{kinect} and augmented reality glasses, that allows an observer visualize, in real time, virtual images merged with real images from the target model, transformed to his viewpoint. In this approach, it's not intended to use any fiducial marker. Instead, it will be used a geometric approach based on the data captured by each Kinect. This proposed environment can be used, for example, on the medical field (real situations, education and training) or in other situation where a multi-view environment for markerless augmented reality is applicable. 
 
 \section{Objectives}
 
@@ -199,6 +200,15 @@ Augmented reality was born on the decade of 1990, to merge a virtual image or vi
   \item Virtual and real objects are aligned;
   \item Applicable to all human sensory systems, including auditory, olfactory and somatosensory \cite{azuma01}.
 \end{itemize}
+
+A typical augmented reality system, that uses a single RGB video feed for tracking and displaying, has basically four steps on its pipeline, as shown on Figure \ref{fig:arpipeline}: camera calibration, video acquisition, tracking and registration, and rendering.
+
+\begin{figure}
+\label{fig:arpipeline}
+\centering
+\includegraphics[width=1\textwidth]{images/arpipeline.png}
+\caption{The typical pipeline of an augmented reality application \cite{gallo11}}
+\end{figure}
 
 From a human-computer interaction perspective, the augmented reality can be considered a new way of interaction between humans and computers, and, on this aspect, it can be classified as direct vision or indirect vision.
 
@@ -409,6 +419,19 @@ saturation, and defect correction \cite{hackingkinect}.
 
 The Kinect is calibrated at factory and has built in numbers for converting the disparity values to depth values, and also for mapping 3D points to the color camera. However, the calibration from factory uses a simple model where depth values are fast enough to be computed, but its accuracy can be improved by using other calibration methods \cite{magnus2013}.
 
+One of those method is the one by \cite{burruscal}. It's a same-automatic way to calibrate the Kinect depth sensor and the RGB output to enable a mapping between them. It's based on a standard stereo calibration technique but the main difficult comes from the depth image that is not able to detect patterns on a flat surface. So, the pattern is created using depth difference. On the first step, the color camera intrinsics are calibrated using standard chessboard recognition. In order to get the intrinsic parameters for the depth camera, the corners of the chessboard on the depth image are extracted and stored (by hand). The raw depth values are integers between 0 and 2047, which can be transformed in meters using some fixed internal values from Kinect, as shown on the following algorithm:
+
+\begin{algorithmic}
+\Function{raw\_depth\_to\_meters}{$raw\_depth$}
+\If {$raw\_depth \leq 2046$}
+\Return $1.0 / (raw\_depth * -0.0030711016 + 3.3309495161)$
+\Else \Return $0$
+\EndIf
+\EndFunction
+\end{algorithmic}
+
+Stereo calibration can also be performed by just selecting the corners of the chessboard on the color images. Depth pixels can be mapped to color pixels by undistorting RGB and depth images using the estimated distortion coefficients and then using a formula to project each pixel of the depth camera to metric 3D space.
+
 All the information gathered by the RGB camera and the IR camera are available in two data streams provided by Kinect. One data stream makes it possible to build an RGB map and the other data stream makes it possible to build a depth map. Both maps without any calibration are useless, so it's necessary to perform a calibration called \textit{depth registration} in order to get the correspondences between a pixel on the RGB map with another pixel on the depth map, which can be done by software but using built-in data stored on Kinect's firmware.
 
 \subsection{Registration}
@@ -590,7 +613,7 @@ Augmented reality has been widely implemented on medicine on the last years, for
 \caption{ARBioMed running, with three fiducial markers \cite{arbiomed}}
 \end{figure}
 
-Another work on the medical field that is based on the traditional square fiducial markers is the motion capture system presented on \cite{fisio}, whose goal is to follow up physiotherapy exercises performed by patients. As shows on Figure \ref{fig:fisio}, fiducial markers are fixed on parts of the patient's body where motion will be captured. Based on trigonometric evaluation of the markers' position, it's possible to establish the range of motion that was executed.
+Another work on the medical field that is based on the traditional square fiducial markers is the motion capture system presented on \cite{fisio}, whose goal is to follow up physiotherapy exercises performed by patients. As shown on Figure \ref{fig:fisio}, fiducial markers are fixed on parts of the patient's body where motion will be captured. Based on trigonometric evaluation of the markers' position, it's possible to establish the range of motion that was executed.
 
 \begin{figure}
 \label{fig:fisio}
@@ -684,9 +707,16 @@ One approach to use visual information to improve geometric mapping is discussed
 
 The closest to what is done on this work is the work by \cite{kinectkanade}, which improves the KinectFusion algorithm by using the Lucas-Kanade algorithm in cases of low geometric features.
 
+An application of the hybrid-based tracking is also noticed on \cite{tryon}. It's a virtual try-on system that employs one Kinect sensor and one high definition camera. It covers the calibration of the HD camera in relation to the Kinect sensor, which is based on the OpenCV implementation of a standard chessboard calibration \cite{matlab}. On this work, the Kinect is used for skeleton tracking and height estimation, and the HD camera is used for capturing a better video from the user.
+
 \xchapter{Solution architecture}{In this chapter I explain in details the steps performed in order to implement the objective of this work.}
+
+In order to achieve the objectives of this work, it was necessary to implement some softwares and auxiliary codes, all of them based on other open source code or open source libraries. All the code implement on this work was released under open licenses and are available on public repositories
+
 \section{Environment}
-Technologies, machines, SOs, etc.
+
+The multi-view environment proposed by this work is composed by two Kinects and one pair of augmented reality glasses. Since each Kinect needs its own USB hub (not only an USB port), and the glasses themselves need other two USB ports, it was not possible to use a single computer to 
+
 \section{Calibration}
 \subsection{Augmented reality glasses calibration}
 \subsection{Initial calibration between Kinects}
