@@ -903,7 +903,7 @@ But first, it's necessary to calibrate the maps of each Kinect. As explained on 
 \centering
 \includegraphics[width=0.7\textwidth]{images/kinectnocal.png}
 \caption{RGB map and depth map with no matching between them}
-\label{fig:kinectnocal}
+\label{fig:kinectnotcal}
 \end{figure}
 
 When looking for alternatives for this calibration, it was found that OpenNI \cite{openni} could be a good solution for this calibration, through the \textit{libfreenect} driver. OpenNI is a framework that provides many features for development of middlewares and applications for three-dimensional sensing. OpenNI provides a functionality to automatically calibrate the RGB and depth sensors, by using data stored on Kinect's firmware. This calibration, called \textit{depth registration}, is enough for most of the applications, but better precision could be achieved by employing more specialized methods. It was decided to use the algorithm from \cite{burruscal} explained on section \ref{sec:kinect}, largely used by many applications (\cite{herrera}, for example). The program implemented for this calibration is written in C and uses the OpenCV \cite{opencv} library. Code can be found at \cite{masterproject}. The result of this calibration can be checked on Figure \ref{fig:kinectcal}.
@@ -954,10 +954,12 @@ $M = \begin{matrix}
 Since the reference point is the same for both, the position of a Kinect in relation to the other can be estimated. Figure \ref{fig:panda} shows a reconstructed chessboard captured by two Kinects in order to validate this calibration. This code is also available at \cite{masterproject}. At this step, the system has the pose of each Kinect, and so it's ready to capture the observer and the target model.
 
 \subsection{Initial calibration between Kinect and glasses}
+
+The final step for the calibration stage is the calibration between the Kinect and the glasses, this way, it's possible to make a first transformation of the model from the Kinect's point of view to the observer's point of view, and for the later transformations, the system will used data from the glasses' tracker or from the Kinect that captures the observer.
+
 \section{Communication}
 \label{sec:comm}
 Network, sockets, etc.
-\section{Transformations}
 \section{Method 1: Glasses accelerometer and one Kinect}
 \label{sec:method1}
 Cover Lucas-Kanade algorithm, etc.
