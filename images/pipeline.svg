@@ -498,9 +498,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.26212209"
-     inkscape:cx="726.90893"
-     inkscape:cy="556.55416"
+     inkscape:zoom="0.74139323"
+     inkscape:cx="902.2952"
+     inkscape:cy="528.56055"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -523,7 +523,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -814,7 +814,7 @@
            y="537.09161"
            x="756.24561"
            sodipodi:role="line"
-           id="tspan9936">acceletometer</tspan><tspan
+           id="tspan9936">accelerometer</tspan><tspan
            style="font-size:27.35195923px;text-align:center;text-anchor:middle;fill:#ff6600"
            y="571.28162"
            x="760.59949"

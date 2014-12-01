@@ -21,5 +21,15 @@
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Three Kinect devices being used for a full scan of the human body with minimum overlapping \cite {tong}}}{32}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Calibrating Kinect using toolbox from \cite {herrera}}}{33}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Vuzix Wrap 920AR augmented reality glasses}}{36}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Augmented reality pipeline}}{37}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces High level representation of the augmented reality environment implementation}}{38}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Experimental environment arranged for the implementation}}{39}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Experimental environment arranged for the implementation with each component identified by a number}}{40}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Distances between each component on the experimental environment}}{41}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Capturable movements from glasses \cite {vuzixsdk}}}{42}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Coordinates system of augmented reality glasses' tracker \cite {vuzixsdk}}}{42}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Glasses calibration log}}{44}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Glasses' tracker controlling a virtual cube in order to check its accuracy}}{44}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
