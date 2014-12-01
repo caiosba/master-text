@@ -127,10 +127,10 @@ by estimating the camera position.
 On many situations, fiducial markers\footnote{A fiducial marker or fiducial is an object placed in the field of view of an imaging system which appears in the image produced, for use as a point of reference or a measure.} are used (often this is due to the real time requirements of the augmented reality applications) \cite{azuma} and are drawn in a way that they can be easily identified. Those markers need to be placed on the target scene and can achieve great results using just a few computational resources. Figure \ref{fig:fiducial_marker} shows the usage of a fiducial marker and a three-dimensional object being projected over it.
 
 \begin{figure}
-\label{fig:fiducial_marker}
 \centering
 \includegraphics[width=0.3\textwidth]{images/fiducial_marker.png}
 \caption{Fiducial marker used to represent a three-dimensional model over it \cite{artoolkit}}
+\label{fig:fiducial_marker}
 \end{figure}
 
 However, besides requiring human interference on the scene, there situations where the usage of fiducial markers is not possible, feasible or comfortable for the target model. That is the case, for example, of medical applications on which this model is a patient. It's also possible to cite other limitations of fiducial markers, like, for example, occlusion (a virtual image could be not projected if the marker is not completely visible) and illumination (the intensity of light reflected by the marker could make it hard to be identified). Less common, there are approaches that replace fiducial markers \cite{carmigniani} \cite{gallo09} by GPS, gyroscopes, accelerometers, cameras, among others \cite{azuma} \cite{azuma01}. These approaches have the advantage of not requiring human interference on the scene (to put a marker or to move it around).
@@ -149,10 +149,10 @@ Based on the study of related works, it was defined the following features that 
 reality environment, graphically represented on Figure \ref{fig:diagram}:
 
 \begin{figure}
-\label{fig:diagram}
 \centering
 \includegraphics[width=0.8\textwidth]{images/diagram.png}
 \caption{Global vision}
+\label{fig:diagram}
 \end{figure}
 
 \begin{itemize}
@@ -189,10 +189,10 @@ The next chapter "Conceptual primer" describes some basic theory needed. It also
 Augmented reality was born on the decade of 1990, to merge a virtual image or virtual environment with a real image or real environment. But only from the 2000s it became more popular, due to lower costs of hardware and software devices, and ready to be used on tangible and multimodal (voice, touch, gesture, etc.) applications \cite{paddle}. It can be considered the mixing of real and virtual worlds at some point of the continuum reality-virtuality, that connects completely virtual environments to completely real environments \cite{milgram94}, like shown on Figure \ref{fig:cont}. It can also be considered a system that completes the real world with virtual objects, in a way that they seem to exist on the same space, respecting the following features:
 
 \begin{figure}
-\label{fig:cont}
 \centering
 \includegraphics[width=0.5\textwidth]{images/cont.png}
 \caption{The augmented reality is localized between the extremes of the reality-virtuality continuum}
+\label{fig:cont}
 \end{figure}
 
 \begin{itemize}
@@ -205,10 +205,10 @@ Augmented reality was born on the decade of 1990, to merge a virtual image or vi
 A typical augmented reality system, that uses a single RGB video feed for tracking and displaying, has basically four steps on its pipeline, as shown on Figure \ref{fig:arpipeline}: camera calibration, video acquisition, tracking and registration, and rendering.
 
 \begin{figure}
-\label{fig:arpipeline}
 \centering
 \includegraphics[width=1\textwidth]{images/arpipeline.png}
 \caption{The typical pipeline of an augmented reality application \cite{gallo11}}
+\label{fig:arpipeline}
 \end{figure}
 
 From a human-computer interaction perspective, the augmented reality can be considered a new way of interaction between humans and computers, and, on this aspect, it can be classified as direct vision or indirect vision.
@@ -219,19 +219,19 @@ From a human-computer interaction perspective, the augmented reality can be cons
 Augmented reality is classified as \textit{direct vision} or \textit{immersive} when the user sees the mixed world pointing his eyes straight to the real position of the objects of interest, like shown on Figure \ref{fig:direct}.
 
 \begin{figure}
-\label{fig:direct}
 \centering
 \includegraphics[width=0.5\textwidth]{images/direct.png}
 \caption{Immersive augmented reality}
+\label{fig:direct}
 \end{figure}
 
 On the direct vision, images from the real world can be seen with the naked eye or brought by video, while the generated virtual images can be projected on the eyes, on the real scenario or mixed with the real world video. Immersive augmented reality can be implemented with optical helmets, for example \cite{tori2006fundamentos}.
 
 \begin{figure}
-\label{fig:indirect}
 \centering
 \includegraphics[width=0.5\textwidth]{images/indirect.png}
 \caption{Non-immersive augmented reality}
+\label{fig:indirect}
 \end{figure}
 
 On the other hand, non-immersive augmented reality (indirect vision), happens when the user sees the mixed world through other output device, like a monitor screen, for example, not aligned with the real positions, as shown on Figure \ref{fig:indirect}. On this kind of vision, real and virtual images are merged and displayed as video to the user. It can be achieved by using cameras and projectors \cite{tori2006fundamentos}.
@@ -247,19 +247,19 @@ Fiducial markers are often implemented as square white cards with a black symbol
 Fiducial markers can assume other shapes besides a square card. The Figure \ref{fig:sticker} shows an example of a fiducial marker used on medical applications, similar to a sticker, which is fixed on the patient's skin. On these applications, augmented reality can be used for visualization and training on surgeries. It's possible to collect patient's data in real time, by using non-invasive sensors as the ones used for magnetic resonance imaging and computed tomography. This dataset can be merged in real time with the real image of the patient \cite{azuma}.
 
 \begin{figure}
-\label{fig:sticker}
 \centering
 \includegraphics[width=0.5\textwidth]{images/sticker.png}
 \caption{Example of fiducial marker used by medical applications}
+\label{fig:sticker}
 \end{figure}
 
 On motion capture systems, other kinds of markers can also be used, like, for example, the one described on \cite{4526681} and represented on Figure \ref{fig:helmet}. In order to estimate the pose, it uses a single camera and three spherical fiducial markers, which are also reflexive. Two of those markers are placed at the left and right sides of the actor, perpendicular to his ears. The third marker is placed on the same height as the other two, but in front of the actor. The markers have a color close to orange for high reflectance (in order to be easily recognized) and are supported by a structure made of carbon fiber (which is light).
 
 \begin{figure}
-\label{fig:helmet}
 \centering
 \includegraphics[width=0.5\textwidth]{images/helmet.png}
 \caption{Example of fiducial marker for motion capture}
+\label{fig:helmet}
 \end{figure}
 
 Disadvantages of fiducial markers are listed on \cite{dolz}, for example, they are invasive (need to be placed on the scene or fixed on the target object), they have limited interaction (can't be moved around so much because it needs to still be visible and recognizable) and need to be printed or drawn before using and stored for future usage.
@@ -374,10 +374,10 @@ The works by \cite{Tsai86} and \cite{zhang2000flexible} are extensively referenc
 There are some tools available for automatic camera calibration. Two of the most popular ones are The Bouguet MatLab Toolbox \cite{matlab} and the OpenCV library \cite{opencv}. The former is an application that asks the user to define four extreme points that represent the area where an algorithm searches for the calibration points, given the number of rows and columns of the pattern. The latter is a very popular computer vision library that offers an automatic way to detect chessboard patterns in images by the \textit{findChessboardCorners()} function. The method performs successive morphological operators until a number of black and white contours are identified, subsequently the corners of the contours make up the calibration point set. The pattern is recognized only if all rectangles are identified. Figure \ref{fig:chessboard} shows how a person can use a chessboard in order to calibrate a camera using the OpenCV library.
 
 \begin{figure}
-\label{fig:chessboard}
 \centering
 \includegraphics[width=0.5\textwidth]{images/chessboard.png}
 \caption{Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the
+\label{fig:chessboard}
 camera) and the camera intrinsics \cite{bradski2008learning}}
 \end{figure}
 
@@ -495,10 +495,10 @@ The input for the algorithm is a temporal sequence of depth maps as returned by 
 So, at each new frame, the new depth map obtained from the depth sensor is used as input for the algorithm. This depth map must be converted into a three-dimensional point cloud with vertex and normal information. This is done at different, layered resolutions, resulting in a number of images with different levels of details, which is originally defined in the algorithm as three. This is called \textit{multi-resolution pyramid} (see Figure \ref{fig:pyr}), on which the lower resolution layers are obtained by sub-sampling the higher resolution ones.
 
 \begin{figure}
-\label{fig:pyr}
 \centering
 \includegraphics[width=0.5\textwidth]{images/pyr.png}
 \caption{A multi-resolution pyramid with three levels \cite{michele}}
+\label{fig:pyr}
 \end{figure}
 
 The depth map is converted into a three-dimensional point cloud by back-projection. In order to do that, it's used the internal calibration matrix that is stored in Kinect, that matches depth values to actual 3D coordinates. The normal of each point is estimated through cross-product of two vectors: the vector joining the chosen point and the one above it, and the vector that pass through the chosen point and the one at its right. In other words, since the points are arranged as depth pixels, if point $(x, y, z)$ is picked up, points $(x, y+1, z)$ and $(x+1, y, z)$ will be used for normal estimation, where $x$ and $y$ are image coordinates and $z$ is the depth value at these coordinates. At this point, there is a point cloud with normal and vertex information for each point with three distinct levels of details. This cloud is considered ordered since the points are arranged according to the pixels on the depth map.
@@ -584,20 +584,20 @@ The Lucas-Kanade method can be applied in a sparse context because it relies onl
 One component in many algorithms is a coarse-to-fine strategy. The most common approach is to build image pyramids by repeated blurring and downsampling. So, optical flow is first computed on the top level (fewest pixels) and then upsampled and used to initialize the estimate at the next level \cite{dblk}, as shown on Figure \ref{fig:plk}. Computation at the higher levels in the pyramid involves far fewer unknowns and so is far faster. The initialization at each level from the previous level also means that far fewer interactions are required at each level. Due to this, pyramid algorithms are usually faster than a single solution at the bottom level.
 
 \begin{figure}
-\label{fig:plk}
 \centering
 \includegraphics[width=0.5\textwidth]{images/plk.png}
 \caption{Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first
+\label{fig:plk}
 mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite{bradski2008learning}}
 \end{figure}
 
 The features to be tracked by the Lucas-Kanade algorithm can be manually defined or identified from an algorithm, like the popular one proposed by Shi and Tomasi \cite{shi}, called "good features to track", and implemented by the OpenCV library \cite{opencv}. The idea of this algorithm is a modification of the Harris Corner Detection \cite{harris}, which basically replaces Harris' scoring function. Figure \ref{fig:shi-harris} shows the feature points on the same input image as identified by both algorithms.
 
 \begin{figure}
-\label{fig:shi-harris}
 \centering
 \includegraphics[width=0.5\textwidth]{images/shi-harris.png}
 \caption{The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)}
+\label{fig:shi-harris}
 \end{figure}
 
 So, the Lucas-Kanade algorithm, applied over a good set of feature points, is an efficient method for obtaining optical flow information at interesting points in an image and works for moderate object speeds.
@@ -611,19 +611,19 @@ On the field of augmented reality, one of the first approaches was to track know
 Augmented reality has been widely implemented on medicine on the last years, for training, simulation, therapy and so on. Many works on this field are based on fiducial markers in order to calculate the camera's real position in relation to the marker's real position, like the system called ARBioMed \cite{arbiomed}. The idea of this system is to represent a virtual, three-dimensional heart over a marker placed on the target user's chest. This virtual heart has its pulsation simulated according to a received signal. From this system, the operator user can define, through a user interface, a fixed pulse rate to be simulated on the heart. In order to set the size of the heart based on the dimensions of the user chest, two other fiducial markers are used, as shown on Figure \ref{fig:arbiomed}. This architecture makes the implementation simpler, since it is based on ARToolKit \cite{artoolkit}, a popular and straightforward framework for augmented reality based on fiducial markers. However, the markers pollute the augmented reality scene and offers a less comfortable experience to the target user, since the markers are invasive.
 
 \begin{figure}
-\label{fig:arbiomed}
 \centering
 \includegraphics[width=0.5\textwidth]{images/arbiomed.png}
 \caption{ARBioMed running, with three fiducial markers \cite{arbiomed}}
+\label{fig:arbiomed}
 \end{figure}
 
 Another work on the medical field that is based on the traditional square fiducial markers is the motion capture system presented on \cite{fisio}, whose goal is to follow up physiotherapy exercises performed by patients. As shown on Figure \ref{fig:fisio}, fiducial markers are fixed on parts of the patient's body where motion will be captured. Based on trigonometric evaluation of the markers' position, it's possible to establish the range of motion that was executed.
 
 \begin{figure}
-\label{fig:fisio}
 \centering
 \includegraphics[width=0.5\textwidth]{images/fisio.png}
 \caption{User under augmented virtual therapy \cite{fisio}}
+\label{fig:fisio}
 \end{figure}
 
 Augmented reality applications on medicine are also applied for training, like the ANGELS system \cite{angels}. The main objective of this project is to test the utility of augmented reality to train in prevention of risks at work in the health care sector. After conducting a requirements analysis in order to obtain a general framework for the priority risks in safety at work within the health care, a pilot study was carried out and preliminary results showed a good opinion of the users as well as favorable usability of the system.
@@ -633,10 +633,10 @@ Still on training, the work at \cite{endo} implemented augmented reality telemen
 On the therapy side, there is a work that developed a low-cost spatial augmented reality system that allows individuals with stroke to practice hand and arm movement exercises at home or at a clinic with minimal support of the therapist \cite{stroke}. This setup uses a color marker, fixed on the patient's hand, to track his movement and check how accurate he performs. After that, a score is displayed to him. There are setups for some exercises, and one of them is displayed on Figure \ref{fig:stroke}.
 
 \begin{figure}
-\label{fig:stroke}
 \centering
 \includegraphics[width=0.5\textwidth]{images/stroke.png}
 \caption{Patient with stroke performing an exercise to reach melody boxes \cite{stroke}}
+\label{fig:stroke}
 \end{figure}
 
 This study of related works on the field of augmented reality applied on medicine showed that most of the works are still based on fiducial markers. Works related to markerless augmented reality approaches will be studied on the next section.
@@ -671,19 +671,19 @@ More than one Kinect is needed when the use case is capturing a large volume, fu
 However, when more than one Kinect device is used, new challenges come in. Data captured from the overlapping region between two or more Kinects usually have poor quality due to the interference, since the depth sensing technology limits the use of multiple Kinects \cite{roy}. This noticed from the depth maps, which suffer major quality degradation in overlapping areas. In places of depth uncertainty, Kinect will place zero values, and so, holes will be created. The difference between using a single Kinect and multiple Kinects is represented on Figure \ref{fig:twokin}. 
 
 \begin{figure}
-\label{fig:twokin}
 \centering
 \includegraphics[width=0.5\textwidth]{images/twokin.png}
 \caption{Difference between using a single Kinect and more than one Kinects}
+\label{fig:twokin}
 \end{figure}
 
 On the other hand, multiple Kinects can result on better data quality for large objects or regions since each device can be responsible for capturing an specific part of an object or scene, resulting in more details for each component. Similar approach is implemented by the work at \cite{tong}, which aims to make a full three-dimensional scan of the human body by using three Kinects carefully positioned in order to avoid overlapping (and consequently, interference) between them as much as possible, as shown on Figure \ref{fig:3kin}.
 
 \begin{figure}
-\label{fig:3kin}
 \centering
 \includegraphics[width=0.5\textwidth]{images/3kin.jpg}
 \caption{Three Kinect devices being used for a full scan of the human body with minimum overlapping \cite{tong}}
+\label{fig:3kin}
 \end{figure}
 
 The main reason that made the authors decide for using multiple Kinects was because in order to capture a full human body, a single Kinect should be positioned around 3 meters away from the body, and the resolution would be very low, since little geometry information is captured on the depth map. Even using multiple frames to enhance the final resolution, the result wouldn't be acceptable.
@@ -695,10 +695,10 @@ When multiple Kinects are present on a multi-camera configuration, the challenge
 Besides calibrating the depth and RGB maps simultaneously, for some cases it's also important to calibrate one Kinect in relation to the other and so be able to determine the relative position between them. On \cite{magnus2013}, among other works, it's used a calibration process introduced by \cite{herrera}, which not only explains the approach, but also releases a toolbox to perform the calibration, which is represented on Figure \ref{fig:herrera}.
 
 \begin{figure}
-\label{fig:herrera}
 \centering
 \includegraphics[width=0.5\textwidth]{images/herrera.png}
 \caption{Calibrating Kinect using toolbox from \cite{herrera}}
+\label{fig:herrera}
 \end{figure}
 
 That algorithm simultaneously calibrates the color camera and the depth camera, as well as the relative position between them. The color camera intrinsics is based on the following model: a 3D point is transformed into image coordinates and a disparity value from the disparity map at these coordinates is transformed into a 3D point.
@@ -732,19 +732,19 @@ The Kinects are from the first generation and most of its internal workings were
 As explained on section \ref{sec:dirind}, an augmented reality experience can be classified in two different ways depending on how the user sees the mixed world. When the user sees the mixed world pointing his eyes directly to the real positions of the object or scene, this experience is classified as \textit{direct view}, while when the user sees the mixed world through a monitor screen or projector, this experience is classified as \textit{indirect view}. On this work, augmented reality glasses are used in order to guarantee a \textit{direct view} experience to the observer. The augmented reality glasses employed on this work are Vuzix Wrap 920AR, whose photo is on Figure \ref{fig:glasses}. This device has a VGA adapter that can be connected to the computer. It also has a motion tracker based on accelerometer and magnetometer which connects to a device's special port and allows softwares to track direction, viewing angle and motion of the user. Two modified USB cameras are placed on the front of the lenses (one camera on each lens) and be connected to the computer as two VGA webcams. Behind each lens, there is a screen whose resolution is 640 x 480 pixels. So, what the user sees in front of his eyes is a rectangular screen, which doesn't provide a full immersive experience. The glasses have three cables: a VGA (a single VGA output that provides access to both screens) and two USB (one for both cameras and the other that is an interface for the accelerometer/magnetometer data).
 
 \begin{figure}
-\label{fig:glasses}
 \centering
 \includegraphics[width=0.5\textwidth]{images/vuzix.png}
 \caption{Vuzix Wrap 920AR augmented reality glasses}
+\label{fig:glasses}
 \end{figure}
 
 Back to the traditional augmented reality pipeline presented on Figure \ref{fig:arpipeline}, on Figure \ref{fig:pipeline} it's explained visually what is the pipeline for the augmented reality application implemented on this work.
 
 \begin{figure}
-\label{fig:pipeline}
 \centering
 \includegraphics[width=1\textwidth]{images/pipeline.png}
 \caption{Augmented reality pipeline}
+\label{fig:pipeline}
 \end{figure}
 
 On the calibration stage, it's necessary to perform four different calibrations:
@@ -761,10 +761,10 @@ Each of these calibration processes will be covered in details on section \ref{s
 Back to the global view of the proposed environment represented on Figure \ref{fig:diagram} and idealized before the implementation of this environment, there is another diagram on Figure \ref{fig:env} that shows the actual implemented environment. Is worth noticing that the proposed environment was implemented as planned. The idea of this diagram is to make it easier to understand, from a higher level, how the proposed environment was actually implemented.
 
 \begin{figure}
-\label{fig:env}
 \centering
 \includegraphics[width=1\textwidth]{images/env.png}
 \caption{High level representation of the augmented reality environment implementation}
+\label{fig:env}
 \end{figure}
 
 The diagram at Figure \ref{fig:env} represents the main components of the augmented reality environment and their main roles. First of all, is worth noticing that all these components and roles will be explained in more details on sections \ref{sec:method1} and \ref{sec:method2}. As it will be better explained on section \ref{sec:kinectscalib}, each Kinect needs to be connect to not only a USB port, but more than that, a USB hub. This is also stated on \cite{kinecthacks} on the section about \textit{Multiple Kinects}. Most computers have two USB hubs, which allows the user to use at most two Kinects at the same time, and this is the case here too. The Dell computer employed here has three USB ports, where two are on the same hub. Since each Kinect gets a USB port from each hub, the remaining USB port is used by the video input cable from the glasses and the VGA output cable from the glasses are connected to the Dell computer too. This way, it's possible to avoid transferring video streams (regardless input or output) over the network, what could add a reasonable delay to the whole process. The remaining connector from the glasses is the USB cable responsible for streaming the accelerometer/magnetometer data. This one is connect to the Acer computer, since its computation is not costly and transferring a tuple of values over the network is not costly either. Both computers are on the same network (more details about this on section \ref{sec:comm}. The Dell computer is responsible for running the heaviest softwares, which are two: MyKinFu (based on PCL's KinectFusion implementation), which is the core of this environment and connects all other components, and MyKinFuHeadless, which is based on the former but just keeps the code necessary to calculate the transformation of the movement performed by the observer.
@@ -772,19 +772,19 @@ The diagram at Figure \ref{fig:env} represents the main components of the augmen
 To finish this section, Figure \ref{fig:expenv} is a photo of the experimental environment arranged for this implementation.
 
 \begin{figure}
-\label{fig:expenv}
 \centering
 \includegraphics[width=0.7\textwidth]{images/expenv.jpg}
 \caption{Experimental environment arranged for the implementation}
+\label{fig:expenv}
 \end{figure}
 
 Since it would be hard to find two volunteers to act as observer and target model during this implementation, on the experimental environment a movable square box with the augmented glasses over it is used as observer while a doll is employed as the target model. In order to be able to easily isolate the target model's head, a black background is placed behind it and removed by color matching. As explained on section \ref{sec:kinfu}, better results are achieved for surfaces with enough irregularities or details, so there was a concern that using a spheric head for the target model and a square head for the observer wouldn't give the best results, thus real persons were employed on the calibration stage and on the environment evaluation, which will be presented on section \ref{sec:results}.
 
 \begin{figure}
-\label{fig:expenv2}
 \centering
 \includegraphics[width=0.7\textwidth]{images/expenv2.jpg}
 \caption{Experimental environment arranged for the implementation with each component identified by a number}
+\label{fig:expenv2}
 \end{figure}
 
 On Figure \ref{fig:expenv2} each component is numbered for easy identification. They are:
@@ -804,10 +804,10 @@ On Figure \ref{fig:expenv2} each component is numbered for easy identification. 
 There was a concern about the amount of sunlight arriving at the room where the environment was built, because, as stated on section \ref{sec:kinect}, the sunlight's wide band IR has enough power on Kinect's IR sensor range in order to blind it. Another concern was regarding the distances between each component, which were all below one meter, as shown on Figure \ref{fig:expenv3}.
 
 \begin{figure}
-\label{fig:expenv3}
 \centering
 \includegraphics[width=0.7\textwidth]{images/expenv3.png}
 \caption{Distances between each component on the experimental environment}
+\label{fig:expenv3}
 \end{figure}
 
 Once the environment is ready, the next step is the calibration, which will covered on the following section \ref{sec:calibration}.
@@ -837,7 +837,7 @@ As informed on the manufacturer's support website \cite{vuzixsupport}, the API t
 
 The coordinates system of the augmented reality glasses' tracker is represented on Figure \ref{fig:glasses2}. The zero point of yaw movement is looking straight ahead. On the Wrap 920AR model, yaw and roll are valid over the range of -180\degree to +180\degree, while valid values for pitch are over the range of -90\degree to +90\degree. The zero point is forward for all axes. Yaw increments to the left, roll increments as the head turns towards the right shoulder and pitch increments as the user looks up.
 
-The implemented driver has two major components: a \textit{rules} file, that allows its correct recognition by the computer, and a \textit{decoder}, written on C/C++, responsible for analyzing the raw data that comes from the glasses. The driver recognizes the device connected on the USB port and maps it to the location \textit{/dev/wrap920AR}, as virtual device. In order to that, a rules file is placed at \textit{/etc/udev/rules.d}, that contains the device identification (defined by properties \textit{VendorID} and \textit{ProductID}) and the path to the executable file that needs to be run when such device is recognized. This executable is the \textit{decoder}, a C++ program that, based on device's input data, returns values for yaw, pitch and roll. The rules evaluation and mapping to the correct location is done by \textit{udev}, an utility to manage paths under \textit{/dev} on UNIX-based systems, through evaluating rules defined by the system's administrator \cite{udev}.
+The implemented driver has two major components: a \textit{rules} file, that allows its correct recognition by the computer, and a \textit{decoder}, written on C/C++, responsible for analyzing the raw data that comes from the glasses. The driver recognizes the device connected on the USB port and maps it to the location \textit{/dev/wrap920AR}, as virtual device. In order to that, a rules file is placed at \textit{/etc/udev/rules.d}, that contains the device identification (defined by properties \textit{VendorID} and \textit{ProductID}) and the path to the executable file that needs to be run when such device is recognized. This executable is the \textit{decoder}, a C++ program that, based on device's input data, returns values for yaw, pitch and roll. Those values are returned as Euler angles, as integer values in order to reduce little variations caused by interference and thus provide more stability. The rules evaluation and mapping to the correct location is done by \textit{udev}, an utility to manage paths under \textit{/dev} on UNIX-based systems, through evaluating rules defined by the system's administrator \cite{udev}.
 
 The decoder receives raw data from the glasses, which are organized as blocks of 42 bytes structured like Table \ref{tab:glassesdata}.
 
@@ -894,6 +894,65 @@ Glasses' tracker information is used as one of the approaches for tracking the o
 
 \subsection{Initial calibration between Kinects}
 \label{sec:kinectscalib}
+
+Two Kinect devices are used to capture the observer and the target object. Kinect already had drivers for Linux, implemented within the project OpenKinect \cite{openkinect}. After the initial calibration between two Kinects, it's possible to know the relative position between them, by putting a central object that can be captured by both devices.
+
+But first, it's necessary to calibrate the maps of each Kinect. As explained on section \ref{sec:kinect}, the Kinect provides two streams: color stream (as an RGB map) and depth stream (as a depth map). The depth map obtained at this stage is not yet ready for immediate usage, because there is no correspondence between the pixels of the depth map and the pixels of the RGB map. The intuition is that for each pixel on the RGB map, there is a correspondent pixel on the depth map. Figure \ref{fig:kinectnotcal} shows the images from depth map and RGB map where no calibration was done relative to the correspondences between pixels of both maps.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{images/kinectnocal.png}
+\caption{RGB map and depth map with no matching between them}
+\label{fig:kinectnocal}
+\end{figure}
+
+When looking for alternatives for this calibration, it was found that OpenNI \cite{openni} could be a good solution for this calibration, through the \textit{libfreenect} driver. OpenNI is a framework that provides many features for development of middlewares and applications for three-dimensional sensing. OpenNI provides a functionality to automatically calibrate the RGB and depth sensors, by using data stored on Kinect's firmware. This calibration, called \textit{depth registration}, is enough for most of the applications, but better precision could be achieved by employing more specialized methods. It was decided to use the algorithm from \cite{burruscal} explained on section \ref{sec:kinect}, largely used by many applications (\cite{herrera}, for example). The program implemented for this calibration is written in C and uses the OpenCV \cite{opencv} library. Code can be found at \cite{masterproject}. The result of this calibration can be checked on Figure \ref{fig:kinectcal}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{images/kinectcal.png}
+\caption{RGB map and depth map with depth registration enabled}
+\label{fig:kinectcal}
+\end{figure}
+
+As addressed on section \ref{sec:kinect}, when multiple Kinects illuminate the same area with their IR projectors, interference is created. The random pattern that each Kinect produces from its diffraction grating is burned into the hardware. Extra dots added means that noise is added to the pattern too, and it confuses the depth differencing algorithm. This results in bad values randomly scatters on the depth window \cite{kinecthacks}. The approach here to avoid the interference between the Kinects is to calibrate them separately, but using a fixed calibration object on the center between them. The calibration object is a chessboard printed on both sides of a piece of carton.
+
+Once the Kinects are calibrated and the intrinsic parameters are known, it's possible to know their positions given a chessboard pattern. These are the extrinsic parameters and are composed by a rotation matrix and a translation vector, that, when combined, take the points from the chessboard's coordinates system to the camera's coordinates system. Once the extrinsic parameters are known and the position of the chessboard in relation to camera is also known (this position is known initially), it's possible to define that the chessboard is the origin of this coordinates system and thus transform the cameras to this system.
+
+The translation and rotation of an object in relation to the camera is equivalent to the transformation of the object to the camera's space, given by:
+
+\begin{center}
+$v' = R \times v + t$
+\end{center}
+
+Since the inverse of the rotation matrix is simply its transpose, it's possible to get the transformation of the camera on chessboard's space:
+
+\begin{center}
+$R^{-1} = R^{T}$
+\end{center}
+
+\begin{center}
+$v = R^T \times v' - R^T \times t$
+\end{center}
+
+Finally it's possible to obtain the homogeneous transformation matrix (4x4):
+
+\begin{center}
+$M = \begin{matrix}
+    R^T & -R^T \times t \\
+    0 & 1 \\
+    \end{matrix}$
+\end{center}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{images/panda.png}
+\caption{Two Kinects in action: above, the real configuration (two Kinects capturing the same object) and below, the virtual image combined}
+\label{fig:panda}
+\end{figure}
+
+Since the reference point is the same for both, the position of a Kinect in relation to the other can be estimated. Figure \ref{fig:panda} shows a reconstructed chessboard captured by two Kinects in order to validate this calibration. This code is also available at \cite{masterproject}. At this step, the system has the pose of each Kinect, and so it's ready to capture the observer and the target model.
+
 \subsection{Initial calibration between Kinect and glasses}
 \section{Communication}
 \label{sec:comm}
