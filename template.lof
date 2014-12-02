@@ -32,9 +32,9 @@
 \contentsline {figure}{\numberline {4.9}{\ignorespaces Glasses calibration log}}{44}
 \contentsline {figure}{\numberline {4.10}{\ignorespaces Glasses' tracker controlling a virtual cube in order to check its accuracy}}{44}
 \contentsline {figure}{\numberline {4.11}{\ignorespaces RGB map and depth map with no matching between them}}{45}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces RGB map and depth map with depth registration enabled}}{45}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Two Kinects in action: above, the real configuration (two Kinects capturing the same object) and below, the virtual image combined}}{46}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces How OpenCV's cornerSubPix function works \cite {opencvfd}}}{47}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces RGB map and depth map with depth registration enabled}}{46}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Two Kinects in action: above, the real configuration (two Kinects capturing the same object) and below, the virtual image combined}}{47}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces How OpenCV's cornerSubPix function works \cite {opencvfd}}}{48}
 \contentsline {figure}{\numberline {4.15}{\ignorespaces Calibration process and result}}{50}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Chessboard recognized by both Kinect's camera and glasses' camera}}}{50}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Reconstructed model from Kinect}}}{50}
