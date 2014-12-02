@@ -1062,11 +1062,54 @@ As mentioned briefly on section \ref{sec:env}, there wasn't enough USB ports or 
 
 But there was still the data cable from the glasses, which delivers data from the glasses' tracker. Since there wasn't a free port on the main computer, it was necessary to employ another computer. As explained on section \ref{sec:glasses}, it was implemented on the scope of this work a driver for the glasses that was compatible with Linux machines. It reads the raw data from the glasses, converts them to integer values of yaw, pitch and roll and makes these values available under a virtual device located on \textit{/dev}. In order to make it available to the other machine, it was implemented a new component for the augmented reality system, also available at \cite{masterproject}, that reads the values for yaw, pitch and roll from \textit{/dev/wrap920AR} and sends them over the network.
 
-Since one of the objectives of this work was to run in real-time, velocity was a major concern. At a first glance, there were two main possibilities: connect both computers through a local wireless network or through a local wired network (what would be faster than the wireless approach), but the final decision was to make a cross-over connection between both computers, because is the fastest approach and also doesn't require a network infrastructure, which makes the overall augmented reality environment a bit simpler to be installed and configured. In order to configure the cross-over connection between the two computers, it was necessary to connect the ethernet cross-over cable between both devices and just run the commands \textit{ifconfig eth0 192.168.1.1 up} on the first computer and \textit{ifconfig eth0 192.168.1.2 up} on the second computer. The \textit{ifconfig} command is a Linux utility to configure network interfaces, while \textit{eth0} is the virtual network interface that identifies the network interface card and the second parameter is the IP. After that, both computers were connected with minimum delay.
+Since one of the objectives of this work was to run in real-time, velocity was a major concern. At a first glance, there were two main possibilities: connect both computers through a local wireless network or through a local wired network (what would be faster than the wireless approach), but the final decision was to make a cross-over connection between both computers, because is the fastest approach and also doesn't require a network infrastructure, which makes the overall augmented reality environment a bit simpler to be installed and configured. In order to configure the cross-over connection between the two computers, it was necessary to connect the ethernet cross-over cable between both devices (as shown on Figure \ref{fig:cross}) and just run the commands \textit{ifconfig eth0 192.168.1.1 up} on the first computer and \textit{ifconfig eth0 192.168.1.2 up} on the second computer. The \textit{ifconfig} command is a Linux utility to configure network interfaces, while \textit{eth0} is the virtual network interface that identifies the network interface card and the second parameter is the IP. After that, both computers were connected with minimum delay. Table \ref{tab:ping} shows the times to send a packet from one computer to the other through the command line \textit{ping} utility, for each one of the approaches.
 
-% Parei em mostrar aqui que cross-over é mais rápido que wireless e ethernet (rodar ping pros 3 casos pra comprovar)
-% Para os testes, usar ping ou enviar pacotes com yaw, pitch e roll
-% Comparar também UDP e TCP
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{images/cross.jpg}
+\caption{Cross-over connection between two computers}
+\label{fig:cross}
+\end{figure}
+
+\begin{table}
+\caption{Times to send a packet from one computer to other using different network structures}
+\label{tab:ping}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Network type & Packet 1 & Packet 2 & Packet 3 & Packet 4 & Packet 5 & Packet 6 \\
+\hline
+             & Packet 7 & Packet 8 & Packet 9 & Packet 10 & Average & Maximum \\ 
+\hline
+Wireless & 97.2 ms & 319 ms & 40.4 ms & 62.7 ms & 85.2 ms & 90.5 ms \\
+\hline
+         & 27.5 ms & 349 ms & 71.9 ms & 95.0 ms & 124.000 ms & 349.863 ms \\
+\hline
+Ethernet & 0.849 ms & 0.215 ms & 0.237 ms & 0.199 ms & 0.245 ms & 0.217 ms \\
+\hline
+         & 0.187 ms & 0.228 ms & 0.184 ms & 0.186 ms & 0.274 ms & 0.849 ms \\
+\hline
+Cross-over & 0.203 ms & 0.194 ms & 0.196 ms & 0.175 ms & 0.166 ms & 0.168 ms \\
+\hline
+           & 0.152 ms & 0.173 ms & 0.215 ms & 0.181 ms & 0.182 ms & 0.215 ms \\
+\hline
+\end{tabular}
+\end{table}
+
+Is also worth noticing that on this case the network was dedicated only to this task (there wasn't no any other device on connected to the network, regardless the configuration). So, in a real situation, with more devices competing for packets, the difference from the cross-over connection to the other two could be even higher. It's also possible to notice from Table \ref{tab:ping} that the cross-over approach has the lowest difference between the average and the higher time spent to send a packet, which shows its higher stability.
+
+Once the computers are connected, the glasses were ready to send the values of yaw, pitch and roll to the main computer. Basically there were two protocols here that could be used: TCP or UDP (see Figure \ref{fig:udptcp}). They are not the unique protocols that work at the transport layer of a network, but the most used ones. TCP means \textit{Transmission Control Protocol} and is the most common way to transfer packets over the internet. The biggest feature of TCP is reliability: it manages message acknowledgment, retransmission and timeout. It does multiple attempts to deliver the message and if it gets lost along the way, the server will re-request the lost part. In TCP, there's either no missing data. However, it's also heavier: it requires three packets to setup a socket connection, before any data can be sent \cite{udp}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{images/udptcp.png}
+\caption{UDP and TCP protocols}
+\label{fig:udptcp}
+\end{figure}
+
+On the other hand, UDP (which stands \textit{User Datagram Protocol}, uses a simple connectionless transmission model with a minimum protocol mechanism. It's unreliable: when a UDP message is sent, there is no guarantee that it will reach the client, since it can get lost along the way. There is no concept of acknowledgment, retransmission, timeout, ordering or congestion control. However, it is also lightweight: applications can send messages (called \textit{datagrams}) to other hosts without prior communications or special configurations. Time-sensitive applications often use UDP because dropping packets is preferable to waiting for delayed packets, which may not be an option in a real-time system \cite{udp}, like this one.
+
+Since any control is provided by the UDP protocol, on the application that gets the glasses' tracker data an index number and prefix are attached to the datagram, along with the integer values for yaw, pitch and roll. For example, a valid datagram sent by this application through a UDP socket is \textit{GYPR 12 0 32 67}, where \textit{GYPR} (which stands for \textit{Glasses Yaw Pitch Roll}) is a prefix that identifies this packet as one coming from the application, \textit{12} means that this is related to the 12º frame, and \textit{0}, \textit{32} and \textit{67} are the degrees values for yaw, pitch and roll, respectively. Hosts and ports involved on this communication are defined as configuration options for the client and server applications. More details on this application will be explained on the next section \ref{sec:method1}.
 
 \section{Method 1: Glasses accelerometer and one Kinect}
 \label{sec:method1}

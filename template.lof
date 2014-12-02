@@ -39,5 +39,7 @@
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Chessboard recognized by both Kinect's camera and glasses' camera}}}{50}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Reconstructed model from Kinect}}}{50}
 \contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Model captured by Kinect transformed to glasses' camera space according to the calibration between them}}}{50}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Cross-over connection between two computers}}{52}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces UDP and TCP protocols}}{53}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
