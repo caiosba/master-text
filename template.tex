@@ -5,11 +5,14 @@
 %% www.dcc.ufba.br/~terceiro/ufbathesis
 
 \documentclass[msc, a4paper, classic, en]{ufbathesis}
+\usepackage{minted}
 \usepackage[utf8]{inputenc}
 \usepackage[super]{nth}
 \usepackage[english]{babel}
 \usepackage[]{algpseudocode}
 \usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{subfigure}
 
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
@@ -955,7 +958,100 @@ Since the reference point is the same for both, the position of a Kinect in rela
 
 \subsection{Initial calibration between Kinect and glasses}
 
-The final step for the calibration stage is the calibration between the Kinect and the glasses, this way, it's possible to make a first transformation of the model from the Kinect's point of view to the observer's point of view, and for the later transformations, the system will used data from the glasses' tracker or from the Kinect that captures the observer.
+The final step for the calibration stage is the calibration between the Kinect and the glasses, this way, it's possible to make a first transformation of the model from the Kinect's point of view to the observer's point of view, and for tracking and later transformations, the system will use data from the glasses' tracker or from the Kinect that captures the observer.
+
+The implementation for this stage was based on OpenCV \cite{opencv} and the library \textit{libfreenect} \cite{openkinect}. The code for this calibration was implemented on C++ and is available at \cite{masterproject}. When this code runs, it first calibrates each camera (glasses and Kinect) and then does the stereo calibration between them. The results (rotation matrix and translation vector) are stored on a file that is used as input by the main application. The approach employed here is similar to the one mentioned on \cite{tryon}, which is a virtual fitting room powered by a Kinect device and a high definition camera. The calibration on that work is based on OpenCV through capturing 30 chessboard poses.
+
+Here, first, the Kinect device is accessed by the \textit{freenect} driver and a new thread is started, which is responsible for capturing a certain number of chessboard patterns by both cameras. This number was configured as 40 patterns; the board has 8 horizontal squares and 5 vertical squares, and each square has dimension 3cm x 3cm. This information is important for the calibration process.
+
+Each frame of each video source is converted to grayscale and OpenCV's \textit{findChessboardCorners} function is used to check for a chessboard pattern on that frame. Here it's used adaptive thresholding to convert the image to black and white, rather than a fixed threshold level (computed from the average image brightness). This function will return a non-zero value if all the corners are found (that's we it's necessary to inform them previously) and if they are in order. If both input frames are views of the chessboard pattern, the function \textit{cornerSubPix} is called in order to achieve more accurate coordinates of the identified squares, since the coordinates determined by \textit{findChessboardCorners} are just approximations. The \textit{cornerSubPix} function iterates to find the sub-pixel accurate location of corners, as shown on Figure \ref{fig:cornersubpix}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{images/cornersubpix.png}
+\caption{How OpenCV's cornerSubPix function works \cite{opencvfd}}
+\label{fig:cornersubpix}
+\end{figure}
+
+Sub-pixel accurate corner locator is based on the observation that every vector from the center $q$ to a point $p$ located within a neighborhood of $q$ is orthogonal to the image gradient at $p$ subject to image and measurement noise. Consider the expression:
+
+\begin{center}
+$\epsilon_i = DI_{p_i}^T \times (q - p_i)$
+\end{center}
+
+Where $DI_{p_i}$ is an image gradient at one of the points $p_i$ in a neighborhood of $q$. The value of $q$ is to be found so that $\epsilon_i$ is minimized. A system of equations may be set up with $\epsilon_i$ set to zero:
+
+\begin{center}
+$\sum_{i}{(DI_{p_i} \times DI_{p_i}^T)} - \sum_{i}{(DI_{p_i} \times DI_{p_i}^T \times p_i)}$
+\end{center}
+
+Where the gradients are summed within a neighborhood ("search window") of $q$ . Calling the first gradient term $G$ and the second gradient term $b$ gives:
+
+\begin{center}
+$q = G^{-1} \times b$
+\end{center}
+
+The algorithm sets the center of the neighborhood window at this new center $q$ and then iterates until the center stays within a set threshold \cite{opencvfd}. On this case here, the criteria for termination of the iterative process of corner refinement is when the number of iterations is 30 or when the corner position moves by less than 0.1 on some iteration. After that, corners are stored and the process continues with the next frame.
+
+After 40 chessboard patterns are recognized by both cameras, calibration actually starts. Here it's employed the function \textit{calibrateCamera} the distance coefficients and camera matrix for each camera, and these values will be used for the stereo calibration of both cameras, which is performed by the \textit{stereoCalibrate} function. This function estimates the transformation between two cameras making a stereo pair. It's possible to use this function here since the previous step computed poses of the chessboard relative to both cameras and the orientation and relative position of the two cameras is fixed (the observer can move his head, what would move the glasses' camera, but when he does it, the transformation from this calibration is not used anymore, this information is just used for an initial alignment). So, this function computes $(R, T)$ so that \cite{opencvsc}:
+
+\begin{center}
+$R_2 = R \times R_1$
+\end{center}
+
+\begin{center}
+$T_2= R \times T_1 + T$
+\end{center}
+
+This function is also able to perform an individual calibration of each camera before the stereo calibration, but the decision calibrate first each camera separately is to achieve a higher accuracy.
+
+This function can also compute the essential matrix and the fundamental matrix, but here the interest is only on the rotation matrix and on the translation vector, that, once computed, are stored on a YAML \cite{yaml} file called \textit{mystereocalib.yml}. The decision for this format is is because OpenCV has a native feature to store and then restore various OpenCV data structures on YAML files. It's possible to store and load arbitrarily complex data structures, which include OpenCV data structures, as well as primitive data types (including floating-point numbers) as their elements. This way, the main component of the augmented reality system, which will be explained on sections \ref{sec:method1} and \ref{sec:method2}, can easily obtain the transformation of the Kinect's camera to the glasses' camera through the rotation matrix and translation vector. An example of such output file is below:
+
+\begin{minted}[
+gobble=4,
+  frame=single,
+  linenos
+  ]{yaml}
+    %YAML:1.0
+    R: !!opencv-matrix
+       rows: 3
+       cols: 3
+       dt: d
+       data: [  9.5931697680448691e-01,  1.0205450748957576e-01,
+                2.6324098373118038e-01,  6.2359918574626111e-02,
+                8.3276379420942992e-01, -5.5010517504317302e-01,
+               -2.7535827310989852e-01,  5.4414091975790069e-01,
+                7.9252033467600069e-01 ]
+    T: !!opencv-matrix
+       rows: 3
+       cols: 1
+       dt: d
+       data: [ -7.3745822417389917e+00, 6.4602374992291454e+00,
+                1.3012152778240264e+01 ]
+\end{minted}
+
+The calibration process doesn't provide a perfect transformation between the two cameras, but after experimenting the parameters for the OpenCV functions and making attempts until the final version of the calibration code was ready, the result was reasonable for a initial aligment. Figure \ref{fig:kinect2glasses} illustrates three steps of this process: chessboard being recognized by both cameras (Figure \ref{fig:kinect2glassesa}), reconstruction of the model captured by the Kinect from the Kinect's point of view (Figure \ref{fig:kinect2glassesb}) and finally the reconstructed model transformed to the glasses' camera space according to the transformation that resulted from the calibration process (Figure \ref{fig:kinect2glassesc}). More details about the reconstruction and the transformation will be given on the following section \ref{sec:method1}.
+
+\begin{figure}
+\centering
+\subfigure[Chessboard recognized by both Kinect's camera and glasses' camera]
+{
+  \includegraphics[width=.8\textwidth]{images/kinect2glassesa.png}
+  \label{fig:kinect2glassesa}
+}
+\subfigure[Reconstructed model from Kinect]
+{
+  \includegraphics[width=.8\textwidth]{images/kinect2glassesb.png}
+  \label{fig:kinect2glassesb}
+}
+\subfigure[Model captured by Kinect transformed to glasses' camera space according to the calibration between them]
+{
+  \includegraphics[width=.8\textwidth]{images/kinect2glassesc.png}
+  \label{fig:kinect2glassesc}
+}
+\caption{Calibration process and result}
+\label{fig:kinect2glasses}
+\end{figure}
 
 \section{Communication}
 \label{sec:comm}
