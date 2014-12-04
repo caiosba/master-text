@@ -469,6 +469,7 @@ On Kinect, these operations can be performed in the following way:
 Two consecutive point clouds, scanned at different times, can be aligned in order to calculate the transformation of the captured object.
 
 \subsection{Alignment}
+\label{sec:icp}
 
 There also many methods for aligning two point clouds, but the Iterative Closest Point (ICP) \cite{icp} is far the most implemented one, proposed on 1992 for the registration of 3D shapes, but it's also used to reconstruct surfaces of different scans, gather optimal path planning, and so on. The main goal of the algorithm is to minimize the difference between two point clouds, one called the \textit{target} and another one called the \textit{source}. The target point cloud is kept fixed, while the source point cloud is transformed in order to best match the fixed target point cloud. The algorithm iteratively revises the transformation (composed by rotation and translation) in order to minimize the difference between the source point cloud and the target point cloud, until it reaches a local minimum.
 
@@ -538,6 +539,7 @@ Despite their differences, many of these techniques can be viewed conceptually i
 One of the most popular methods for computing the optical flow of an image is the Lucas-Kanade algorithm, which will be explained on the following section.
 
 \subsection{Lucas-Kanade algorithm}
+\label{sec:lucas}
 
 The Lucas-Kanade \cite{lk} algorithm is a differential method for computing the optical flow of an image \cite{kinectkanade}. The goal of Lucas-Kanade is to align a template image $T(x)$ to an input image $I(x)$ where $x = (x, y)^T$ is a column vector containing the pixel coordinates. If the Lucas-Kanade algorithm is being used to compute optical flow or to track an image from time $t = 1$ to time $t = 2$, the template $T(x)$ is an extracted sub-region (a window) of the image at $t = 1$ and $I(x)$ is the image at $t = 2$. Applications of the Lucas-Kanade algorithm range from optical flow and tracking to layered motion, mosaic construction and face coding. Numerous variations has been made to the original algorithm \cite{lk20}.
 
@@ -718,7 +720,7 @@ An application of the hybrid-based tracking is also noticed on \cite{tryon}. It'
 
 \xchapter{Solution architecture}{In this chapter I explain in details the steps performed in order to implement the objective of this work.}
 
-In order to achieve the objectives of this work, it was necessary to implement some softwares and auxiliary codes, all of them based on other open source code or open source libraries. All the code implemented on this work was released under open licenses and is available on public repositories, which will be informed along this chapter.
+In order to achieve the objectives of this work, it was necessary to implement some softwares and auxiliary codes, all of them based on other open source code or open source libraries. All the code implemented on this work was released under open licenses and is available on public repositories, which will be informed along this chapter. All the documentation about the code implemented on this work is available on the appendix.
 
 \section{Environment}
 \label{sec:env}
@@ -760,9 +762,9 @@ On the calibration stage, it's necessary to perform four different calibrations:
   \item Calibrate the glasses in relation to the Kinect the captures the target model.
 \end{itemize}
 
-Each of these calibration processes will be covered in details on section \ref{sec:calibration}. On the video acquisition stage, the environment gets video streams and depth streams from both RGB cameras of each Kinect as well as the video stream from the glasses' lenses. On the tracking an registration stage, there are different approaches for tracking the observer (by just using the glasses or by using a second Kinect), while the target model is always tracked by a Kinect device. Information from the Kinects are registered as point clouds while information from the glasses are registered as transformation matrices. Finally, the target model, transformed to the observer's viewing point, is rendered along with some virtual image and displayed on the glasses' lenses. Is worth noticing that the merging of the real image with a virtual image is not on the scope of this work, which is focused on transformation, tracking and multi-view. More details on each of these stages will be provided along this chapter.
+Each of these calibration processes will be covered in details on section \ref{sec:calibration}. On the video acquisition stage, the environment gets video streams and depth streams from both RGB cameras of each Kinect as well as the video stream from the glasses' lenses. On the tracking an registration stage, there are different approaches for tracking the observer (by just using the glasses or by using a second Kinect), while the target model is always tracked by a Kinect device. Information from the Kinects are registered as point clouds while information from the glasses are registered as transformation matrices. Finally, the target model, transformed to the observer's viewing point, is rendered along with some virtual image and displayed on the glasses' lenses. It is worth noticing that the merging of the real image with a virtual image is not on the scope of this work, which is focused on transformation, tracking and multi-view. More details on each of these stages will be provided along this chapter.
 
-Back to the global view of the proposed environment represented on Figure \ref{fig:diagram} and idealized before the implementation of this environment, there is another diagram on Figure \ref{fig:env} that shows the actual implemented environment. Is worth noticing that the proposed environment was implemented as planned. The idea of this diagram is to make it easier to understand, from a higher level, how the proposed environment was actually implemented.
+Back to the global view of the proposed environment represented on Figure \ref{fig:diagram} and idealized before the implementation of this environment, there is another diagram on Figure \ref{fig:env} that shows the actual implemented environment. It is worth noticing that the proposed environment was implemented as planned. The idea of this diagram is to make it easier to understand, from a higher level, how the proposed environment was actually implemented.
 
 \begin{figure}
 \centering
@@ -771,7 +773,7 @@ Back to the global view of the proposed environment represented on Figure \ref{f
 \label{fig:env}
 \end{figure}
 
-The diagram at Figure \ref{fig:env} represents the main components of the augmented reality environment and their main roles. First of all, is worth noticing that all these components and roles will be explained in more details on sections \ref{sec:method1} and \ref{sec:method2}. As it will be better explained on section \ref{sec:kinectscalib}, each Kinect needs to be connect to not only a USB port, but more than that, a USB hub. This is also stated on \cite{kinecthacks} on the section about \textit{Multiple Kinects}. Most computers have two USB hubs, which allows the user to use at most two Kinects at the same time, and this is the case here too. The Dell computer employed here has three USB ports, where two are on the same hub. Since each Kinect gets a USB port from each hub, the remaining USB port is used by the video input cable from the glasses and the VGA output cable from the glasses are connected to the Dell computer too. This way, it's possible to avoid transferring video streams (regardless input or output) over the network, what could add a reasonable delay to the whole process. The remaining connector from the glasses is the USB cable responsible for streaming the accelerometer/magnetometer data. This one is connect to the Acer computer, since its computation is not costly and transferring a tuple of values over the network is not costly either. Both computers are on the same network (more details about this on section \ref{sec:comm}. The Dell computer is responsible for running the heaviest softwares, which are two: MyKinFu (based on PCL's KinectFusion implementation), which is the core of this environment and connects all other components, and MyKinFuHeadless, which is based on the former but just keeps the code necessary to calculate the transformation of the movement performed by the observer.
+The diagram at Figure \ref{fig:env} represents the main components of the augmented reality environment and their main roles. First of all, it's worth noticing that all these components and roles will be explained in more details on sections \ref{sec:method1} and \ref{sec:method2}. As it will be better explained on section \ref{sec:kinectscalib}, each Kinect needs to be connect to not only a USB port, but more than that, a USB hub. This is also stated on \cite{kinecthacks} on the section about \textit{Multiple Kinects}. Most computers have two USB hubs, which allows the user to use at most two Kinects at the same time, and this is the case here too. The Dell computer employed here has three USB ports, where two are on the same hub. Since each Kinect gets a USB port from each hub, the remaining USB port is used by the video input cable from the glasses and the VGA output cable from the glasses are connected to the Dell computer too. This way, it's possible to avoid transferring video streams (regardless input or output) over the network, what could add a reasonable delay to the whole process. The remaining connector from the glasses is the USB cable responsible for streaming the accelerometer/magnetometer data. This one is connect to the Acer computer, since its computation is not costly and transferring a tuple of values over the network is not costly either. Both computers are on the same network (more details about this on section \ref{sec:comm}. The Dell computer is responsible for running the heaviest softwares, which are two: MyKinFu (based on PCL's KinectFusion implementation), which is the core of this environment and connects all other components, and MyKinFuHeadless, which is based on the former but just keeps the code necessary to calculate the transformation of the movement performed by the observer.
 
 To finish this section, Figure \ref{fig:expenv} is a photo of the experimental environment arranged for this implementation.
 
@@ -782,7 +784,7 @@ To finish this section, Figure \ref{fig:expenv} is a photo of the experimental e
 \label{fig:expenv}
 \end{figure}
 
-Since it would be hard to find two volunteers to act as observer and target model during this implementation, on the experimental environment a movable square box with the augmented glasses over it is used as observer while a doll is employed as the target model. In order to be able to easily isolate the target model's head, a black background is placed behind it and removed by color matching. As explained on section \ref{sec:kinfu}, better results are achieved for surfaces with enough irregularities or details, so there was a concern that using a spheric head for the target model and a square head for the observer wouldn't give the best results, thus real persons were employed on the calibration stage and on the environment evaluation, which will be presented on section \ref{sec:results}.
+Since it would be hard to find two volunteers to act as observer and target model during this implementation, on the experimental environment a movable square box with the augmented glasses over it is used as observer while a doll is employed as the target model. In order to be able to easily segment the target model's head, a black background is placed behind it and removed by color matching. As explained on section \ref{sec:kinfu}, better results are achieved for surfaces with enough irregularities or details, so there was a concern that using a spheric head for the target model and a square head for the observer wouldn't give the best results, thus real persons were employed on the calibration stage and on the environment evaluation, which will be presented on section \ref{sec:results}.
 
 \begin{figure}
 \centering
@@ -959,6 +961,7 @@ $M = \begin{matrix}
 Since the reference point is the same for both, the position of a Kinect in relation to the other can be estimated. Figure \ref{fig:panda} shows a reconstructed chessboard captured by two Kinects in order to validate this calibration. This code is also available at \cite{masterproject}. At this step, the system has the pose of each Kinect, and so it's ready to capture the observer and the target model.
 
 \subsection{Initial calibration between Kinect and glasses}
+\label{sec:kinect2glasses}
 
 The final step for the calibration stage is the calibration between the Kinect and the glasses, this way, it's possible to make a first transformation of the model from the Kinect's point of view to the observer's point of view, and for tracking and later transformations, the system will use data from the glasses' tracker or from the Kinect that captures the observer.
 
@@ -1113,12 +1116,295 @@ Since any control is provided by the UDP protocol, on the application that gets 
 
 \section{Method 1: Glasses accelerometer and one Kinect}
 \label{sec:method1}
-Cover Lucas-Kanade algorithm, etc.
+
+Once the devices were calibrated and able to communicate, it was time to connect all of them in a single augmented reality environment. On this work we tried two different approaches to track the observer's head movement: by using glasses' data or by using the observer's model as captured by another Kinect device. On this chapter, the former will be explained.
+
+The main component implemented on this approach is based on \textit{MyKinectFusion} \cite{marcio}. \textit{MyKinectFusion} is a fork of \textit{KinFu} that supports augmented reality with polygonal surfaces or medical volumes. So, the merging of virtual images with real ones is handled by this part of the code, while here the goal is to transform the reconstructed and augmented model to the different view points of this multi-view environment. Finally, \textit{KinFu} is an open source implementation of KinectFusion algorithm and is part of the PCL library, but not available on the stable version of PCL (as of version 1.4, the one employed here), but can be found on the repositories of the library. The code is written in C++ and uses the PCL libraries. \textit{KinFu} itself introduces a few modifications to the original KinectFusion algorithm, as can be noticed by reading the source code. KinFu can work with any OpenNI-compatible device, while KinectFusion just works with Kinect, as expected. The normal estimation step is done through eigenvalue estimation instead of simple cross-vector computation. Rendering is done using a marching cubes algorithm instead of ray casting. It's also possible to save the surface meshes and to represent the point clouds \cite{michele}. Basically, the original code used as base here captures and reconstructs a model, in real-time, according to the Kinect's point of view. The fork implemented on this stage of the project is available at \cite{mykinfu} and integrates the reconstruction features of the original KinFu and the augmented reality support of MyKinectFusion with the glasses' tracking data. The new steps performed here, for each frame, in real-time, are:
+
+\begin{enumerate}
+  \item Segments the model's head;
+  \item Gets the current rotation matrix and translation vector for the reconstructed model as returned by ICP;
+  \item Composes this transformation with the transformation given by the calibration of the glasses with the Kinect that captures the target model;
+  \item Composes the rotation of this transformation with the rotation given by the glasses' tracker (accelerometer/magnetometer);
+  \item Composes the translation of this transformation with the translation given by the optical flow of feature points on glasses' video;
+  \item Sets the pose to the final transformation given by the applications of the previous steps;
+  \item Renders the transformed model and shows it on the glasses' lenses.
+\end{enumerate}
+
+Each step will be explained in details along this chapter.
+
+The first step here was to port the source code of \textit{MyKinectFusion} from Microsoft Windows to GNU/Linux, until it compiled and ran successfully on Ubuntu 12.04 through \textit{optirun} with CUDA support. The next step was to segment the model, and this was achieved by implementing a truncation of the points that are after a defined threshold, which can be configured, but here the value used was 700 millimeters, so any point from the point cloud that is beyond this value is ignored. Since there are the depth maps, the information about the depth of each point is available. On the experimentation phase, the employed doll (as seen on Figure \ref{fig:expenv}) was not rigid enough to keep its head up, so in order to segment its head, a carton was placed behind that and it was implemented a temporary chroma key feature in order to remove the background and then segment the head. The background removal step was removed afterwards, when running with real people.
+
+The full documentation about the source code is available on the appendix, so here only the most important and altered classes and methods will be covered. The \textit{Reconstruction} class is responsible for handling the reconstructed target model captured by the Kinect device and is instantiated when the code starts. The output file of the calibration process described on section \ref{sec:kinect2glasses} is used as an initial alignment to transform the target model to the glasses' point of view. In order to do that, a new method was implemented on the \textit{Reconstruction} class, called \textit{readPoseFromFile}. This method is run for each frame, and looks for a file called \textit{calibration.yml} on the root of code base. Since it is a native format from OpenCV, the values for the rotation matrix and translation vector are naturally read to variables, which are stored in memory (so the file is not opened for reading and unserialized again for the next frames, which improves the performance) and composed of the current rotation and translation of the reconstructed model by applying the following equations:
+
+\begin{center}
+$R = R_{current} \times R_{file}^{-1}$
+\end{center}
+
+Where $R$ is the final rotation to be applied to the reconstructed model, $R_{current}$ is the current rotation of the model as returned by ICP and $R_{file}^{-1}$ is the inverse of the rotation matrix read from the file. A similar composition is applied to the translation:
+
+\begin{center}
+$T = R_{file}^{-1} \times T_{curr} + T_{file}$
+\end{center}
+
+Where $T$ is the final translation to be applied to the reconstructed model. $T_{curr}$ is the current translation as returned by ICP and $T_{file}$ is the translation read from the calibration file. A result of this transformation is represented on Figure \ref{fig:kinect2glassesc}.
+
+However, this transformation is from the calibration process, which assumes that the observer doesn't move (since the glasses' camera is static during the calibration). So it's not possible to use only this information to transform the model. In order to track the observer's head, on this approach it's used information from the glasses' tracker, which is explained on section \ref{sec:glasses}. This integration is managed by a new class, called \textit{Glasses}, whose class diagram is represented on Figure \ref{fig:glassesclassdiagram}. A full class diagram of the whole system is available on the appendix.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.2\textwidth]{images/glasses.png}
+\caption{Class diagram of \textit{Glasses}}
+\label{fig:glassesclassdiagram}
+\end{figure}
+
+The role of each attribute and method of this class is briefly described on the lists below:
+
+\begin{itemize}
+  \item sock: Stores the instance of the socket used to listen for tracking data that comes from the glasses;
+  \item port: The class listens on this port number for incoming tracking data from the glasses;
+  \item gray: The grayscale version of the input frame from the glasses, used for optical flow;
+  \item prevgray: The grayscale version of the previous frame from the glasses, used for optical flow;
+  \item image: A copy from the input frame from the glasses' video;
+  \item frame: The actual frame that comes from the glasses' video;
+  \item cap: An instance of OpenCV's \textit{VideoCapture} class, which on this case opens and reads the frames from glasses' video stream
+  \item yaw: The integer value of the rotation around the yaw axis, as calculated and given by the glasses' tracker;
+  \item pitch: The integer value of the rotation around the pitch axis, as calculated and given by the glasses' tracker;
+  \item roll: The integer value of the rotation around the roll axis, as calculated and given by the glasses' tracker;
+  \item x: The value of the translation on the x axis, as calculated by the optical flow on the glasses' video frame;
+  \item y: The value of the translation on the y axis, as calculated by the optical flow on the glasses' video frame;
+  \item z: The value of the translation on the z axis, as calculated by the optical flow on the glasses' video frame;
+  \item xi: The initial value of the translation on the x axis, as calculated by the optical flow on the glasses' video frame;
+  \item yi: The initial value of the translation on the x axis, as calculated by the optical flow on the glasses' video frame;
+  \item yi: The initial value of the translation on the x axis, as calculated by the optical flow on the glasses' video frame.
+\end{itemize}
+
+\begin{itemize}
+  \item get(): Calls the two methods below;
+  \item getYawPitchRoll(): Listens on the socket for the values for yaw, pitch and roll and stores them on the respective attributes;
+  \item getXYZ(): Executes the Lucas-Kanade algorithm over the current glasses' frame, calculates the translation and stores the values for x, y and z on the respective attributes;
+  \item init(): Just calls the two methods below;
+  \item initYawPitchRoll(): Opens the socket to communicate with the glasses;
+  \item initXYZ(): Opens the glasses' camera and stores to features from the image that will be tracked;
+  \item finish(): Just calls the two methods below;
+  \item finishYawPitchRoll(): Closes the socket that was being used to communicate with the glasses;
+  \item finishXYZ(): Closes the video stream and clear the feature points that were being tracked;
+  \item zero(): Just calls the two methods below;
+  \item zeroYawPitchRoll(): Sets the values for yaw, pitch and roll as zero;
+  \item zeroXYZ(): Sets the values for x, y and z as zero;
+  \item getYaw(): A getter for the yaw attribute;
+  \item getPitch(): A getter for the pitch attribute;
+  \item getRoll(): A getter for the roll attribute;
+  \item getX(): A getter for the x attribute;
+  \item getY(): A getter for the y attribute;
+  \item getZ(): A getter for the z attribute;
+  \item readFrame(): Reads the current frame from the glasses' stream and stores it on the respective attribute;
+  \item getFrame(): A getter for the frame attribute.
+\end{itemize}
+
+When the program starts, a new instance of the \textit{Glasses} class is created, which connects to the UDP socket at the host and port defined on the configuration file. On this host (which on the implementation here is another computer, connect to main one though a cross-over network), there is a program that runs and reads the yaw, pitch and roll values as calculated by the implemented driver. Those values are sent, every 100ms, to a UDP socket. The datagram just consists of a prefix, that identifies the datagram as valid, an index and the integer values for yaw, pitch and roll. It's a very light program that just needs a few resources, and also transfers a tiny datagram, that usually will have a few dozens of bytes. The frames are numbered before being sent, so the main code knows if some frame is missed, but currently does nothing on such case. Details on that were explained on section \ref{sec:glasses}.
+
+Back to the core program, after an instance of the \textit{Glasses} class is created, a new thread, separated from the main one, is triggered. The library used for managing the threads here is the popular \textit{pthreads} \cite{pthreads}, a set of C language programming types and procedure calls for creating and manipulating threads, as defined by a POSIX standard. This thread runs indefinitely, with an interval of 100ms between consecutive iterations. On each iteration, this thread listens on the UDP socket for new datagrams that contain the values for yaw, pitch and roll and stores them on the respective attributes of the \textit{Glasses} instance that was created.
+
+It's worth noticing that, as stated on the manufacturer's manual \cite{vuzixsdk}, the employed model of the glasses and its SDK version don't support all the six degrees of freedom, so it's only possible to get accurate values for yaw, pitch and roll from the tracker. So, in order to provide the values for translation motion along the x, y and z axes, an optical flow approach was implemented. This also happens on the glasses' thread.
+
+The glasses' thread is also responsible, on each iteration, for reading a frame from the glasses' video stream and for executing the optical flow algorithm over it. The algorithm implemented here is the pyramidal version of Lucas-Kanade one, explained on section \ref{sec:lucas}. On the first run, on the main thread, it tracks the key features of the image, which is done automatically by using Shi-Tomasi algorithm, also cited on section \ref{sec:lucas}. The Shi-Tomasi method will try to find corners on the grayscale version of frame, by performing the following steps:
+
+\begin{enumerate}
+  \item Calculates the corner quality measure at every source image pixel and stores this information on a \textit{qualityMeasureMap};
+  \item Performs a non-maximum suppression (the local maximums in a 3x3 neighborhood are retained);
+  \item The corners with the minimal eigenvalue less than $0.01 \times MAX(qualityMeasureMap)$ (1\% of the best corner quality measure) are rejected;
+  \item The remaining corners are sorted by the quality measure in descending order;
+  \item Corners for which there is a stronger corner at a distance less than the maximum distance are rejected as well.
+\end{enumerate}
+
+After that, the key points for the frame are stored and can be tracked on the next frames by the pyramidal Lucas-Kanade algorithm, as shown on Figure \ref{fig:lk}. The OpenCV's \textit{cornerSubPix} is also employed here in order to get a better accuracy for the coordinates of the feature points that were identified.
+
+\begin{figure}
+\centering
+\subfigure[Features automatically detected by Shi-Tomasi method (green dots)]
+{
+  \includegraphics[width=.3\textwidth]{images/lk1.png}
+  \label{fig:lk1}
+}
+\subfigure[Face tracking by Pyramidal Lucas-Kanade, moving to the left]
+{
+  \includegraphics[width=.3\textwidth]{images/lk2.png}
+  \label{fig:lk2}
+}
+\subfigure[Face tracking by Pyramidal Lucas-Kanade, moving to the right]
+{
+  \includegraphics[width=.3\textwidth]{images/lk3.png}
+  \label{fig:lk3}
+}
+\caption{Lucas-Kanade algorithm tracking a face whose key points were previously identified through Shi-Tomasi algorithm}
+\label{fig:lk}
+\end{figure}
+
+Back to the glasses' thread, on each iteration, pyramidal Lucas-Kanade algorithm is used for tracking that feature points that were previously identified. The previous point set and previous grayscale frame are stored for comparison. After Lucas-Kanade method runs, there will be the previous and current grayscale frames as well as the feature points identified on each. Once the two feature points sets are available, the homography between them is calculated, which will find the perspective transformation between the current and the previous feature points, thus defining the approximate translation performed by the observer.
+
+The homography matrix (denoted below by $H$) relates the positions of the points in the previous frame (source) with the points on the current frame (destiny) by the following equations \cite{bradski2008learning} so that the back-projection error is minimized.
+
+\begin{center}
+$P_{dst} = H \times P_{src}, P_{src} = H^{-1} \times P_{dst}$
+\end{center}
+
+\begin{center}
+$P_{dst} = \begin{bmatrix} x_{dst} \\ y_{dst} \\ 1 \end{bmatrix}, P_{dst} = \begin{bmatrix} x_{src} \\ y_{src} \\ 1 \end{bmatrix}$
+\end{center}
+
+However, if not all of the point pairs fit the rigid perspective transformation (that is, there are some outliers), this initial estimate will $H$ be poor. Here it uses the RANSAC method, which tries many different random subsets of the corresponding point pairs (of four pairs each), to estimate the homography matrix using this subset and a simple least-square algorithm, and then compute the quality/goodness of the computed homography (which is the number of inliers for RANSAC). The best subset is then used to produce the initial estimate of the homography matrix and the mask of inliers/outliers. After that, the translation values for x, y and z are extracted from the matrix and returned. The current grayscale frame becomes the previous grayscale frame, the current feature points set becomes the previous feature points set and so the algorithm iterates for the next frames. Since the values for x, y and z are related to the transformation between the current and previous frames and the interest here is on the transformation between the current frame and the first frame, the values for x, y and z are always accumulated instead of replaced.
+
+After connecting to the socket and performing the optical flow over the glasses' frame, the values for yaw, pitch, roll, x, y and z are already available and set as attributes of the \textit{Reconstruction} object, which is shared between the main thread and the glasses thread.
+
+On the main thread of the program, each frame is processed each 100 ms as well. Besides composing the current rotation with the rotation from the calibration file, and the translation with the translation from the calibration, as explained previously, both are also composed with the rotation and translation that come from the glasses.
+
+For yaw, pitch and roll, first it's necessary to convert from Euler angles to matrices. Since the goal here is to transform the model based on the observer's motion, the negative values for each angle will be used. The matrices are:
+
+% Yaw: Y
+\begin{center}
+$R_{yaw} = \begin{bmatrix}
+           \cos(\phi) & \sin(\phi) & 0 \\
+           -\sin(\phi) & \cos(\phi) & 0 \\
+           0 & 0 & 1 \\
+           \end{bmatrix}$
+\end{center}
+
+% Pitch: X
+\begin{center}
+$R_{pitch} = \begin{bmatrix}
+             \cos(\theta) & 0 & -\sin(\theta) \\
+             0 & 1 & 0 \\
+             \sin(\theta) & 0 & \cos(\theta) \\
+             \end{bmatrix}$
+\end{center}
+
+% Roll: Z
+\begin{center}
+$R_{roll} = \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & \cos(\psi) & \sin(\psi) \\
+            0 & -\sin(\psi) & \cos(\psi) \\
+            \end{bmatrix}$
+\end{center}
+
+Then the current model rotation is compounded with the rotation given by the multiplication of the three matrices above:
+
+\begin{center}
+$R_{glasses} = R_{roll} \times R_{pitch} \times R_{yaw} \therefore R =  R_{glasses} \times R_{current}$
+\end{center}
+
+The model's translation is given by:
+
+\begin{center}
+$T_{glasses} = [x, y, z] \therefore T = R_{glasses} \times T_{current} - T_{glasses}$
+\end{center}
+
+After that, the final transformation given by the rotation $R$ and the translation $T$ is applied to the model.
+
+The glasses' tracker is very sensible and can suffer interference from magnetic objects near it \cite{vuzixsdk}, while the optical flow needs at least four feature points in order to keep the tracking \cite{opencvfd}, and most feature points can easily disappear when a fast movement happens. In order to try to mitigate those problems, a new approach was implemented, which uses a second Kinect to calculate the observer's movement, which will be explained on the following section \ref{sec:method2}.
+
 \section{Method 2: Two Kinects}
 \label{sec:method2}
-Talk about performance of two Kinfus fighting for a single GPU.
+
+On this approach, the only information that's still used from the glasses is the video stream, which is combined with the reconstructed target model. This approach uses the same code as the main component, but on the configuration file the options for glasses' tracking (from both accelerometer/magnetometer and optical flow) are turned off, while the option for using the second Kinect is turned on.
+
+A new component was implemented here, which is called \textit{MyKinFuHeadless}, available at \cite{mykinfuheadless}. It's a simplified version of \textit{MyKinFu} that just captures an object, segments it (removes background or other objects based on the depth map), calculates its transformation from the initial pose and sends this transformation, as a serialized rotation matrix and serialized translation vector, to a UDP socket, in real-time.
+
+The code behaves just like the original \textit{KinFu}. The main difference is that on the original version the ICP calculates the transformation from the current model in relation to the previous one, while here it's necessary to know the transformation from the current model to the initial one. As explained on section \ref{sec:icp}, it takes some iterations until ICP is able to segment the model and ignore new objects that appear on the scene. At this moment, this transformation is considered the initial one. For the next iterations of ICP, it composes the current rotation and current translation and a new calculation introduced here will provide the difference $R_{diff}$ between the current rotation $R_{curr}$ and the initial rotation $R_{ini}$ and the difference $T_{diff}$ between the current translation $T_{curr}$ and the initial translation $T_{ini}$, both given by:
+
+\begin{center}
+$R_{diff} = R_{curr} \times R_{ini}^T$
+\end{center}
+
+\begin{center}
+$T_{diff} = T_{curr} - T_{ini}$
+\end{center}
+
+After $R_{diff}$ and $T_{diff}$ are computed, they are sent to a UDP socket as serialized data, since only strings can be written to the socket. Similarly to what was done with the glasses' tracker, on this case an auxiliary code to check the tracker's accuracy was implemented too, and is available at \cite{masterproject}. This auxiliary code uses OpenGL and listens on the same socket where \textit{MyKinFuHeadless} writes to, and transforms the virtual cube as it was seen by the glasses. Figure \ref{fig:secondkinecttrack} shows this accuracy using a box as the observer. Since the geometry of the box is not as irregular as a human head, better results can be achieved on real situations, but it still has a reasonable accuracy.
+
+\begin{figure}
+\centering
+  \includegraphics[width=0.5\textwidth]{images/secondkinectrack.png}
+\caption{Virtual cube as seen by the observer according to the transformation given by the Kinect that captures it}
+\label{fig:secondkinecttrack}
+\end{figure}
+
+On the main code side, the change is similar to the one implemented for the first method. A new thread is triggered when the code starts and runs in parallel to the main thread. This thread listens on the UDP socket and gets the rotation matrix and translation vector that represent the transformation of the observer. The values are unserialized and saved with the \textit{Reconstruction} object, which is shared with the main thread. On the main thread, for each frame, the current rotation and translation of the target model are composed with the rotation and translation of the observer as given by the second Kinect, the following way:
+
+\begin{center}
+$R = R_{diff} \times R_{curr}$
+\end{center}
+
+\begin{center}
+$T = T_{curr} + [T_{diff_x}, -T_{diff_y}, T_{diff_z}]$
+\end{center}
+
+As explained on section \ref{sec:kinfu}, it needs CUDA to run, and on this experimental augmented reality environment there was only one computer with a graphics card with CUDA support. The \textit{MyKinFuHeadless} component is a standalone code that sends the calculated values to a socket, so it could (and actually should) run on a separate machine, since two programs that needs the GPU running on the same machine would decrease the overall performance.
+
+But since there was only one computer with CUDA support, it would be necessary to run \textit{MyKinFu} and \textit{MyKinFuHeadless} on the same machine at the same time. A benchmark showed that each of them running separately took approximately 90 ms to process one frame. When both were running at the same time, this value jumped to approximately 180 ms, which makes sense, since both were fighting for a single GPU. The result was a huge delay between the observer's real movement and the respective virtual transformation on the rendered frame. So it was necessary to improve the performance. A more detailed benchmark showed that most of the time was spent on ICP and point clouds alignment:
+
+\begin{verbatim}
+setDepthDevice took 0ms.
+setRgbDevice took 0ms.
+applyBilateralFilter took 0ms.
+applyDepthTruncation took 0ms.
+applyPyrDown took 0ms.
+convertToPointCloud took 20ms.
+applyDepthTruncation took 0ms.
+sync took 0ms.
+ICP level 2 iteration 0 took 0ms.
+ICP level 2 iteration 1 took 0ms.
+ICP level 2 iteration 2 took 8ms.
+ICP level 2 iteration 3 took 8ms.
+ICP level 1 iteration 0 took 9ms.
+ICP level 1 iteration 1 took 9ms.
+ICP level 1 iteration 2 took 9ms.
+ICP level 1 iteration 3 took 9ms.
+ICP level 1 iteration 4 took 26ms.
+ICP level 0 iteration 0 took 31ms.
+ICP level 0 iteration 1 took 7ms.
+ICP level 0 iteration 2 took 7ms.
+ICP level 0 iteration 3 took 7ms.
+ICP level 0 iteration 4 took 7ms.
+ICP level 0 iteration 5 took 7ms.
+ICP level 0 iteration 6 took 7ms.
+ICP level 0 iteration 7 took 7ms.
+ICP level 0 iteration 8 took 7ms.
+ICP level 0 iteration 9 took 7ms.
+alignPointCloud took 96ms.
+reset took 0ms.
+integrateVolume took 24ms.
+raycast took 37ms.
+last sync took 0ms.
+last step took 1ms.
+TOTAL FRAME took 184ms.
+\end{verbatim}
+
+The first step was to change the virtual volume size of KinectFusion, which is by default 3000 mm x 3000 mm x 3000 mm, because it's intended to be used to scan large scenarios. Since the use case here is just faces, it's not necessary to use such dimensions for the volume size. It was changed to 700 mm x 700 mm x 1400 mm and the voxel size from 512 to 256 per axis (both the number of voxels and the size in meters give the amount of detail of our model) and the result was still satisfactory. See Figure \ref{fig:kinfu} to better understand the virtual cube of KinectFusion.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{images/kinfu.jpg}
+\caption{The cube is subdivided into a set of voxels; these voxels are equal in size; the default size in meters for the cube is 3 meters per axis; and the default voxel size is 512 per axis \cite{pclkinfu}}
+\label{fig:kinfu}
+\end{figure}
+
+Also, the number of ICP iterations were reduced, and since it was one of the most time-consuming steps, the overall runtime was decreased. As a last step, the code was refactored to use the most recent libraries, using as reference another refactoring of KinFu called \textit{KinFuRemake} \cite{kinfuremake}. The result was a code twice faster (see chart at Figure \ref{fig:kinfuchart}). Thus, now, \textit{MyKinFu} and \textit{MyKinfuHeadless} running at the same time on the same machine was consuming the same time as just one of them was consuming alone previously.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{images/plot.png}
+\caption{Comparison of time to process a frame before and after the refactoring}
+\label{fig:kinfuchart}
+\end{figure}
+
+This approach has shown to be visually better for greater range of motion, although the accuracy was not that good for simpler movements and the performance was much worse. In order to combine the best of the two approaches implemented on this work, an hybrid approach was proposed, which will be explained on the following section \ref{sec:hybrid}.
+
 \section{Hybrid approach}
-When optical flow has just a few feature points, we switch to the second Kinect.
+\label{sec:hybrid}
+
+The hybrid approach is just a combination of the two previous methods. On this approach, both threads (one for the glasses and the other for the Kinect that captures the observer) are kept running simultaneously. The glasses' data are used primarily since it has better performance. If the number of tracked features for the optical flow goes below eight points, the transformation calculated by the second Kinect is used in order to transform the target model. This method has the best accuracy since it applies each method to the situation they fit better. The results of running each of the three methods with real people will be shown on the next section \ref{sec:results}.
 
 \xchapter{Result}{In this chapter I present the results of the procedure explained in the previous chapter.}
 \label{sec:results}
