@@ -13,6 +13,8 @@
 \usepackage{gensymb}
 \usepackage{graphicx}
 \usepackage{subfigure}
+\usepackage{caption}
+\usepackage{url}
 
 %% Preâmbulo:
 %% coloque aqui o seu preâmbulo LaTeX, i.e., declaração de pacotes,
@@ -28,7 +30,7 @@
 
 % Folha de rosto
 % FIXME: Check if 0007 is the right sequential number
-\dmccfrontpage{MMCC-Msc-0007}
+\dmccfrontpage{MMCC-Msc-0013}
 % Se seu trabalho não for uma tese de doutorado do DMCC, apague a linha
 % acima e use \frontpage
 
@@ -55,7 +57,7 @@
 % Modifique com os membros da sua banca
 \approvalsheet{Salvador, December \nth{15}, 2014}{
   \comittemember{Prof. Dr. Antônio Lopes Apolinário Júnior 1}{Federal University of Bahia - Brazil}
-  \comittemember{Prof. Dr. Michelle Ângelo 2}{State University of Feira de Santana - Brazil}
+  \comittemember{Profa. Dra. Michelle Ângelo 2}{State University of Feira de Santana - Brazil}
   \comittemember{Prof. Dr. Rodrigo Silva 3}{Federal University of Juiz de Fora - Brazil}
 }
 
@@ -71,49 +73,19 @@ my grandmother Lourdes for everything I learned from her all these years;
 my girlfriend Jéssica, for giving a new meaning to my life;
 and specially my advisor Antônio Apolinário, for trusting on me to make this work happen.
 
-% Resumo em Português
-% Se preferir, crie um arquivo à parte e o inclua via \include{}
-%\resumo
-% Palavras-chave do resumo em Português
-%\begin{keywords}
-%\end{keywords}
-
-% Resumo em Inglês
-% Se preferir, crie um arquivo à parte e o inclua via \include{}
 \abstract
-Augmented reality is a technology which allows 2D and 3D computer graphics to be aligned or registered with scenes of the real-world in real-time. This projection of virtual images requires a reference in the captured real image, which is often achieved by using one or more markers. But, there are situations where using markers can be unsuitable, like medical applications, for example. In this work, it's presented a multi-view environment, composed by augmented reality glasses and two Kinect devices, which doesn't use fiducial markers in order to run augmented reality applications. All devices are calibrated according to a common reference system, and then the virtual models are transformed accordingly too. In order to achieve that, two approaches were specified and implemented: one based on one Kinect plus optical flow and accelerometer data from augmented reality glasses, and another one based purely on two Kinect devices. The results regarding quality and performance achieved by these two approaches are presented and discussed, as well as a comparison between them.
+Augmented reality is a technology which allows 2D and 3D computer graphics to be aligned or registered with scenes of the real-world in real-time. This projection of virtual images requires a reference in the captured real image, which is often achieved by using one or more markers. But, there are situations where using markers can be unsuitable, like medical applications, for example. In this work, it's presented a multi-view environment, composed by augmented reality glasses and two Kinect devices, which doesn't use fiducial markers in order to run augmented reality applications. All devices are calibrated according to a common reference system, and then the virtual models are transformed accordingly too. In order to achieve that, two approaches were specified and implemented: one based on one Kinect plus optical flow and accelerometer data from augmented reality glasses, and another one based purely on two Kinect devices. The results regarding quality and performance achieved by these two approaches are presented and discussed, as well as a comparison between them, and all related issues faced and addressed by this work.
 \begin{keywords}
-augmented reality, augmented reality glasses, kinect, transformation, optical flow, markerless
+augmented reality, augmented reality glasses, kinect, transformation, optical flow, markerless, tracking
 \end{keywords}
 
-% Sumário
-% Comente para ocultar
 \tableofcontents
-
-% Lista de figuras
-% Comente para ocultar
 \listoffigures
-
-% Lista de tabelas
-% Comente para ocultar
 \listoftables
 
-%%
-%% Parte textual
-%%
 \mainmatter
 
-% É aconselhável criar cada capítulo em um arquivo à parte, digamos
-% "capitulo1.tex", "capitulo2.tex", ... "capituloN.tex" e depois
-% incluí-los com:
-% \include{capitulo1}
-% \include{capitulo2}
-% ...
-% \include{capituloN}
-%
-% Importante: Use \xchapter ao invés de \chapter, conforme exemplo abaixo.
-
-\xchapter{Introduction}{In this chapter I present the motivation, objectives and overview of this work.}
+\xchapter{Introduction}{This chapter presents the motivation, objectives and overview of this work.}
 \section{Motivation}
 
 Augmented reality has benefited from the progresses of multimedia and virtual reality, making feasible new forms of
@@ -136,7 +108,7 @@ On many situations, fiducial markers\footnote{A fiducial marker or fiducial is a
 \label{fig:fiducial_marker}
 \end{figure}
 
-However, besides requiring human interference on the scene, there situations where the usage of fiducial markers is not possible, feasible or comfortable for the target model. That is the case, for example, of medical applications on which this model is a patient. It's also possible to cite other limitations of fiducial markers, like, for example, occlusion (a virtual image could be not projected if the marker is not completely visible) and illumination (the intensity of light reflected by the marker could make it hard to be identified). Less common, there are approaches that replace fiducial markers \cite{carmigniani} \cite{gallo09} by GPS, gyroscopes, accelerometers, cameras, among others \cite{azuma} \cite{azuma01}. These approaches have the advantage of not requiring human interference on the scene (to put a marker or to move it around).
+However, besides requiring human interference on the scene, there are situations where the usage of fiducial markers is not possible, feasible or comfortable for the target model. That is the case, for example, of medical applications on which this model is a patient. It's also possible to cite other limitations of fiducial markers, like, for example, occlusion (a virtual image could be not projected if the marker is not completely visible) and illumination (the intensity of light reflected by the marker could make it hard to be identified). Less common, there are approaches that replace fiducial markers \cite{carmigniani} \cite{gallo09} by GPS, gyroscopes, accelerometers, cameras, among others \cite{azuma} \cite{azuma01}. These approaches have the advantage of not requiring human interference on the scene (to put a marker or to move it around).
 
 Depending on the way that a user sees the mixed world, augmented reality can be classified on two ways. When the user sees the mixed world pointing his eyes straight to the real positions with optical scene or video, this augmented reality is called \textit{immersive} or of \textit{direct vision}. On the other hand, when the user sees the mixed world by some device, like a monitor screen or projector, not aligned with the real positions, this augmented reality is \textit{non-immersive} or of \textit{indirect vision} \cite{tori2006fundamentos}.
 
@@ -154,15 +126,15 @@ reality environment, graphically represented on Figure \ref{fig:diagram}:
 \begin{figure}
 \centering
 \includegraphics[width=0.8\textwidth]{images/diagram.png}
-\caption{Global vision}
+\caption{Global view}
 \label{fig:diagram}
 \end{figure}
 
 \begin{itemize}
   \item There are two main elements on the environment, the observer and the target model;
   \item Observer and target model are positioned one in front of the other, with some restriction of minimum and maximum distance;
-  \item The observer sees the combination of a real image with a pre-defined virtual image over the target model, through the augmented
-        reality glasses;
+  \item The observer can see the composition of a real image with a pre-defined virtual image over the target model, through the augmented
+        reality glasses (however the main goal here is on alignment - be able to track where to place the virtual image);
   \item The observer and target model can move their heads, in a way that the virtual image adapts itself in real time to fit the new
         viewing angles;
   \item No fiducial marker is used.
@@ -172,9 +144,9 @@ The elements presented on this environment are the following:
 
 \begin{itemize}
   \item Observer - He is the user of the system that wears a pair of augmented reality glasses and is positioned in front of the target model (which can be a human being, for example, or a static object). On a medical context, the observer would be a medical specialist, responsible for observing the patient and responsible for analyzing the combination of the real image (part of the patient body) with a virtual image (from magnetic resonance imaging or computed tomography). The observer is able to move his head.
-  \item Augmented reality glasses - The augmented reality glasses are wore by the observer and have two cameras. The images captured from the target model will be merged with virtual images and displayed on the two lenses of these glasses. On one of the approaches implemented by this work, the observer motion is determined from sensors present on the glasses: accelerometer, magnetometer and gyroscopes. Based on sensor data, it's possible to determine the variation on the orientation of the glasses, and so it's possible to know how much the observer has moved his head. This calculation returns values that define motion on longitudinal axis, vertical axis and lateral axis. The virtual image should be reprojected in real time according to those movements.
-  \item Target model - The target model (a human being, for example), is placed in front of the observer and doesn't use any kind of fiducial marker. The main goal is that the virtual image is placed over the target model. In order to calculate where and how the virtual image should be displayed, it's necessary to identify the position and orientation of the real object relative to the observer. This is done based on two sensors placed on the environment, where the first one captures data from the observer and the second one captures data from the target model.
-  \item Sensors - Two sensors are placed on the environment and capture data from the observer and the target model (one for each). The information captured by the target model's sensor contains its model, that will be merged with the virtual image.
+  \item Augmented reality glasses - The augmented reality glasses are worn by the observer and have two cameras. The images captured from the target model will be merged with virtual images and displayed on the two lenses of these glasses. On one of the approaches implemented by this work, the observer motion is determined from sensors present on the glasses: accelerometer, magnetometer and gyroscopes. Based on sensor data, it's possible to determine the variation on the orientation of the glasses, and so it's possible to know how much the observer has moved his head. This calculation returns values that define motion on longitudinal axis, vertical axis and lateral axis. The virtual image should be reprojected in real time according to those movements.
+  \item Target model - The target model (a human being, for example), is placed in front of the observer and doesn't use any kind of fiducial marker. The main goal is that the target model can be tracked in real time even without any marker. In order to calculate where and how the virtual image should be displayed, it's necessary to identify the position and orientation of the real object relative to the observer. This is done based on two sensors placed on the environment, where the first one captures data from the observer and the second one captures data from the target model.
+  \item Sensors - Two sensors are placed on the environment and capture data from the observer and the target model (one for each). The information captured by the target model's sensor contains its model, which is used for tracking and can be merged with a virtual image.
 \end{itemize}
 
 Each device presented on this multi-view (glasses and sensors) environment has its own coordinate system, but all information must be converted to a global coordinate system.
@@ -184,17 +156,17 @@ uses the augmented reality glasses to determine the observer's pose (based on da
 
 \section{Thesis overview}
 
-The next chapter "Conceptual primer" describes some basic theory needed. It also describes the hardwares that are used by this work and how to calibrate them. After that, the "Related work" chapter presents some works related to this one, divided by subject. The third chapter, "Solution architecture", after the theory and related works were presented, explains the steps performed in order to implement the objectives of this work. The results of this implementation are presented on the chapter later, "Results", and finally the conclusions about those results are presented on the last chapter, "Conclusions", where possible future works are also listed.
+The next chapter "Conceptual primer" describes some basic theory needed. It also describes the hardware components that are used by this work and how to calibrate them. After that, the "Related work" chapter presents some works related to this one, divided by subject. The third chapter, "Solution architecture", after the theory and related works were presented, explains the steps performed in order to implement the objectives of this work and some results. More results of this implementation are presented on the chapter after, "Results", and finally the conclusions about this work are presented on the last chapter, "Conclusions", where possible future works are also listed.
 
-\xchapter{Conceptual primer}{In this chapter I present the main concepts behind this work.}
+\xchapter{Conceptual primer}{The main concepts behind this work are explained here.}
 \section{Augmented reality}
 
-Augmented reality was born on the decade of 1990, to merge a virtual image or virtual environment with a real image or real environment. But only from the 2000s it became more popular, due to lower costs of hardware and software devices, and ready to be used on tangible and multimodal (voice, touch, gesture, etc.) applications \cite{paddle}. It can be considered the mixing of real and virtual worlds at some point of the continuum reality-virtuality, that connects completely virtual environments to completely real environments \cite{milgram94}, like shown on Figure \ref{fig:cont}. It can also be considered a system that completes the real world with virtual objects, in a way that they seem to exist on the same space, respecting the following features:
+Augmented reality was born on the decade of 1990, to merge a virtual image or virtual environment with a real image or real environment. But only from the 2000s it became more popular, due to lower costs of hardware and software devices, and ready to be used on tangible and multimodal (voice, touch, gesture, etc.) applications \cite{paddle}. It can be considered the mixing of real and virtual worlds at some point of the reality-virtuality continuum, that connects completely virtual environments to completely real environments \cite{milgram94}, like shown on Figure \ref{fig:cont}. It can also be considered a system that completes the real world with virtual objects, in a way that they seem to exist on the same space, respecting the following features:
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{images/cont.png}
-\caption{The augmented reality is localized between the extremes of the reality-virtuality continuum}
+\caption{The augmented reality is located between the extremes of the reality-virtuality continuum}
 \label{fig:cont}
 \end{figure}
 
@@ -241,7 +213,7 @@ On the other hand, non-immersive augmented reality (indirect vision), happens wh
 
 \subsection{Markers}
 
-In order to identify the position where a virtual image should be rendered, two main approaches can be applied by augmented reality applications: one is to use fiducial markers, the other is not use them.
+In order to identify the position where a virtual image should be rendered, two main approaches can be applied by augmented reality applications: one is to use fiducial markers, the other is to discard them.
 
 \subsubsection{Fiducial markers}
 
@@ -265,13 +237,13 @@ On motion capture systems, other kinds of markers can also be used, like, for ex
 \label{fig:helmet}
 \end{figure}
 
-Disadvantages of fiducial markers are listed on \cite{dolz}, for example, they are invasive (need to be placed on the scene or fixed on the target object), they have limited interaction (can't be moved around so much because it needs to still be visible and recognizable) and need to be printed or drawn before using and stored for future usage.
+Disadvantages of fiducial markers are listed on \cite{dolz}, for example, they are invasive (need to be placed on the scene or fixed on the target object), they have limited interaction (can't be moved around freely, because it still needs to be visible and recognizable) and need to be printed or drawn before using, and also stored for future usage.
 
 \subsubsection{Markerless}
 
 Markerless augmented reality means that fiducial markers are not used on the scene. Instead, features from the target scene need to be used in order to estimate the camera pose and objects orientations.
 
-Target detection based on computer vision has been extensively studied and successfully applied on augmented reality applications. On related computer vision literature, geometric primitives can be used for pose estimation, on most cases, points, segments, lines, edges of edge points, cones, cylinders, or a combination of two or more of those features.
+Target detection based on computer vision has been extensively studied and successfully applied on augmented reality applications. On related computer vision literature, geometric primitives can be used for pose estimation, on most cases, points, segments, lines, edges, cones, cylinders, or a combination of two or more of those features.
 
 Markerless augmented reality has the advantage of using parts of the real environment as targets and can even extract information from the environment to be used by the augmented reality system \cite{dolz}.
 
@@ -320,7 +292,7 @@ The relation between world coordinate system and the camera reference frame can 
 $X_c = R_c \times X + T_c$
 \end{center}
 
-Where $X$ is a 3x1 vector that represents a point on the world coordinate space, $R_c$ is the extrinsic rotation matrix, $T_c$ is the extrinsic translation matrix and $X_c$ is a 3x1 vector in the camera reference frame. The rotation matrix is build from the combination of three single-axis rotation matrices:
+Where $X$ is a 3x1 vector that represents a point on the world coordinate space, $R_c$ is the extrinsic rotation matrix, $T_c$ is the extrinsic translation matrix and $X_c$ is a 3x1 vector in the camera reference frame. The rotation matrix is built from the combination of three single-axis rotation matrices:
 
 \begin{center}
 
@@ -405,14 +377,14 @@ Three-dimensional (3D) reconstruction of an environment is an important problem 
 \subsection{Kinect}
 \label{sec:kinect}
 
-Kinect \cite{kinect} is a new and widely-available sensor platform that incorporates a structured light based depth sensor. It can be classified as an RGB-D camera, since it comes with not only an RGB camera, but also a depth sensor. While the quality of this depth map is generally remarkable given the cost of the device, a number of challenges still remains \cite{kinfu2}: the depth images can contain a number of "holes", when depth reading was not possible, due to certain materials or scene objects that don't reflect infra-red (IR) light, very thin or small structures or surfaces at glancing incident angles. Data can also be missed if the device is moved fast.
+Kinect \cite{kinect} is a new and widely-available sensor platform that incorporates a structured light based depth sensor. It can be classified as an RGB-D camera, since it comes with not only an RGB camera, but also a depth sensor. While the quality of this depth map is generally remarkable given the cost of the device, a number of challenges still remains \cite{kinfu2}, like for example: the depth images can contain a number of "holes" when depth reading was not possible due to certain materials or scene objects that don't reflect infra-red (IR) light; or very thin or small structures or surfaces at glancing incident angles. Data can also be missed if the device is moved fast.
 
 The depth sensing system of Kinect consists of two parts: the IR laser emitter (which creates a known noisy pattern of structured IR light) and the IR camera. The depth sensing works on a principle of structured light. There's a known pseudo-random pattern of dots being pushed out from the camera. These dots are recorded by the IR camera and then compared to a known pattern \cite{hackingkinect}. The disturbances are known to be variations in the surface and can be detected as closer or further away. The fact that light matters brings three main problems:
 
 \begin{itemize}
   \item The wavelength must be constant (Kinect handles it internally)
   \item Ambient light can cause issues
-  \item Distante is limited by the emitter strength
+  \item Distance is limited by the emitter strength
 \end{itemize}
 
 Within the sensor, there is a small heater/cooler that keeps the laser diode at a constant temperature. This ensures that the output wavelength remains as constant as possible, given variations on power and temperature. Ambient light is the bane of structured light sensors, but there are measures to mitigate this. One is an IR-pass filter that prevents stray IR in other ranges from blinding the sensor. However, Kinect doesn't work well in places with strong sunlight. Sunlight's wide band IR has enough power on Kinect's IR sensor range in order to blind it \cite{hackingkinect}.
@@ -425,7 +397,7 @@ saturation, and defect correction \cite{hackingkinect}.
 
 The Kinect is calibrated at factory and has built in numbers for converting the disparity values to depth values, and also for mapping 3D points to the color camera. However, the calibration from factory uses a simple model where depth values are fast enough to be computed, but its accuracy can be improved by using other calibration methods \cite{magnus2013}.
 
-One of those method is the one by \cite{burruscal}. It's a same-automatic way to calibrate the Kinect depth sensor and the RGB output to enable a mapping between them. It's based on a standard stereo calibration technique but the main difficult comes from the depth image that is not able to detect patterns on a flat surface. So, the pattern is created using depth difference. On the first step, the color camera intrinsics are calibrated using standard chessboard recognition. In order to get the intrinsic parameters for the depth camera, the corners of the chessboard on the depth image are extracted and stored (by hand). The raw depth values are integers between 0 and 2047, which can be transformed in meters using some fixed internal values from Kinect, as shown on the following algorithm:
+One of those methods is the one by \cite{burruscal}. It's a same-automatic way to calibrate the Kinect depth sensor and the RGB output to enable a mapping between them. It's based on a standard stereo calibration technique but the main difficult comes from the depth image that is not able to detect patterns on a flat surface. So, the pattern is created using depth difference. On the first step, the color camera intrinsics are calibrated using standard chessboard recognition. In order to get the intrinsic parameters for the depth camera, the corners of the chessboard on the depth image are extracted and stored (by hand). The raw depth values are integers between 0 and 2047, which can be transformed in meters using some fixed internal values from Kinect, as shown on the following algorithm:
 
 \begin{algorithmic}
 \Function{raw\_depth\_to\_meters}{$raw\_depth$}
@@ -483,7 +455,7 @@ Regardless the representation of the source surface $P$, it is first converted t
   $d(p_i, x) = min_{x \in T} \Vert x - p_i \Vert$
 \end{center}
 
-All the closest points (one for each $p_i$) are returned as new a set ${q_i}$. A least squares registration between the points $p_i$ and $q_i$ can be performed and so the set of source points $p_i$ can be transformed to a set of points $p'_i$ using the rigid body transformations (composed by a rotation and a translation) that was calculated, and then the closest points can be identified again. The algorithm stops when the change in mean square error between two iterations goes below a threshold. Since the algorithm iterates to a local minimum closest to the starting point, it may not find the best solution, that's why the original authors propose to start the algorithm multiple times and then choose the minimum of the minima obtained \cite{icp}.
+All the closest points (one for each $p_i$) are returned as a new set ${q_i}$. A least squares registration between the points $p_i$ and $q_i$ can be performed and so the set of source points $p_i$ can be transformed to a set of points $p'_i$ using the rigid body transformations (composed by a rotation and a translation) that was calculated, and then the closest points can be identified again. The algorithm stops when the change in mean square error between two iterations goes below a threshold. Since the algorithm iterates to a local minimum closest to the starting point, it may not find the best solution, that's why the original authors propose to start the algorithm multiple times and then choose the minimum of the minima obtained \cite{icp}.
 
 The algorithm can be optimized by storing the solutions at each iteration, for example. Actually many variations were proposed to the original version, mainly focused on performance improvements, like using KD-trees \cite{zhang1994}, Lie group representation \cite{Dong201467} or expectation maximization estimation for point set registration with noise \cite{6957732}.
 
@@ -509,7 +481,7 @@ The depth map is converted into a three-dimensional point cloud by back-projecti
 
 The next stage is the alignment. The first point cloud is related to the model that was captured. From the second step on, the new point cloud is aligned to the current model and them merged to it in order to produce more refined model through iterative steps. The alignment is performed through the iterative closest point algorithm (ICP). A point-to-point approach is used here: for each point in the current point cloud, the closest one on the previous (global) point cloud is considered, and the distance between them is calculated. The final transformation at the step is the one that minimizes the total error between all point pairs. It's important to notice that KinectFusion doesn't use the standard ICP algorithm since it's too slow to be applied on a real-time context. The difference here is that is assumes that the changes between the current cloud and the previous one are small, which makes sense if the algorithm runs in real-time (for example, at 30 frames per second) and if the Kinect is moved slowly. The modified ICP back-projects the two clouds onto the camera image frame of the model and so they are considered to match if they fall on the same pixel. To make it even faster, the ICP iterations are performed at three resolutions. After a match is found, the modified ICP algorithm calculates the error between two points in a match by using a point-to-plane metric. Some iterations later, the modified ICP will generate a six degrees of freedom transformation matrix, composed by a rotation and a translation, which aligns the source point cloud with the target point cloud.
 
-After that, comes the reconstruction itself. Once the transformation is found and this the current pose of the camera can be estimated, the new cloud is ready to be merged with the current model. In order to avoid losing details, the raw depth data is used instead of the filtered one. This step is based on a Truncated Signed Distance Function (TSDF). What this function does is extract the surface of objects in the scene and assign negative numbers to pixels inside objects or inside an area not yet measured, and positive numbers to pixels outside the surface. For pixels on the surface, this number is zero, for pixels outside the surface, this value is greater for pixels far from the surface and lower for pixels near the surface. TSDF is computed for the new cloud and merged to the current model's TSDF.
+After that, comes the reconstruction itself. Once the transformation is found and thus the current pose of the camera can be estimated, the new cloud is ready to be merged with the current model. In order to avoid losing details, the raw depth data is used instead of the filtered one. This step is based on a Truncated Signed Distance Function (TSDF). What this function does is extract the surface of objects in the scene and assign negative numbers to pixels inside objects or inside an area not yet measured, and positive numbers to pixels outside the surface. For pixels on the surface, this number is zero, for pixels outside the surface, this value is greater for pixels far from the surface and lower for pixels near the surface. TSDF is computed for the new cloud and merged to the current model's TSDF.
 
 On the last step, the resulting TSDF is used to reconstruct the surface of the refined model, which is achieved through ray casting. It is performed from the global camera focal point by intersecting the zero level set of the TSDF. The refined ray-casted model will be used for the next step of the ICP alignment. The end result of the algorithm is a 3D surface representing the acquired scene.
 
@@ -557,7 +529,7 @@ Mathematically, the goal of the Lucas-Kanade is to minimize the sum of squared e
   $\sum_{x}{[I(W(x;p))-T(x)]^2}$
 \end{center}
 
-Where $W(x;p)$ denote the parametrized set of allowed warps, where $p = (p_1,...,p_n)^T$ is a vector of parameters. The warp $W(w;p)$ takes the pixel $x$ in the coordinate frame of the template $T$ and maps it to the sub-pixel location $W(x;p)$ in the coordinate frame of the image $I$. In this context of optical flow computation, the warps $W(w;p)$ are the translations:
+Where $W(x;p)$ denote the parametrized set of allowed warps and where $p = (p_1,...,p_n)^T$ is a vector of parameters. The warp $W(w;p)$ takes the pixel $x$ in the coordinate frame of the template $T$ and maps it to the sub-pixel location $W(x;p)$ in the coordinate frame of the image $I$. In this context of optical flow computation, the warps $W(w;p)$ are the translations:
 
 \begin{center}
 $W(w;p) = \begin{matrix}
@@ -593,7 +565,7 @@ One component in many algorithms is a coarse-to-fine strategy. The most common a
 \includegraphics[width=0.5\textwidth]{images/plk.png}
 \caption{Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first
 \label{fig:plk}
-mitigates the problems caused by violating our assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite{bradski2008learning}}
+mitigates the problems caused by violating the assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite{bradski2008learning}}
 \end{figure}
 
 The features to be tracked by the Lucas-Kanade algorithm can be manually defined or identified from an algorithm, like the popular one proposed by Shi and Tomasi \cite{shi}, called "good features to track", and implemented by the OpenCV library \cite{opencv}. The idea of this algorithm is a modification of the Harris Corner Detection \cite{harris}, which basically replaces Harris' scoring function. Figure \ref{fig:shi-harris} shows the feature points on the same input image as identified by both algorithms.
@@ -607,13 +579,13 @@ The features to be tracked by the Lucas-Kanade algorithm can be manually defined
 
 So, the Lucas-Kanade algorithm, applied over a good set of feature points, is an efficient method for obtaining optical flow information at interesting points in an image and works for moderate object speeds.
 
-\xchapter{Related works}{In this chapter I present some related works. Since it hasn't been found any work that uses a multi-view markerless augmented reality environment based on hybrid reconstruction, this chapter is divided into subjects related to the this work: usage of multiple Kinects, optical flow, markerless augmented reality, medical applications, multi-view environment, reconstruction, etc.}
+\xchapter{Related works}{This chapter presents some related works. Since it hasn't been found any work that uses a multi-view markerless augmented reality environment based on geometric models, this chapter is divided into subjects related to the this work: usage of multiple Kinects, optical flow, markerless augmented reality, medical applications, multi-view environment, reconstruction, etc.}
 
 \section{Augmented reality applications for medicine}
 
 On the field of augmented reality, one of the first approaches was to track known patterns, that's how much fiducial markers work. The traditional ARToolKit \cite{artoolkit} is probably the most famous of them and augments virtual objects onto black and white square markers. Its advantage is simplicity and performance, since it works also with modest computers and commodity cameras. However, it doesn't support any kind of occlusion, since its fitting process is based on a four-lines approach that requires the marker to be fully visible by the camera.
 
-Augmented reality has been widely implemented on medicine on the last years, for training, simulation, therapy and so on. Many works on this field are based on fiducial markers in order to calculate the camera's real position in relation to the marker's real position, like the system called ARBioMed \cite{arbiomed}. The idea of this system is to represent a virtual, three-dimensional heart over a marker placed on the target user's chest. This virtual heart has its pulsation simulated according to a received signal. From this system, the operator user can define, through a user interface, a fixed pulse rate to be simulated on the heart. In order to set the size of the heart based on the dimensions of the user chest, two other fiducial markers are used, as shown on Figure \ref{fig:arbiomed}. This architecture makes the implementation simpler, since it is based on ARToolKit \cite{artoolkit}, a popular and straightforward framework for augmented reality based on fiducial markers. However, the markers pollute the augmented reality scene and offers a less comfortable experience to the target user, since the markers are invasive.
+Augmented reality has been widely implemented on medicine on the last years, for training, simulation, therapy and so on. Many works on this field are based on fiducial markers in order to calculate the camera's real position in relation to the marker's real position, like the system called ARBioMed \cite{arbiomed}. The idea of this system is to represent a virtual, three-dimensional heart over a marker placed on the target user's chest. This virtual heart has its pulsation simulated according to a received signal. From this system, the operator user can define, through a user interface, a fixed pulse rate to be simulated on the heart. In order to set the size of the heart based on the dimensions of the user chest, two other fiducial markers are used, as shown on Figure \ref{fig:arbiomed}. This architecture makes the implementation simpler, since it is based on ARToolKit \cite{artoolkit}, a popular and straightforward framework for augmented reality based on fiducial markers. However, the markers pollute the augmented reality scene and offer a less comfortable experience to the target user, since they are invasive.
 
 \begin{figure}
 \centering
@@ -656,24 +628,24 @@ Other alternatives to fiducial markers are proposed on \cite{wuest}, that uses a
 
 The system designed on \cite{ZhangL12} allows any object from the environment to be used as a marker, instead of using a fiducial marker. Besides that, the system was designed to work with low-contrast surfaces (like human hand marks). In order to place a three-dimensional object, the system uses salient points from the environment combined with a local texture, which turns the detection much more stable.
 
-Like that work, other works show that feature detection on the target scene can achieve good performance. Descriptors are usually computed from key-points of the scene, so, they don't reach great performance when dealing with objects without texture and/or with few key-points on their surfaces \cite{bay}.
+Like that work, other works show that feature detection on the target scene can achieve good performance. Descriptors are usually computed from key-points of the scene, so, they don't reach high accuracy when dealing with objects without texture and/or with few key-points on their surfaces \cite{bay}.
 
 On the other hand, object recognition based on depth focuses on geometric properties of the target, like curves or edges. An object can be identified based on its depth map.
 
 \section{Sensors}
 
-Recently augmented reality works use sensors in order to capture scene data and use them for pose estimation, replacing the need for markers. Such sensors can capture real images from the scene in order to identify natural marks or features, or can even capture three-dimensional objects to be used as geometric markers.
+Recent augmented reality works use sensors in order to capture scene data and use it for pose estimation, replacing the need for markers. Such sensors can capture real images from the scene in order to identify natural marks or features, or can even capture three-dimensional objects to be used as geometric markers.
 
 The study on \cite{Lee20125286} proposes a cranial augmented reality system which performs image-to-patient registration using only natural facial features. The hardware for this project is composed by three calibrated cameras and no fiducial markers. Two of the cameras are mounted together in order to form a stereo-vision system, while the third camera moves freely and captures real-time images for displaying with the virtual image. The patient's head is first reconstructed by stereo vision, while another surface is reconstructed from computed tomography images. An algorithm based on the iterative closest point (ICP) is then used to register the two facial data, which transfers the facial information from the computer tomography images to the physical space. The reconstruction, as expected, comes with noisy data, so the conventional ICP would suffer from the local-minimum problem of not reaching the best match. Therefore, the authors also propose an improvement to the ICP algorithm in order to increase robustness.
 
-An interesting approach that uses the human hand as a marker is proposed by \cite{4373785}. On the calibration stage, an algorithm based on computer vision detects the user's hand (by checking the contours of the fingers) and use them as a reference pattern, thus providing a virtual camera with six degrees of freedom on the user's hand, that's where virtual objects will be projected. On the next stage, the user can move his hand arbitrarily and so the virtual object projected on his hand will mode accordingly too. This is an example of augmented reality application that uses image analysis to identify where to project the virtual object.
+An interesting approach that uses the human hand as a marker is proposed by \cite{4373785}. On the calibration stage, an algorithm based on computer vision detects the user's hand (by checking the contours of the fingers) and use them as a reference pattern, thus providing a virtual camera with six degrees of freedom on the user's hand, that's where virtual objects will be projected. On the next stage, the user can move his hand arbitrarily and so the virtual object projected on his hand will move accordingly too. This is an example of augmented reality application that uses image analysis to identify where to project the virtual object.
 
 Another system that treats the user hand as a marker is presented on \cite{51078809}. On this implementation, the user can interact with menus and three-dimensional objects without using any fiducial marker. The system is activated from a specific motion performed by the user's hand, which is captured by a Kinect device. The interaction means selecting and controlling a set of virtual objects and buttons that are displayed in front of the user, which wears a pair of augmented reality glasses. 
 
 \section{Multiple Kinects}
 
 More than one Kinect is needed when the use case is capturing a large volume, full 3D reconstruction, tracking or super resolution. 
-However, when more than one Kinect device is used, new challenges come in. Data captured from the overlapping region between two or more Kinects usually have poor quality due to the interference, since the depth sensing technology limits the use of multiple Kinects \cite{roy}. This noticed from the depth maps, which suffer major quality degradation in overlapping areas. In places of depth uncertainty, Kinect will place zero values, and so, holes will be created. The difference between using a single Kinect and multiple Kinects is represented on Figure \ref{fig:twokin}. 
+However, when more than one Kinect device is used, new challenges come in. Data captured from the overlapping region between two or more Kinects usually have poor quality due to the interference, since the depth sensing technology limits the use of multiple Kinects \cite{roy}. This can be noticed from the depth maps, which suffer major quality degradation in overlapping areas. In places of depth uncertainty, Kinect will place zero values, and so, holes will be created. The difference between using a single Kinect and multiple Kinects is represented on Figure \ref{fig:twokin}. 
 
 \begin{figure}
 \centering
@@ -716,26 +688,26 @@ One approach to use visual information to improve geometric mapping is discussed
 
 The closest to what is done on this work is the work by \cite{kinectkanade}, which improves the KinectFusion algorithm by using the Lucas-Kanade algorithm in cases of low geometric features.
 
-An application of the hybrid-based tracking is also noticed on \cite{tryon}. It's a virtual try-on system that employs one Kinect sensor and one high definition camera. It covers the calibration of the HD camera in relation to the Kinect sensor, which is based on the OpenCV implementation of a standard chessboard calibration \cite{matlab}. On this work, the Kinect is used for skeleton tracking and height estimation, and the HD camera is used for capturing a better video from the user.
+An application of the hybrid-based tracking is also noticed on \cite{tryon}. It's a virtual try-on system that employs one Kinect sensor and one high definition camera. It covers the calibration of the HD camera in relation to the Kinect sensor, which is based on the OpenCV implementation of a standard chessboard calibration \cite{matlab}. On that work, the Kinect is used for skeleton tracking and height estimation, and the HD camera is used for capturing a better video from the user.
 
-\xchapter{Solution architecture}{In this chapter I explain in details the steps performed in order to implement the objective of this work.}
+\xchapter{Solution architecture}{This chapter explains in details the steps performed in order to implement the objective of this work.}
 
-In order to achieve the objectives of this work, it was necessary to implement some softwares and auxiliary codes, all of them based on other open source code or open source libraries. All the code implemented on this work was released under open licenses and is available on public repositories, which will be informed along this chapter. All the documentation about the code implemented on this work is available on the appendix.
+In order to achieve the objectives of this work, it was necessary to implement some softwares and auxiliary codes, all of them based on other open source code or open source libraries. All the code implemented on this work was released under open licenses and is available on public repositories, which will be informed along this chapter.
 
 \section{Environment}
 \label{sec:env}
 
-An augmented reality system is composed by two basic components: software and hardware. Hardware means input devices, displayed, processors and networks. Software means the augmented reality application plus trackers, image mergers, interaction functions and multi-modal interfaces \cite{tori2006fundamentos}. The implementation of the environment proposed by this work involved arrangement, configuration, implementation, calibration, transformation, communication and tunning.
+An augmented reality system is composed by two basic components: software and hardware. Hardware means input devices, displays, processors and networks. Software means the augmented reality application plus trackers, image mergers, interaction functions and multi-modal interfaces \cite{tori2006fundamentos}. The implementation of the environment proposed by this work involved arrangement, configuration, implementation, calibration, transformation, communication and tunning.
 
 The development environment chosen for the implementation is based on GNU/Linux, supported by the distributions Debian 6 (due to stability) and its variation Ubuntu 12.04 (the 12.04 was told to be more stable for many of the open libraries used by this implementation \cite{pcl14}). All the code was written in C/C++ and all used libraries are released under open licenses. Both machines employed on this environment are 32 bits, so there is no guarantee that it will work on 64 bits (but in theory it should). Since the relevant libraries have versions for both Windows and Linux systems, all code here is theoretically portable to Windows.
 
-Two computers were employed on this environment, because, as it's going to be explained on next sections, the number of USB ports or throughput of one computer was not enough. The machine used for most of the tasks was a notebook Dell Inspiron 14R 5421-A20, Intel Core i7 with 8GB of RAM memory, 1 TB of disk space and 2 GB dedicated video card NVIDIA GeForce GT 640M LE. The other machine is a simple laptop, an ACER notebook with just 2 GB of RAM memory, an Atom processor dual-core and no dedicated video. The former runs Ubuntu 12.04 while the latter runs Debian 6. Most of the code implemented here is based on the KinectFusion (explained on section \ref{sec:kinfu}) implementation on PCL, which requires a Nvidia graphics card with CUDA support. There wasn't a native driver for that graphics card for Ubuntu, so it was necessary to use a third-party project called Bumblebee \cite{bumblebee}, which aims to provide support for Nvidia Optimus technology for GNU/Linux distributions. After compiling and installing its drivers, it was possible to run CUDA on Linux, by just prefixing an \textit{optirun} prefix before running any executable on the command line.
+Two computers were employed on this environment, because, as it's going to be explained further, the number of USB ports or throughput of one computer was not enough. The machine used for most of the tasks was a notebook Dell Inspiron 14R 5421-A20, Intel Core i7 with 8GB of RAM memory, 1 TB of disk space and 2 GB dedicated video card NVIDIA GeForce GT 640M LE. The other machine is a simple laptop, an ACER notebook with just 2 GB of RAM memory, an Atom dual-core processor and no dedicated video. The former runs Ubuntu 12.04 while the latter runs Debian 6. Most of the code implemented here is based on the KinectFusion (explained on section \ref{sec:kinfu}) implementation on PCL, which requires a Nvidia graphics card with CUDA support. There wasn't a native driver for that graphics card for Ubuntu, so it was necessary to use a third-party project called Bumblebee \cite{bumblebee}, which aims to provide support for Nvidia Optimus technology for GNU/Linux distributions. After compiling and installing its drivers, it was possible to run CUDA on Linux, by just prefixing an \textit{optirun} prefix before running any executable on the command line.
 
 The multi-view environment proposed by this work is composed by two Kinects and one pair of augmented reality glasses.
 
 The Kinects are from the first generation and most of its internal workings were explained on section \ref{sec:kinect}. For both, the depth sensor and RGB camera are used, but the audio features are not used for anything.
 
-As explained on section \ref{sec:dirind}, an augmented reality experience can be classified in two different ways depending on how the user sees the mixed world. When the user sees the mixed world pointing his eyes directly to the real positions of the object or scene, this experience is classified as \textit{direct view}, while when the user sees the mixed world through a monitor screen or projector, this experience is classified as \textit{indirect view}. On this work, augmented reality glasses are used in order to guarantee a \textit{direct view} experience to the observer. The augmented reality glasses employed on this work are Vuzix Wrap 920AR, whose photo is on Figure \ref{fig:glasses}. This device has a VGA adapter that can be connected to the computer. It also has a motion tracker based on accelerometer and magnetometer which connects to a device's special port and allows softwares to track direction, viewing angle and motion of the user. Two modified USB cameras are placed on the front of the lenses (one camera on each lens) and be connected to the computer as two VGA webcams. Behind each lens, there is a screen whose resolution is 640 x 480 pixels. So, what the user sees in front of his eyes is a rectangular screen, which doesn't provide a full immersive experience. The glasses have three cables: a VGA (a single VGA output that provides access to both screens) and two USB (one for both cameras and the other that is an interface for the accelerometer/magnetometer data).
+As explained on section \ref{sec:dirind}, an augmented reality experience can be classified in two different ways depending on how the user sees the mixed world. When the user sees the mixed world pointing his eyes directly to the real positions of the object or scene, this experience is classified as \textit{direct view}, while when the user sees the mixed world through a monitor screen or projector, this experience is classified as \textit{indirect view}. On this work, augmented reality glasses are used in order to guarantee a \textit{direct view} experience to the observer. The augmented reality glasses employed on this work are Vuzix Wrap 920AR, whose photo is on Figure \ref{fig:glasses}. This device has a VGA adapter that can be connected to the computer. It also has a motion tracker based on accelerometer and magnetometer which connects to a device's special port and allows softwares to track direction, viewing angle and motion of the user. Two modified USB cameras are placed on the front of the lenses (one camera on each lens) and are connected to the computer as two VGA webcams. Behind each lens, there is a screen whose resolution is 640 x 480 pixels. So, what the user sees in front of his eyes is a rectangular screen, which doesn't provide a full immersive experience. The glasses have three cables: a VGA (a single VGA output that provides access to both screens) and two USB cables (one for both cameras and the other that is an interface for the accelerometer/magnetometer data).
 
 \begin{figure}
 \centering
@@ -773,7 +745,7 @@ Back to the global view of the proposed environment represented on Figure \ref{f
 \label{fig:env}
 \end{figure}
 
-The diagram at Figure \ref{fig:env} represents the main components of the augmented reality environment and their main roles. First of all, it's worth noticing that all these components and roles will be explained in more details on sections \ref{sec:method1} and \ref{sec:method2}. As it will be better explained on section \ref{sec:kinectscalib}, each Kinect needs to be connect to not only a USB port, but more than that, a USB hub. This is also stated on \cite{kinecthacks} on the section about \textit{Multiple Kinects}. Most computers have two USB hubs, which allows the user to use at most two Kinects at the same time, and this is the case here too. The Dell computer employed here has three USB ports, where two are on the same hub. Since each Kinect gets a USB port from each hub, the remaining USB port is used by the video input cable from the glasses and the VGA output cable from the glasses are connected to the Dell computer too. This way, it's possible to avoid transferring video streams (regardless input or output) over the network, what could add a reasonable delay to the whole process. The remaining connector from the glasses is the USB cable responsible for streaming the accelerometer/magnetometer data. This one is connect to the Acer computer, since its computation is not costly and transferring a tuple of values over the network is not costly either. Both computers are on the same network (more details about this on section \ref{sec:comm}. The Dell computer is responsible for running the heaviest softwares, which are two: MyKinFu (based on PCL's KinectFusion implementation), which is the core of this environment and connects all other components, and MyKinFuHeadless, which is based on the former but just keeps the code necessary to calculate the transformation of the movement performed by the observer.
+The diagram at Figure \ref{fig:env} represents the main components of the augmented reality environment and their main roles. First of all, it's worth noticing that all these components and roles will be explained in more details on sections \ref{sec:method1} and \ref{sec:method2}. As it will be better explained on section \ref{sec:kinectscalib}, each Kinect needs to be connect to not only a USB port, but more than that, a USB hub. This is also stated on \cite{kinecthacks} on the section about \textit{Multiple Kinects}. Most computers have two USB hubs, which allows the user to use at most two Kinects at the same time, and this is the case here too. The Dell computer employed here has three USB ports, where two are on the same hub. Since each Kinect gets a USB port from each hub, the remaining USB port is used by the video input cable from the glasses and the VGA output cable from the glasses are connected to the Dell computer too. This way, it's possible to avoid transferring video streams (regardless input or output) over the network, what could add a reasonable delay to the whole process. The remaining connector from the glasses is the USB cable responsible for streaming the accelerometer/magnetometer data. This one is connect to the Acer computer, since its computation is not costly and transferring a tuple of values over the network is not costly either. Both computers are on the same network (more details about this on section \ref{sec:comm}). The Dell computer is responsible for running the heaviest softwares, which are two: MyKinFu (based on PCL's KinectFusion implementation), which is the core of this environment and connects all other components, and MyKinFuHeadless, which is based on the former but just keeps the code necessary to calculate the transformation of the movements performed by the observer.
 
 To finish this section, Figure \ref{fig:expenv} is a photo of the experimental environment arranged for this implementation.
 
@@ -800,7 +772,7 @@ On Figure \ref{fig:expenv2} each component is numbered for easy identification. 
   \item Kinect that captures the target model;
   \item Kinect over a tripod, to capture the observer;
   \item A doll that acts as the target model;
-  \item The Acer computer, employed just to calculate the observer's movement based on accelerometer/magnetometer data from the glasses;
+  \item The Acer computer, employed just to calculate the observer's motion based on accelerometer/magnetometer data from the glasses;
   \item The Dell computer, responsible for the core code and the main computation;
   \item An external USB hub with external power supply, needed by the video USB cable of the glasses (since the Kinect uses most of the power of the hub which it is connected to)
   \item The chessboard used for calibration;
@@ -826,7 +798,7 @@ This section will cover the calibration of each component of the multi-view envi
 \subsection{Augmented reality glasses calibration}
 \label{sec:glasses}
 
-As informed on the manufacturer's support website \cite{vuzixsupport}, the API the accompanies the device doesn't have support under GNU/Linux environments. Under Microsoft Windows or Macintosh environments, calibration could be done by using a software provided by the manufacturer. Since one of the objectives was that the environment worked fully on a GNU/Linux environment, it was decided to implement an open driver for Linux that could be able to get raw data from the accelerometer/magnetometer and convert those to yaw, pitch and roll according to the movement of the observer's head, as shown on Figures \ref{fig:glasses1} and \ref{fig:glasses2}. The development of this driver was guided by the information on the Vuzix SDK guide \cite{vuzixsdk}.
+As informed on the manufacturer's support website \cite{vuzixsupport}, the API that accompanies the device doesn't have support under GNU/Linux environments. Under Microsoft Windows or Macintosh environments, calibration could be done by using a software provided by the manufacturer. Since one of the objectives was that the environment worked fully on a GNU/Linux environment, it was decided to implement an open driver for Linux that could be able to get raw data from the accelerometer/magnetometer and convert those to yaw, pitch and roll according to the movement of the observer's head, as shown on Figures \ref{fig:glasses1} and \ref{fig:glasses2}. The development of this driver was guided by the information on the Vuzix SDK guide \cite{vuzixsdk}.
 
 \begin{figure}
 \centering
@@ -844,7 +816,7 @@ As informed on the manufacturer's support website \cite{vuzixsupport}, the API t
 
 The coordinates system of the augmented reality glasses' tracker is represented on Figure \ref{fig:glasses2}. The zero point of yaw movement is looking straight ahead. On the Wrap 920AR model, yaw and roll are valid over the range of -180\degree to +180\degree, while valid values for pitch are over the range of -90\degree to +90\degree. The zero point is forward for all axes. Yaw increments to the left, roll increments as the head turns towards the right shoulder and pitch increments as the user looks up.
 
-The implemented driver has two major components: a \textit{rules} file, that allows its correct recognition by the computer, and a \textit{decoder}, written on C/C++, responsible for analyzing the raw data that comes from the glasses. The driver recognizes the device connected on the USB port and maps it to the location \textit{/dev/wrap920AR}, as virtual device. In order to that, a rules file is placed at \textit{/etc/udev/rules.d}, that contains the device identification (defined by properties \textit{VendorID} and \textit{ProductID}) and the path to the executable file that needs to be run when such device is recognized. This executable is the \textit{decoder}, a C++ program that, based on device's input data, returns values for yaw, pitch and roll. Those values are returned as Euler angles, as integer values in order to reduce little variations caused by interference and thus provide more stability. The rules evaluation and mapping to the correct location is done by \textit{udev}, an utility to manage paths under \textit{/dev} on UNIX-based systems, through evaluating rules defined by the system's administrator \cite{udev}. Evaluation is done when the device is plugged to the computer. In the case here, it was also necessary to blacklist some drivers at kernel level in order to avoid misinterpretation of the glasses by the computer.
+The implemented driver has two major components: a \textit{rules} file, that allows its correct recognition by the computer, and a \textit{decoder}, written on C/C++, responsible for analyzing the raw data that comes from the glasses. The driver recognizes the device connected on the USB port and maps it to the location \textit{/dev/wrap920AR}, as virtual device. In order to that, a rules file is placed at \textit{/etc/udev/rules.d}, that contains the device identification (defined by properties \textit{VendorID} and \textit{ProductID}) and the path to the executable file that needs to be run when such device is recognized. This executable is the \textit{decoder}, a C++ program that, based on device's input data, returns values for yaw, pitch and roll. Those values are returned as Euler angles, as integer values in order to reduce little (but frequent) variations caused by interference and thus provide more stability. The rules evaluation and mapping to the correct location is done by \textit{udev}, an utility to manage paths under \textit{/dev} on UNIX-based systems, through evaluating rules defined by the system's administrator \cite{udev}. Evaluation is done when the device is plugged to the computer. In the case here, it was also necessary to blacklist some drivers at kernel level in order to avoid misinterpretation of the glasses by the computer.
 
 The decoder receives raw data from the glasses, which are organized as blocks of 42 bytes structured like Table \ref{tab:glassesdata}.
 
@@ -882,13 +854,13 @@ The device calibration is done on the first run (or if any calibration file is f
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{images/glasseslog.png}
-\caption{Glasses calibration log}
+\caption{Glasses driver log}
 \label{fig:glasseslog}
 \end{figure}
 
-The calibration result is is stored on a configuration file on the user's home directory. Those values will be used on the next run of the tracker. If the glasses are going to be used on another environment different from the one where it was calibrated, a new calibration might be necessary. In order to do that, it's enough to remove the calibration file created on the user's home directory.
+The calibration result is stored on a configuration file on the user's home directory. Those values will be used on the next run of the tracker. If the glasses are going to be used on another environment different from the one where it was calibrated, a new calibration might be necessary. In order to do that, it's enough to remove the calibration file that was created on the user's home directory.
 
-The calculated results for yaw, pitch and roll are available at the location \textit{/dev/wrap920AR} and can be read by any program by simply using a file handler, since on UNIX-like systems, the locations under \textit{/dev} are like normal files. An example was an auxiliary code that was implemented in order to test the glasses' tracker accuracy, and also publicly available at \cite{masterproject}. It reads glasses' tracker data and moves a three-dimensional cube accordingly, as shown on Figure \ref{fig:glassescube}. A video is available at \cite{videos}.
+The calculated results for yaw, pitch and roll are available at the location \textit{/dev/wrap920AR} and can be read by any program by simply using a file handler, since on UNIX-like systems, the locations under \textit{/dev} are like normal files. An example was an auxiliary code that was implemented in order to test the glasses' tracker accuracy, and also publicly available at \cite{masterproject}. It reads glasses' tracker data and moves a three-dimensional cube like it was seen by the glasses, as shown on Figure \ref{fig:glassescube}. A video is available at \cite{videos}.
 
 \begin{figure}
 \centering
@@ -897,7 +869,7 @@ The calculated results for yaw, pitch and roll are available at the location \te
 \label{fig:glassescube}
 \end{figure}
 
-Glasses' tracker information is used as one of the approaches for tracking the observer's head, as will be explained on section \ref{sec:method1}.
+Glasses' tracker information is used as one of the approaches for tracking the observer's head, as it will be explained on section \ref{sec:method1}.
 
 \subsection{Initial calibration between Kinects}
 \label{sec:kinectscalib}
@@ -998,7 +970,7 @@ $q = G^{-1} \times b$
 
 The algorithm sets the center of the neighborhood window at this new center $q$ and then iterates until the center stays within a set threshold \cite{opencvfd}. On this case here, the criteria for termination of the iterative process of corner refinement is when the number of iterations is 30 or when the corner position moves by less than 0.1 on some iteration. After that, corners are stored and the process continues with the next frame.
 
-After 40 chessboard patterns are recognized by both cameras, calibration actually starts. Here it's employed the function \textit{calibrateCamera} the distance coefficients and camera matrix for each camera, and these values will be used for the stereo calibration of both cameras, which is performed by the \textit{stereoCalibrate} function. This function estimates the transformation between two cameras making a stereo pair. It's possible to use this function here since the previous step computed poses of the chessboard relative to both cameras and the orientation and relative position of the two cameras is fixed (the observer can move his head, what would move the glasses' camera, but when he does it, the transformation from this calibration is not used anymore, this information is just used for an initial alignment). So, this function computes $(R, T)$ so that \cite{opencvsc}:
+After 40 chessboard patterns are recognized by both cameras, calibration actually starts. Here it's employed the function \textit{calibrateCamera} to determine the distance coefficients and camera matrix for each camera, and these values will be used for the stereo calibration of both cameras, which is performed by the \textit{stereoCalibrate} function. This function estimates the transformation between two cameras making a stereo pair. It's possible to use this function here since the previous step computed poses of the chessboard relative to both cameras and the orientation and relative position of the two cameras is fixed (the observer can move his head, what would move the glasses' camera, but when he does it, the transformation from this calibration is not used anymore, this information is just used for an initial alignment). So, this function computes $(R, T)$ so that \cite{opencvsc}:
 
 \begin{center}
 $R_2 = R \times R_1$
@@ -1008,9 +980,9 @@ $R_2 = R \times R_1$
 $T_2= R \times T_1 + T$
 \end{center}
 
-This function is also able to perform an individual calibration of each camera before the stereo calibration, but the decision calibrate first each camera separately is to achieve a higher accuracy.
+This function is also able to perform an individual calibration of each camera before the stereo calibration, but the decision of calibrating first each camera separately is to achieve a higher accuracy.
 
-This function can also compute the essential matrix and the fundamental matrix, but here the interest is only on the rotation matrix and on the translation vector, that, once computed, are stored on a YAML \cite{yaml} file called \textit{mystereocalib.yml}. The decision for this format is is because OpenCV has a native feature to store and then restore various OpenCV data structures on YAML files. It's possible to store and load arbitrarily complex data structures, which include OpenCV data structures, as well as primitive data types (including floating-point numbers) as their elements. This way, the main component of the augmented reality system, which will be explained on sections \ref{sec:method1} and \ref{sec:method2}, can easily obtain the transformation of the Kinect's camera to the glasses' camera through the rotation matrix and translation vector. An example of such output file is below:
+This function can also compute the essential matrix and the fundamental matrix, but here the interest is only on the rotation matrix and on the translation vector, that, once computed, are stored on a YAML \cite{yaml} file called \textit{mystereocalib.yml}. The decision for this format is because OpenCV has a native feature to store and then restore various OpenCV data structures on YAML files. It's possible to store and load arbitrarily complex data structures, which include OpenCV data structures, as well as primitive data types (including floating-point numbers) as their elements. This way, the main component of the augmented reality system, which will be explained on sections \ref{sec:method1} and \ref{sec:method2}, can easily obtain the transformation of the Kinect's camera to the glasses' camera through the rotation matrix and translation vector. An example of such output file is below:
 
 \begin{minted}[
 gobble=4,
@@ -1035,7 +1007,7 @@ gobble=4,
                 1.3012152778240264e+01 ]
 \end{minted}
 
-The calibration process doesn't provide a perfect transformation between the two cameras, but after experimenting the parameters for the OpenCV functions and making attempts until the final version of the calibration code was ready, the result was reasonable for a initial aligment. Figure \ref{fig:kinect2glasses} illustrates three steps of this process: chessboard being recognized by both cameras (Figure \ref{fig:kinect2glassesa}), reconstruction of the model captured by the Kinect from the Kinect's point of view (Figure \ref{fig:kinect2glassesb}) and finally the reconstructed model transformed to the glasses' camera space according to the transformation that resulted from the calibration process (Figure \ref{fig:kinect2glassesc}). More details about the reconstruction and the transformation will be given on the following section \ref{sec:method1}.
+The calibration process doesn't provide a perfect transformation between the two cameras, but after experimenting the parameters for the OpenCV functions and making attempts until the final version of the calibration code was ready, the result was reasonable for a initial aligment. Figure \ref{fig:kinect2glasses} illustrates three steps of this process: chessboard being recognized by both cameras (Figure \ref{fig:kinect2glassesa}), reconstruction of the model captured by the Kinect from the Kinect's point of view (Figure \ref{fig:kinect2glassesb}) and finally the reconstructed model transformed to the glasses' camera space according to the transformation that resulted from the calibration process (Figure \ref{fig:kinect2glassesc}). More details about the reconstruction and the transformation will be given on the section \ref{sec:method1}.
 
 \begin{figure}
 \centering
@@ -1099,7 +1071,7 @@ Cross-over & 0.203 ms & 0.194 ms & 0.196 ms & 0.175 ms & 0.166 ms & 0.168 ms \\
 \end{tabular}
 \end{table}
 
-Is also worth noticing that on this case the network was dedicated only to this task (there wasn't no any other device on connected to the network, regardless the configuration). So, in a real situation, with more devices competing for packets, the difference from the cross-over connection to the other two could be even higher. It's also possible to notice from Table \ref{tab:ping} that the cross-over approach has the lowest difference between the average and the higher time spent to send a packet, which shows its higher stability.
+It's also worth noticing that on this case the network was dedicated only to this task (there wasn't no any other device connected to the network, regardless the configuration). So, in a real situation, with more devices competing for packets, the difference from the cross-over connection to the other two could be even higher. It's also possible to notice from Table \ref{tab:ping} that the cross-over approach has the lowest difference between the average and the higher time spent to send a packet, which shows its higher stability.
 
 Once the computers are connected, the glasses were ready to send the values of yaw, pitch and roll to the main computer. Basically there were two protocols here that could be used: TCP or UDP (see Figure \ref{fig:udptcp}). They are not the unique protocols that work at the transport layer of a network, but the most used ones. TCP means \textit{Transmission Control Protocol} and is the most common way to transfer packets over the internet. The biggest feature of TCP is reliability: it manages message acknowledgment, retransmission and timeout. It does multiple attempts to deliver the message and if it gets lost along the way, the server will re-request the lost part. In TCP, there's either no missing data. However, it's also heavier: it requires three packets to setup a socket connection, before any data can be sent \cite{udp}.
 
@@ -1110,14 +1082,14 @@ Once the computers are connected, the glasses were ready to send the values of y
 \label{fig:udptcp}
 \end{figure}
 
-On the other hand, UDP (which stands \textit{User Datagram Protocol}, uses a simple connectionless transmission model with a minimum protocol mechanism. It's unreliable: when a UDP message is sent, there is no guarantee that it will reach the client, since it can get lost along the way. There is no concept of acknowledgment, retransmission, timeout, ordering or congestion control. However, it is also lightweight: applications can send messages (called \textit{datagrams}) to other hosts without prior communications or special configurations. Time-sensitive applications often use UDP because dropping packets is preferable to waiting for delayed packets, which may not be an option in a real-time system \cite{udp}, like this one.
+On the other hand, UDP (which stands for \textit{User Datagram Protocol}, uses a simple connectionless transmission model with a minimum protocol mechanism. It's unreliable: when a UDP message is sent, there is no guarantee that it will reach the client, since it can get lost along the way. There is no concept of acknowledgment, retransmission, timeout, ordering or congestion control. However, it is also lightweight: applications can send messages (called \textit{datagrams}) to other hosts without prior communications or special configurations. Time-sensitive applications often use UDP because dropping packets is preferable to waiting for delayed packets, which may not be an option in a real-time system \cite{udp}, like this one.
 
 Since any control is provided by the UDP protocol, on the application that gets the glasses' tracker data an index number and prefix are attached to the datagram, along with the integer values for yaw, pitch and roll. For example, a valid datagram sent by this application through a UDP socket is \textit{GYPR 12 0 32 67}, where \textit{GYPR} (which stands for \textit{Glasses Yaw Pitch Roll}) is a prefix that identifies this packet as one coming from the application, \textit{12} means that this is related to the 12º frame, and \textit{0}, \textit{32} and \textit{67} are the degrees values for yaw, pitch and roll, respectively. Hosts and ports involved on this communication are defined as configuration options for the client and server applications. More details on this application will be explained on the next section \ref{sec:method1}.
 
 \section{Method 1: Glasses accelerometer and one Kinect}
 \label{sec:method1}
 
-Once the devices were calibrated and able to communicate, it was time to connect all of them in a single augmented reality environment. On this work we tried two different approaches to track the observer's head movement: by using glasses' data or by using the observer's model as captured by another Kinect device. On this chapter, the former will be explained.
+Once the devices were calibrated and able to communicate, it was time to connect all of them in a single augmented reality environment. On this work two different approaches were tried in order to track the observer's head movement: by using glasses' data or by using the observer's model as captured by another Kinect device. On this chapter, the former will be explained.
 
 The main component implemented on this approach is based on \textit{MyKinectFusion} \cite{marcio}. \textit{MyKinectFusion} is a fork of \textit{KinFu} that supports augmented reality with polygonal surfaces or medical volumes. So, the merging of virtual images with real ones is handled by this part of the code, while here the goal is to transform the reconstructed and augmented model to the different view points of this multi-view environment. Finally, \textit{KinFu} is an open source implementation of KinectFusion algorithm and is part of the PCL library, but not available on the stable version of PCL (as of version 1.4, the one employed here), but can be found on the repositories of the library. The code is written in C++ and uses the PCL libraries. \textit{KinFu} itself introduces a few modifications to the original KinectFusion algorithm, as can be noticed by reading the source code. KinFu can work with any OpenNI-compatible device, while KinectFusion just works with Kinect, as expected. The normal estimation step is done through eigenvalue estimation instead of simple cross-vector computation. Rendering is done using a marching cubes algorithm instead of ray casting. It's also possible to save the surface meshes and to represent the point clouds \cite{michele}. Basically, the original code used as base here captures and reconstructs a model, in real-time, according to the Kinect's point of view. The fork implemented on this stage of the project is available at \cite{mykinfu} and integrates the reconstruction features of the original KinFu and the augmented reality support of MyKinectFusion with the glasses' tracking data. The new steps performed here, for each frame, in real-time, are:
 
@@ -1135,7 +1107,7 @@ Each step will be explained in details along this chapter.
 
 The first step here was to port the source code of \textit{MyKinectFusion} from Microsoft Windows to GNU/Linux, until it compiled and ran successfully on Ubuntu 12.04 through \textit{optirun} with CUDA support. The next step was to segment the model, and this was achieved by implementing a truncation of the points that are after a defined threshold, which can be configured, but here the value used was 700 millimeters, so any point from the point cloud that is beyond this value is ignored. Since there are the depth maps, the information about the depth of each point is available. On the experimentation phase, the employed doll (as seen on Figure \ref{fig:expenv}) was not rigid enough to keep its head up, so in order to segment its head, a carton was placed behind that and it was implemented a temporary chroma key feature in order to remove the background and then segment the head. The background removal step was removed afterwards, when running with real people.
 
-The full documentation about the source code is available on the appendix, so here only the most important and altered classes and methods will be covered. The \textit{Reconstruction} class is responsible for handling the reconstructed target model captured by the Kinect device and is instantiated when the code starts. The output file of the calibration process described on section \ref{sec:kinect2glasses} is used as an initial alignment to transform the target model to the glasses' point of view. In order to do that, a new method was implemented on the \textit{Reconstruction} class, called \textit{readPoseFromFile}. This method is run for each frame, and looks for a file called \textit{calibration.yml} on the root of code base. Since it is a native format from OpenCV, the values for the rotation matrix and translation vector are naturally read to variables, which are stored in memory (so the file is not opened for reading and unserialized again for the next frames, which improves the performance) and composed of the current rotation and translation of the reconstructed model by applying the following equations:
+For simplicity's sake, here only the most important and altered classes and methods will be covered. The \textit{Reconstruction} class is responsible for handling the reconstructed target model captured by the Kinect device and is instantiated when the code starts. The output file of the calibration process described on section \ref{sec:kinect2glasses} is used as an initial alignment to transform the target model to the glasses' point of view. In order to do that, a new method was implemented on the \textit{Reconstruction} class, called \textit{readPoseFromFile}. This method is run for each frame, and looks for a file called \textit{calibration.yml} on the root of code base. Since it is a native format from OpenCV, the values for the rotation matrix and translation vector are naturally read to variables, which are stored in memory (so the file is not opened for reading and unserialized again for the next frames, which improves the performance) and composed of the current rotation and translation of the reconstructed model by applying the following equations:
 
 \begin{center}
 $R = R_{current} \times R_{file}^{-1}$
@@ -1147,9 +1119,9 @@ Where $R$ is the final rotation to be applied to the reconstructed model, $R_{cu
 $T = R_{file}^{-1} \times T_{curr} + T_{file}$
 \end{center}
 
-Where $T$ is the final translation to be applied to the reconstructed model. $T_{curr}$ is the current translation as returned by ICP and $T_{file}$ is the translation read from the calibration file. A result of this transformation is represented on Figure \ref{fig:kinect2glassesc}.
+Where $T$ is the final translation to be applied to the reconstructed model, $T_{curr}$ is the current translation as returned by ICP and $T_{file}$ is the translation read from the calibration file. A result of this transformation is represented on Figure \ref{fig:kinect2glassesc}.
 
-However, this transformation is from the calibration process, which assumes that the observer doesn't move (since the glasses' camera is static during the calibration). So it's not possible to use only this information to transform the model. In order to track the observer's head, on this approach it's used information from the glasses' tracker, which is explained on section \ref{sec:glasses}. This integration is managed by a new class, called \textit{Glasses}, whose class diagram is represented on Figure \ref{fig:glassesclassdiagram}. A full class diagram of the whole system is available on the appendix.
+However, this transformation is from the calibration process, which assumes that the observer doesn't move (since the glasses' camera is static during the calibration). So it's not possible to use only this information to transform the model. In order to track the observer's head, on this approach it's used information from the glasses' tracker, which is explained on section \ref{sec:glasses}. This integration is managed by a new class, called \textit{Glasses}, whose class diagram is represented on Figure \ref{fig:glassesclassdiagram}.
 
 \begin{figure}
 \centering
@@ -1175,8 +1147,8 @@ The role of each attribute and method of this class is briefly described on the 
   \item y: The value of the translation on the y axis, as calculated by the optical flow on the glasses' video frame;
   \item z: The value of the translation on the z axis, as calculated by the optical flow on the glasses' video frame;
   \item xi: The initial value of the translation on the x axis, as calculated by the optical flow on the glasses' video frame;
-  \item yi: The initial value of the translation on the x axis, as calculated by the optical flow on the glasses' video frame;
-  \item yi: The initial value of the translation on the x axis, as calculated by the optical flow on the glasses' video frame.
+  \item yi: The initial value of the translation on the y axis, as calculated by the optical flow on the glasses' video frame;
+  \item zi: The initial value of the translation on the z axis, as calculated by the optical flow on the glasses' video frame.
 \end{itemize}
 
 \begin{itemize}
@@ -1253,11 +1225,11 @@ $P_{dst} = H \times P_{src}, P_{src} = H^{-1} \times P_{dst}$
 $P_{dst} = \begin{bmatrix} x_{dst} \\ y_{dst} \\ 1 \end{bmatrix}, P_{dst} = \begin{bmatrix} x_{src} \\ y_{src} \\ 1 \end{bmatrix}$
 \end{center}
 
-However, if not all of the point pairs fit the rigid perspective transformation (that is, there are some outliers), this initial estimate will $H$ be poor. Here it uses the RANSAC method, which tries many different random subsets of the corresponding point pairs (of four pairs each), to estimate the homography matrix using this subset and a simple least-square algorithm, and then compute the quality/goodness of the computed homography (which is the number of inliers for RANSAC). The best subset is then used to produce the initial estimate of the homography matrix and the mask of inliers/outliers. After that, the translation values for x, y and z are extracted from the matrix and returned. The current grayscale frame becomes the previous grayscale frame, the current feature points set becomes the previous feature points set and so the algorithm iterates for the next frames. Since the values for x, y and z are related to the transformation between the current and previous frames and the interest here is on the transformation between the current frame and the first frame, the values for x, y and z are always accumulated instead of replaced.
+However, if not all of the point pairs fit the rigid perspective transformation (that is, there are some outliers), this initial estimate $H$ will be poor. Here it uses the RANSAC method, which tries many different random subsets of the corresponding point pairs (of four pairs each), to estimate the homography matrix using this subset and a simple least-square algorithm, and then compute the quality/goodness of the computed homography (which is the number of inliers for RANSAC). The best subset is then used to produce the initial estimate of the homography matrix and the mask of inliers/outliers. After that, the translation values for x, y and z are extracted from the matrix and returned. The current grayscale frame becomes the previous grayscale frame, the current feature points set becomes the previous feature points set and so the algorithm iterates for the next frames. Since the values for x, y and z are related to the transformation between the current and previous frames and the interest here is on the transformation between the current frame and the first frame, the values for x, y and z are always accumulated instead of replaced.
 
 After connecting to the socket and performing the optical flow over the glasses' frame, the values for yaw, pitch, roll, x, y and z are already available and set as attributes of the \textit{Reconstruction} object, which is shared between the main thread and the glasses thread.
 
-On the main thread of the program, each frame is processed each 100 ms as well. Besides composing the current rotation with the rotation from the calibration file, and the translation with the translation from the calibration, as explained previously, both are also composed with the rotation and translation that come from the glasses.
+On the main thread of the program, each frame is processed each 100 ms as well. Besides composing the current rotation with the rotation from the calibration file, and the current translation with the translation from the calibration file, as explained previously, both are also composed with the rotation and translation that come from the glasses.
 
 For yaw, pitch and roll, first it's necessary to convert from Euler angles to matrices. Since the goal here is to transform the model based on the observer's motion, the negative values for each angle will be used. The matrices are:
 
@@ -1300,14 +1272,14 @@ The model's translation is given by:
 $T_{glasses} = [x, y, z] \therefore T = R_{glasses} \times T_{current} - T_{glasses}$
 \end{center}
 
-After that, the final transformation given by the rotation $R$ and the translation $T$ is applied to the model.
+After that, the final transformation given by the rotation $R$ and the translation $T$ is applied to the model. A video showing the tracking provided by this method can be found at \cite{videos}. 
 
 The glasses' tracker is very sensible and can suffer interference from magnetic objects near it \cite{vuzixsdk}, while the optical flow needs at least four feature points in order to keep the tracking \cite{opencvfd}, and most feature points can easily disappear when a fast movement happens. In order to try to mitigate those problems, a new approach was implemented, which uses a second Kinect to calculate the observer's movement, which will be explained on the following section \ref{sec:method2}.
 
 \section{Method 2: Two Kinects}
 \label{sec:method2}
 
-On this approach, the only information that's still used from the glasses is the video stream, which is combined with the reconstructed target model. This approach uses the same code as the main component, but on the configuration file the options for glasses' tracking (from both accelerometer/magnetometer and optical flow) are turned off, while the option for using the second Kinect is turned on.
+On this approach, the only information that's still used from the glasses is the video stream, which is aligned with the reconstructed target model. This approach uses the same code as the main component, but on the configuration file the options for glasses' tracking (from both accelerometer/magnetometer and optical flow) are turned off, while the option for using the second Kinect is turned on.
 
 A new component was implemented here, which is called \textit{MyKinFuHeadless}, available at \cite{mykinfuheadless}. It's a simplified version of \textit{MyKinFu} that just captures an object, segments it (removes background or other objects based on the depth map), calculates its transformation from the initial pose and sends this transformation, as a serialized rotation matrix and serialized translation vector, to a UDP socket, in real-time.
 
@@ -1321,7 +1293,7 @@ $R_{diff} = R_{curr} \times R_{ini}^T$
 $T_{diff} = T_{curr} - T_{ini}$
 \end{center}
 
-After $R_{diff}$ and $T_{diff}$ are computed, they are sent to a UDP socket as serialized data, since only strings can be written to the socket. Similarly to what was done with the glasses' tracker, on this case an auxiliary code to check the tracker's accuracy was implemented too, and is available at \cite{masterproject}. This auxiliary code uses OpenGL and listens on the same socket where \textit{MyKinFuHeadless} writes to, and transforms the virtual cube as it was seen by the glasses. Figure \ref{fig:secondkinecttrack} shows this accuracy using a box as the observer. Since the geometry of the box is not as irregular as a human head, better results can be achieved on real situations, but it still has a reasonable accuracy.
+After $R_{diff}$ and $T_{diff}$ are computed, they are sent to a UDP socket as serialized data, since only strings can be written to the socket. Similarly to what was done with the glasses' tracker, on this case an auxiliary code to check the tracker's accuracy was implemented too, and is available at \cite{masterproject}. A video of that is available at \cite{videos}. This auxiliary code uses OpenGL and listens on the same socket where \textit{MyKinFuHeadless} writes to, and transforms the virtual cube as it was seen by the glasses. Figure \ref{fig:secondkinecttrack} shows this accuracy using a box as the observer. Since the geometry of the box is not as irregular as a human head, better results can be achieved on real situations, but it still has a reasonable accuracy.
 
 \begin{figure}
 \centering
@@ -1342,7 +1314,7 @@ $T = T_{curr} + [T_{diff_x}, -T_{diff_y}, T_{diff_z}]$
 
 As explained on section \ref{sec:kinfu}, it needs CUDA to run, and on this experimental augmented reality environment there was only one computer with a graphics card with CUDA support. The \textit{MyKinFuHeadless} component is a standalone code that sends the calculated values to a socket, so it could (and actually should) run on a separate machine, since two programs that needs the GPU running on the same machine would decrease the overall performance.
 
-But since there was only one computer with CUDA support, it would be necessary to run \textit{MyKinFu} and \textit{MyKinFuHeadless} on the same machine at the same time. A benchmark showed that each of them running separately took approximately 90 ms to process one frame. When both were running at the same time, this value jumped to approximately 180 ms, which makes sense, since both were fighting for a single GPU. The result was a huge delay between the observer's real movement and the respective virtual transformation on the rendered frame. So it was necessary to improve the performance. A more detailed benchmark showed that most of the time was spent on ICP and point clouds alignment:
+But since there was only one computer with CUDA support, it would be necessary to run \textit{MyKinFu} and \textit{MyKinFuHeadless} on the same machine at the same time. A benchmark showed that each of them running separately took approximately 120 ms to process one frame. When both were running at the same time, this value jumped to approximately 240 ms, which makes sense, since both were fighting for a single GPU. The result was a huge delay between the observer's real movement and the respective virtual transformation on the rendered frame. So it was necessary to improve the performance. A more detailed benchmark showed that most of the time was spent on ICP and point clouds alignment:
 
 \begin{verbatim}
 setDepthDevice took 0ms.
@@ -1381,7 +1353,7 @@ last step took 1ms.
 TOTAL FRAME took 184ms.
 \end{verbatim}
 
-The first step was to change the virtual volume size of KinectFusion, which is by default 3000 mm x 3000 mm x 3000 mm, because it's intended to be used to scan large scenarios. Since the use case here is just faces, it's not necessary to use such dimensions for the volume size. It was changed to 700 mm x 700 mm x 1400 mm and the voxel size from 512 to 256 per axis (both the number of voxels and the size in meters give the amount of detail of our model) and the result was still satisfactory. See Figure \ref{fig:kinfu} to better understand the virtual cube of KinectFusion.
+The first step was to change the virtual volume size of KinectFusion, which is by default 3000 mm x 3000 mm x 3000 mm, because it's intended to be used to scan large scenarios. Since the use case here is just faces, it's not necessary to use such dimensions for the volume size. It was changed to 700 mm x 700 mm x 1400 mm and the voxel size from 512 to 256 per axis (both the number of voxels and the size in meters give the amount of detail of the model) and the result was still satisfactory. See Figure \ref{fig:kinfu} to better understand the virtual cube of KinectFusion.
 
 \begin{figure}
 \centering
@@ -1404,41 +1376,101 @@ This approach has shown to be visually better for greater range of motion, altho
 \section{Hybrid approach}
 \label{sec:hybrid}
 
-The hybrid approach is just a combination of the two previous methods. On this approach, both threads (one for the glasses and the other for the Kinect that captures the observer) are kept running simultaneously. The glasses' data are used primarily since it has better performance. If the number of tracked features for the optical flow goes below eight points, the transformation calculated by the second Kinect is used in order to transform the target model. This method has the best accuracy since it applies each method to the situation they fit better. The results of running each of the three methods with real people will be shown on the next section \ref{sec:results}.
+The hybrid approach is just a combination of the two previous methods. On this approach, both threads (one for the glasses and the other for the Kinect that captures the observer) are kept running simultaneously. The glasses' data are used primarily since it has better performance. If the number of tracked features for the optical flow goes below eight points, the transformation calculated by the second Kinect is used in order to transform the target model. This method has the best accuracy since it applies each method to the situation they fit better. The results of running these methods with real people will be shown on the next section \ref{sec:results}. 
 
-\xchapter{Result}{In this chapter I present the results of the procedure explained in the previous chapter.}
+\xchapter{Result}{This chapter presents the results of the procedure explained in the previous chapter. First, an example of the application of the first method (explained on section \ref{sec:method1}) will be presented; later on, an example of a similar use case, but using the second method (explained on section \ref{sec:method2}), will be presented. After that, the difference between them will be discussed, as well as the scope of these tests (limitations and assumptions).}
 \label{sec:results}
-\section{Scope}
-Talk about error propagation.
-\section{Analysis}
-Talk about performance and alignment results.
-\section{Comparison}
-Compare methods 1 and 2 with regards to performance and quality.
 
-\xchapter{Conclusions}{In this chapter I discuss the conclusions of this work and list some possibilities of future works.}
-\section{Future work}
+On this experiment, two persons are involved: one acts as the observer, which wears the augmented reality glasses, the other acts as the target model, which is sit down in front of the observer. A Kinect is placed between them and captures the target model. Figure \ref{fig:method1} shows how the target model is tracked while the observer moves his head. It can be noticed that the reconstructed model remains aligned to what is shown on the glasses' video, according to the transformation based on the initial calibration and on the glasses' tracking information and optical flow. As expected, the result is not perfect due to the interferences suffered by the glasses and the normalization of its angle values (in order to reduce instabilities, as explained on section \ref{sec:glasses}). However, this method has shown to be reasonably fast (imperceptible delay) and works well if the movements are not so fast. On case of fast large range movements, the optical flow is not able to track enough feature points anymore and so the tracking is lost and needs to be restarted.
+
+\captionsetup[figure]{list=no}
+\begin{figure}
+\centering
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method1a.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method1b.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method1c.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method1d.png}}
+\end{figure}
+\captionsetup[figure]{list=yes}
+
+\begin{figure}
+\centering
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method1e.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method1f.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method1g.png}}
+\caption{Target model being tracked during observer's motion using data from glasses: on the left, the alignment of the glasses' video with the transformed model as shown on the glasses' lenses for the observer; on the right, the RGB information from Kinect.}
+\label{fig:method1}
+\end{figure}
+
+For the second method, the same persons were employed as observer and target model, but here instead of glasses' data, a second Kinect is used to track the observer's motion. The glasses are still worn by the observer, since the lenses are used as output device and glasses' video is still used as background to be aligned with the reconstructed model. The initial alignment is the same as the previous example, based on the calibration file, but for the next frames, the target model is transformed according to the transformation of the observer's model as calculated by the second Kinect. As shown on Figure \ref{fig:method2}, the alignment here is worse than the previous method, which can be explained by short range motion which is not perfectly perceived by Kinect. However, it works better for large range motion, although it can also lose track for fast movements.
+
+\captionsetup[figure]{list=no}
+\begin{figure}
+\centering
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method2a.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method2b.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method2c.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method2d.png}}
+\end{figure}
+\captionsetup[figure]{list=yes}
+
+\begin{figure}
+\centering
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method2e.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method2f.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/method2g.png}}
+\caption{Target model being tracked during observer's motion using data from another Kinect: on the left, the alignment of the glasses' video with the transformed model as shown on the glasses' lenses for the observer; on the right, the RGB information from Kinect.}
+\label{fig:method2}
+\end{figure}
+
+An example of the difference between each method for the observer's tracking can be seen on Figure \ref{fig:diff}. The initial alignment is the same for both, since it's based on calibration, but for the next frames, it's possible to notice different behaviors depending on the observer's motion. For a short range alignment, the glasses are more accurate, since the trackers are more sensible. However, when a large range motion is performed, the second method remains accurate, while the glasses' optical flow loses track completely.
+
+\captionsetup[figure]{list=no}
+\begin{figure}
+\centering
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/diffa.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/diffb.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/diffc.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/diffd.png}}
+\end{figure}
+\captionsetup[figure]{list=yes}
+
+\begin{figure}
+\centering
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/diffe.png}}
+\subfigure[]{\includegraphics[width=.8\textwidth]{images/difff.png}}
+\caption{Difference between each method with regard to the observer's tracking: first the target model is reconstructed (a); then both start equally aligned since the initial alignment is based on the calibration (b); alignment is better for short range motion when using glasses' data (c) than using the second Kinect (d), while the transformation given by the second Kinect is more accurate for large range motion (e), on which optical flow loses track and alignment (f)}
+\label{fig:diff}
+\end{figure}
+
+Regarding performance, as explained on section \ref{sec:method2}, the second method performs much worse if running on the same machine, because this means two programs fighting for a single GPU, and so the performance almost doubles itself, as the plot on Figure \ref{fig:perf} shows.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{images/plot2.png}
+\caption{Comparison of methods 1 and 2 running on the same machine}
+\label{fig:perf}
+\end{figure}
+
+It was not possible to test how the second method performs on the main machine when the program for the second Kinect is running on another machine. However, since on this case it just means, for the main machine, listening on a UDP socket (just like it does for the glasses' data on the first method), probably the performance of the two methods would be almost the same.
+
+For a better analysis of the two methods implemented on this work, the results shown here are from examples employing real people as observer and target model. The experiments assume a fixed distance range between each Kinect and its target, because segmenting is based on depth. Due to this same reason, there is nothing between the target and the maximum threshold used for depth segmentation, so it's possible to reconstruct the observer and target models without including other objects of the scene on the reconstructed model. Also, the observer never walks around the room, his movements are limited to those that can be performed while he is sat down. The same applies to the target model.
+
+\xchapter{Conclusions}{This chapter discusses the conclusions of this work and lists some possibilities of future works.}
+
+This work presented a proposal of a multi-view environment for augmented reality applications that doesn't require any fiducial marker to be used. In order to do that, the environment should be able to track the target model so that it can be merged with virtual images in real time, regardless the observer's motion or the target model's motion.
+
+Two different approaches were discussed here. The first one is based on a Kinect that captures the target model and on a pair of augmented reality glasses, worn by the observer, that also sees the target model but has a tracker that provides information about the glasses' rotation. The translation on this approach comes from an optical flow feature, based on Lucas-Kanade algorithm, that tracks feature points from the glasses' video as identified by the Shi-Tomasi algorithm applied on the video frame. A composition of the rotation with the translation gives the final rigid transformation from the observer that can be used to track the target model and keep it aligned with what the observer sees.
+
+The second approach is based on two Kinects. One of them is still employed for the same purpose as on the first method: it tracks and reconstructs the target model. The second Kinect is placed on the opposite direction and captures the observer. Based on the transformations suffered by the observer's model due to the actual observer's motion, it tracks the target model and keeps it aligned with the image captured by the glasses' camera.
+
+Working with multi-view environments brings lots of issues regarding calibration, interference, placement and communication, which are addressed by the various software components that form the software layer of this augmented reality environment. All softwares implemented on this work were explained and the path to their source codes were provided, according to the open source nature of this work. All the implementation is supported by other open source works, like the state-of-art implementation of KinectFusion on PCL and all the libraries for computer vision, image manipulation and point cloud processing, for example.
+
+Following this concern, both proposed approaches were implemented and documented, and all theory on which they rely on was also explained. After that, an example of application of both approaches was presented, as well as a discussion about their accuracy and performance.
+
+However, some points are still open and can be widely explored for further research and development. The main goal here was to propose a multi-view environment for augmented reality and to show that it's feasible, by implementing two approaches over it and by running it in order to show that a target model can be tracked without any fiducial marker. So, each step of this work flow can be explored in a deeper manner and provide an overall better result for the whole process, for example: improve the initial calibration between the Kinect and the glasses, improve the performance of ICP's implementation inside KinectFusion, improve the accuracy of the alignment given by each of the proposed methods, among other points.
 
 \backmatter
-
-% Apêndices
-% Comente se não houver apêndices
-\appendix
-
-% É aconselhável criar cada apêndice em um arquivo à parte, digamos
-% "apendice1.tex", "apendice.tex", ... "apendiceM.tex" e depois
-% incluí-los com:
-% \include{apendice1}
-% \include{apendice2}
-% ...
-% \include{apendiceM}
-
-
-% Bibliografia
-% É aconselhável utilizar o BibTeX a partir de um arquivo, digamos "biblio.bib".
-% Para ajuda na criação do arquivo .bib e utilização do BibTeX, recorra ao
-% BibTeXpress em www.cin.ufpe.br/~paguso/bibtexpress
 \bibliographystyle{abnt-alf}
 \bibliography{template}
-
-%% Fim do documento
 \end{document}
