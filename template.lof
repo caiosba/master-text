@@ -3,12 +3,12 @@
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Fiducial marker used to represent a three-dimensional model over it \cite {artoolkit}\relax }}{2}
 \contentsline {figure}{\numberline {1.2}{\ignorespaces Global view\relax }}{3}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces The augmented reality is located between the extremes of the reality-virtuality continuum\relax }}{7}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces The augmented reality is located between the extremes of the reality-virtuality continuum \cite {milgram94}\relax }}{7}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces The typical pipeline of an augmented reality application \cite {gallo11}\relax }}{8}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Immersive augmented reality\relax }}{8}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Non-immersive augmented reality\relax }}{9}
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of fiducial marker used by medical applications\relax }}{10}
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of fiducial marker for motion capture\relax }}{10}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Immersive augmented reality \cite {tori2006fundamentos}\relax }}{8}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Non-immersive augmented reality \cite {tori2006fundamentos}\relax }}{9}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of fiducial marker used by medical applications \cite {azuma}\relax }}{10}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of fiducial marker for motion capture \cite {4526681}\relax }}{10}
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the camera) and the camera intrinsics \cite {bradski2008learning}\relax }}{14}
 \contentsline {figure}{\numberline {2.8}{\ignorespaces A multi-resolution pyramid with three levels \cite {michele}\relax }}{21}
 \contentsline {figure}{\numberline {2.9}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating the assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}\relax }}{25}
@@ -40,7 +40,7 @@
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Reconstructed model from Kinect}}}{50}
 \contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Model captured by Kinect transformed to glasses' camera space according to the calibration between them}}}{50}
 \contentsline {figure}{\numberline {4.16}{\ignorespaces Cross-over connection between two computers\relax }}{51}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces UDP and TCP protocols\relax }}{52}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces UDP and TCP protocols \cite {udpimg}\relax }}{52}
 \contentsline {figure}{\numberline {4.18}{\ignorespaces Class diagram of \textit {Glasses}\relax }}{55}
 \contentsline {figure}{\numberline {4.19}{\ignorespaces Lucas-Kanade algorithm tracking a face whose key points were previously identified through Shi-Tomasi algorithm\relax }}{59}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Features automatically detected by Shi-Tomasi method (green dots)}}}{59}
