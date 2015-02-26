@@ -9,69 +9,69 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Non-immersive augmented reality \cite {tori2006fundamentos}\relax }}{9}
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Example of fiducial marker used by medical applications \cite {azuma}\relax }}{10}
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Example of fiducial marker for motion capture \cite {4526681}\relax }}{10}
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the camera) and the camera intrinsics \cite {bradski2008learning}\relax }}{14}
-\contentsline {figure}{\numberline {2.8}{\ignorespaces A multi-resolution pyramid with three levels \cite {michele}\relax }}{21}
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating the assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}\relax }}{25}
-\contentsline {figure}{\numberline {2.10}{\ignorespaces The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)\relax }}{25}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces ARBioMed running, with three fiducial markers \cite {arbiomed}\relax }}{11}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces User under augmented virtual therapy \cite {fisio}\relax }}{12}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Images of a chessboard being held at various orientations (left) provide enough information to completely solve for the locations of those images in global coordinates (relative to the camera) and the camera intrinsics \cite {bradski2008learning}\relax }}{17}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces ARBioMed running, with three fiducial markers \cite {arbiomed}\relax }}{28}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces User under augmented virtual therapy \cite {fisio}\relax }}{28}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Difference between using a single Kinect and more than one Kinects\relax }}{30}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Three Kinect devices being used for a full scan of the human body with minimum overlapping \cite {tong}\relax }}{31}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Calibrating Kinect using toolbox from \cite {herrera}\relax }}{32}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces A multi-resolution pyramid with three levels \cite {michele}\relax }}{24}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Pyramid Lucas-Kanade optical flow: running optical flow at the top of the pyramid first mitigates the problems caused by violating the assumptions of small and coherent motion; the motion estimate from the preceding level is taken as the starting point for estimating motion at the next layer down \cite {bradski2008learning}\relax }}{28}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces The same input image being used for features identification by Shi-Tomasi algorithm (red dots) and by Harris Corner Detector (green dots)\relax }}{29}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Difference between using a single Kinect and more than one Kinects\relax }}{30}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Three Kinect devices being used for a full scan of the human body with minimum overlapping \cite {tong}\relax }}{30}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Calibrating Kinect using toolbox from \cite {herrera}\relax }}{32}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Augmented reality pipeline\relax }}{36}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces High level representation of the augmented reality environment implementation\relax }}{37}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Vuzix Wrap 920AR augmented reality glasses\relax }}{38}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Experimental environment arranged for the implementation\relax }}{39}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Experimental environment arranged for the implementation with each component identified by a number\relax }}{40}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Distances between each component on the experimental environment\relax }}{41}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Capturable movements from glasses \cite {vuzixsdk}\relax }}{42}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Coordinates system of augmented reality glasses' tracker \cite {vuzixsdk}\relax }}{42}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Glasses driver log\relax }}{44}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Glasses' tracker controlling a virtual cube in order to check its accuracy\relax }}{44}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces RGB map and depth map with no matching between them\relax }}{45}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces RGB map and depth map with depth registration enabled\relax }}{46}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Two Kinects in action: above, the real configuration (two Kinects capturing the same object) and below, the virtual image combined\relax }}{47}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces How OpenCV's cornerSubPix function works \cite {opencvfd}\relax }}{48}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Calibration process and result\relax }}{50}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Chessboard recognized by both Kinect's camera and glasses' camera}}}{50}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Reconstructed model from Kinect}}}{50}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Model captured by Kinect transformed to glasses' camera space according to the calibration between them}}}{50}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Cross-over connection between two computers\relax }}{52}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces UDP and TCP protocols \cite {udpimg}\relax }}{53}
-\contentsline {figure}{\numberline {4.18}{\ignorespaces Lucas-Kanade algorithm tracking a face whose key points were previously identified through Shi-Tomasi algorithm: (a) Features automatically detected by Shi-Tomasi method (green dots) (b) Face tracking by Pyramidal Lucas-Kanade, moving to the left (c) Face tracking by Pyramidal Lucas-Kanade, moving to the right\relax }}{57}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{57}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{57}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{57}
-\contentsline {figure}{\numberline {4.19}{\ignorespaces Virtual cube as seen by the observer according to the transformation given by the Kinect that captures it\relax }}{60}
-\contentsline {figure}{\numberline {4.20}{\ignorespaces The cube is subdivided into a set of voxels; these voxels are equal in size; the default size in meters for the cube is 3 meters per axis; and the default voxel size is 512 per axis \cite {pclkinfu}\relax }}{62}
-\contentsline {figure}{\numberline {4.21}{\ignorespaces Comparison of time to process a frame before and after the refactoring\relax }}{63}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Augmented reality pipeline\relax }}{34}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces High level representation of the augmented reality environment implementation\relax }}{35}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Vuzix Wrap 920AR augmented reality glasses\relax }}{36}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Experimental environment arranged for the implementation\relax }}{37}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Experimental environment arranged for the implementation with each component identified by a number\relax }}{38}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Distances between each component on the experimental environment\relax }}{39}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Capturable movements from glasses \cite {vuzixsdk}\relax }}{40}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Coordinates system of augmented reality glasses' tracker \cite {vuzixsdk}\relax }}{40}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Glasses driver log\relax }}{42}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Glasses' tracker controlling a virtual cube in order to check its accuracy\relax }}{42}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces RGB map and depth map with no matching between them\relax }}{43}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces RGB map and depth map with depth registration enabled\relax }}{44}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Two Kinects in action: above, the real configuration (two Kinects capturing the same object) and below, the virtual image combined\relax }}{45}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces How OpenCV's cornerSubPix function works \cite {opencvfd}\relax }}{46}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Calibration process and result\relax }}{48}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Chessboard recognized by both Kinect's camera and glasses' camera}}}{48}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Reconstructed model from Kinect}}}{48}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Model captured by Kinect transformed to glasses' camera space according to the calibration between them}}}{48}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Cross-over connection between two computers\relax }}{50}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces UDP and TCP protocols \cite {udpimg}\relax }}{51}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Lucas-Kanade algorithm tracking a face whose key points were previously identified through Shi-Tomasi algorithm: (a) Features automatically detected by Shi-Tomasi method (green dots) (b) Face tracking by Pyramidal Lucas-Kanade, moving to the left (c) Face tracking by Pyramidal Lucas-Kanade, moving to the right\relax }}{55}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{55}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{55}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{55}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces Virtual cube as seen by the observer according to the transformation given by the Kinect that captures it\relax }}{58}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces The cube is subdivided into a set of voxels; these voxels are equal in size; the default size in meters for the cube is 3 meters per axis; and the default voxel size is 512 per axis \cite {pclkinfu}\relax }}{60}
+\contentsline {figure}{\numberline {4.21}{\ignorespaces Comparison of time to process a frame before and after the refactoring\relax }}{61}
 \addvspace {10\p@ }
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{64}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{64}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{64}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{64}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Target model being tracked during observer's motion using data from glasses: on the left, the alignment of the glasses' video with the transformed model as shown on the glasses' lenses for the observer; on the right, the RGB information from Kinect.\relax }}{65}
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{65}
+\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {}}}{65}
+\contentsline {subfigure}{\numberline {(g)}{\ignorespaces {}}}{65}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{66}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{66}
 \contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{66}
 \contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{66}
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Target model being tracked during observer's motion using data from glasses: on the left, the alignment of the glasses' video with the transformed model as shown on the glasses' lenses for the observer; on the right, the RGB information from Kinect.\relax }}{67}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Target model being tracked during observer's motion using data from another Kinect: on the left, the alignment of the glasses' video with the transformed model as shown on the glasses' lenses for the observer; on the right, the RGB information from Kinect.\relax }}{67}
 \contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{67}
 \contentsline {subfigure}{\numberline {(f)}{\ignorespaces {}}}{67}
 \contentsline {subfigure}{\numberline {(g)}{\ignorespaces {}}}{67}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{68}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{68}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{68}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{68}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Target model being tracked during observer's motion using data from another Kinect: on the left, the alignment of the glasses' video with the transformed model as shown on the glasses' lenses for the observer; on the right, the RGB information from Kinect.\relax }}{69}
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{69}
-\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {}}}{69}
-\contentsline {subfigure}{\numberline {(g)}{\ignorespaces {}}}{69}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{71}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{71}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{71}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{71}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Difference between each method with regard to the observer's tracking: first the target model is reconstructed (a); then both start equally aligned since the initial alignment is based on the calibration (b); alignment is better for short range motion when using glasses' data (c) than using the second Kinect (d), while the transformation given by the second Kinect is more accurate for large range motion (e), on which optical flow loses track and alignment (f)\relax }}{72}
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{72}
-\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {}}}{72}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Comparison of methods 1 and 2 running on the same machine\relax }}{73}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{69}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{69}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{69}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{69}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Difference between each method with regard to the observer's tracking: first the target model is reconstructed (a); then both start equally aligned since the initial alignment is based on the calibration (b); alignment is better for short range motion when using glasses' data (c) than using the second Kinect (d), while the transformation given by the second Kinect is more accurate for large range motion (e), on which optical flow loses track and alignment (f)\relax }}{70}
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {}}}{70}
+\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {}}}{70}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Comparison of methods 1 and 2 running on the same machine\relax }}{71}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Class diagram of \textit {Glasses}\relax }}{78}
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Class diagram of \textit {Glasses}\relax }}{76}

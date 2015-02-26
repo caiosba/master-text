@@ -143,9 +143,9 @@
 Work submitted to
 \@program\ of \if\@showdepartment1\@department\ \else\@institute\ \fi
 from \@university\ in partial fullfillment of the requirements for the degree of \@degree\ on \@majorfield.}
-\gdef\resumoname{Abstract}
+\gdef\resumoname{Resumo}
 \gdef\abstrname{Abstract}
-\gdef\keywordsnamePT{Keywords}
+\gdef\keywordsnamePT{Palavras-chave}
 \gdef\keywordsnameEN{Keywords}
 
 %% Language Dependent

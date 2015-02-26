@@ -79,6 +79,12 @@ Augmented reality is a technology which allows 2D and 3D computer graphics to be
 augmented reality, augmented reality glasses, kinect, transformation, optical flow, markerless, tracking
 \end{keywords}
 
+\resumo
+Realidade aumentada é uma tecnologia que permite que gráficos computacionais 2D e 3D sejam alinhados ou registrados com cenas do mundo real em tempo real. Esta projeção de imagens virtuais requer uma referência na imagem real capturada, o que geralmente é obtido através da utilização de um ou mais marcadores. Mas existem situações em que a utilização de marcadores pode não ser adequada, como por exemplo em aplicações médicas. Neste trabalho, é apresentado um ambiente multi-câmera, composto por óculos de realidade aumentada e dois dispositivos Kinect, o qual não utiliza marcadores fiduciais para executar aplicações de realidade aumentada. Todos os equipamentos são calibrados de acordo com um sistema de referência comum, e então os modelos virtuais são transformados de acordo, também. Para isso, duas abordagens foram especificadas e implementadas: a primeira, baseada em um Kinect e dados de fluxo ótico e acelerômetro dos óculos de realidade aumentada, e outra baseada somente em dois dispositivos Kinect. Os resultados relacionados à qualidade e à performance obtidas por estas duas abordagens são apresentados e discutidos, bem como uma comparação entre eles, além de todas as questões relacionadas que foram encontradas e tratadas neste trabalho.
+\begin{keywords}
+augmented reality, augmented reality glasses, kinect, transformation, optical flow, markerless, tracking
+\end{keywords}
+
 \tableofcontents
 \listoffigures
 \listoftables
@@ -112,11 +118,13 @@ However, besides requiring human interference on the scene, there are situations
 
 Depending on the way that a user sees the mixed world, augmented reality can be classified on two ways. When the user sees the mixed world pointing his eyes straight to the real positions with optical scene or video, this augmented reality is called \textit{immersive} or of \textit{direct vision}. On the other hand, when the user sees the mixed world by some device, like a monitor screen or projector, not aligned with the real positions, this augmented reality is \textit{non-immersive} or of \textit{indirect vision} \cite{tori2006fundamentos}.
 
-This work proposes a multi-view environment for augmented reality, of direct vision, composed by two Kinects \cite{kinect} and augmented reality glasses, that allows an observer visualize, in real time, virtual images merged with real images from the target model, transformed to his viewpoint. In this approach, it's not intended to use any fiducial marker. Instead, it will be used a geometric approach based on the data captured by each Kinect. This proposed environment can be used, for example, on the medical field (real situations, education and training) or in other situation where a multi-view environment for markerless augmented reality is applicable. 
+This work proposes a multi-view environment for augmented reality, of direct vision, composed by two Kinects \cite{kinect} and augmented reality glasses, that allows an observer visualize, in real time, virtual images merged with real images from the target model, transformed to his viewpoint. But in this approach, it's not intended to use any fiducial marker. This environment is part of a wider system for markerless augmented reality for medical applications \cite{wim}.
 
 \section{Objectives}
 
-The main objective of this work is to propose and implement a multi-view augmented reality environment that is able to track the target object without using any fiducial marker. The environment proposed on this work aims to contribute to augmented reality applications where virtual images need to be merged with real images in real time, without using fiducial markers, and considering the viewing angle of the observer and the position of the target object. The specific objectives are listed on the following section \ref{sec:features}.
+The main objective of this work is to propose and implement a multi-view augmented reality environment that is able to track the target object without using any fiducial marker. Instead, it will be used a geometric approach based on the data captured by each Kinect. This proposed environment can be used, for example, on the medical field (real situations, education and training) or in other situation where a multi-view environment for markerless augmented reality is applicable. 
+
+The environment proposed on this work aims to contribute to augmented reality applications where virtual images need to be merged with real images in real time, without using fiducial markers, and considering the viewing angle of the observer and the position of the target object. The specific objectives are listed on the following section \ref{sec:features}.
 
 \subsection{Features}
 \label{sec:features}
@@ -157,10 +165,9 @@ uses the augmented reality glasses to determine the observer's pose (based on da
 
 \section{Thesis overview}
 
-The next chapter ``Conceptual primer'' describes some basic theory needed. It also describes the hardware components that are used by this work and how to calibrate them. After that, the ``Related work'' chapter presents some works related to this one, divided by subject. The third chapter, ``Solution architecture'', after the theory and related works were presented, explains the steps performed in order to implement the objectives of this work and some results. More results of this implementation are presented on the chapter after, ``Results'', and finally the conclusions about this work are presented on the last chapter, ``Conclusions'', where possible future works are also listed.
+The next chapter ``Augmented reality'' describes some basic theory needed about augmented reality. The next one, ``RGB-D sensors on augmented reality'' covers how this kind of sensors can be employed on augmented reality applications. The third chapter, ``Solution architecture'', after the theory and related works were presented, explains the steps performed in order to implement the objectives of this work and some results. More results of this implementation are presented on the chapter after, ``Results'', and finally the conclusions about this work are presented on the last chapter, ``Conclusions'', where possible future works are also listed.
 
-\xchapter{Conceptual primer}{The main concepts behind this work are explained here.}
-\section{Augmented reality}
+\xchapter{Augmented reality}{The main basic concepts about augmented reality, behind this work, are covered here.}
 
 Augmented reality was born on the decade of 1990, to merge a virtual image or virtual environment with a real image or real environment. But only from the 2000s it became more popular, due to lower costs of hardware and software devices, and ready to be used on tangible and multimodal (voice, touch, gesture, etc.) applications \cite{paddle}. It can be considered the mixing of real and virtual worlds at some point of the reality-virtuality continuum, that connects completely virtual environments to completely real environments \cite{milgram94}, like shown on Figure \ref{fig:cont}. It can also be considered a system that completes the real world with virtual objects, in a way that they seem to exist on the same space, respecting the following features:
 
@@ -240,6 +247,31 @@ On motion capture systems, other kinds of markers can also be used, like, for ex
 
 Disadvantages of fiducial markers are listed on \cite{dolz}, for example, they are invasive (need to be placed on the scene or fixed on the target object), they have limited interaction (can't be moved around freely, because it still needs to be visible and recognizable) and need to be printed or drawn before using, and also stored for future usage.
 
+\paragraph{Related works}
+
+On the field of augmented reality, one of the first approaches was to track known patterns, that's how many fiducial markers work. The traditional ARToolKit \cite{artoolkit} is probably the most famous of them and augments virtual objects onto black and white square markers. Its advantage is simplicity and performance, since it works also with modest computers and commodity cameras. However, it doesn't support any kind of occlusion alone, since its fitting process is based on a four-lines approach that requires the marker to be fully visible by the camera. But occlusion can be achieved by using multiple markers.
+
+Many works are based on fiducial markers in order to calculate the camera's real position in relation to the marker's real position, like the system called ARBioMed \cite{arbiomed}. The idea of this system is to represent a virtual, three-dimensional heart over a marker placed on the target user's chest. This virtual heart has its pulsation simulated according to a received signal. From this system, the operator user can define, through a user interface, a fixed pulse rate to be simulated on the heart. In order to set the size of the heart based on the dimensions of the user chest, two other fiducial markers are used, as shown on Figure \ref{fig:arbiomed}. This architecture makes the implementation simpler, since it is based on ARToolKit \cite{artoolkit}, a popular and straightforward framework for augmented reality based on fiducial markers. However, the markers pollute the augmented reality scene and offer a less comfortable experience to the target user, since they are invasive.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{images/arbiomed.png}
+\caption{ARBioMed running, with three fiducial markers \cite{arbiomed}}
+\label{fig:arbiomed}
+\end{figure}
+
+Another work that is based on the traditional square fiducial markers is the motion capture system presented on \cite{fisio}, whose goal is to follow up physiotherapy exercises performed by patients. As shown on Figure \ref{fig:fisio}, fiducial markers are fixed on parts of the patient's body where motion will be captured. Based on trigonometric evaluation of the markers' position, it's possible to establish the range of motion that was executed.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{images/fisio.png}
+\caption{User under augmented virtual therapy \cite{fisio}}
+\label{fig:fisio}
+\end{figure}
+
+This study of related works showed that most of them are still based on fiducial markers. Works related to markerless augmented reality approaches will be studied on the next section.
+
+
 \subsubsection{Markerless}
 
 Markerless augmented reality means that fiducial markers are not used on the scene. Instead, features from the target scene need to be used in order to estimate the camera pose and objects orientations.
@@ -249,6 +281,21 @@ Target detection based on computer vision has been extensively studied and succe
 Markerless augmented reality has the advantage of using parts of the real environment as targets and can even extract information from the environment to be used by the augmented reality system \cite{dolz}.
 
 Avoiding markers leads to a much more effective augmented reality experience, but requires the implementation of several image processing or sensor function techniques, resulting in more complex algorithms and in higher computational resources \cite{shumaker2011virtual}.
+
+\paragraph{Related works}
+
+On the last years, alternatives to the traditional fiducial markers started to emerge. One of the common problems related to fiducial markers is that the marker needs to be located on the field of view of the camera. A possible solution for this is presented on \cite{5739718}, that is able to track a camera based on plane tracking algorithm. This technique has been applied mainly due to its simple geometry. Results also show that 3D objects can be used on augmented reality applications with primitive-based modeling \cite{KimLW10}.
+
+One of the first works to propose an algorithm for markerless object tracking was \cite{Comport03d}, that suggests a tracking algorithm based on 3D models to calculate the distance between the camera and the objects. Based on this calculation, objects can be placed on the scene. Though this method seemed to be robust on handling occlusion and luminosity issues, which are weak points of the fiducial markers, it still had some limitations. This is an example of an application based on models, that already uses geometric 3D data to identify where to place a virtual image on the real scene.
+
+Other alternatives to fiducial markers are proposed on \cite{wuest}, that uses an adaptive edge detector, \cite{ferrari}, that renders planar textures over planar fragments previously identified, and on \cite{klein}, which proposed a multi-thread system to track a camera and to compute a three-dimensional map of the available marks, using a hand-held camera.
+
+The system designed on \cite{ZhangL12} allows any object from the environment to be used as a marker, instead of using a fiducial marker. Besides that, the system was designed to work with low-contrast surfaces (like human hand marks). In order to place a three-dimensional object, the system uses salient points from the environment combined with a local texture, which turns the detection much more stable.
+
+Like that work, other works show that feature detection on the target scene can achieve good performance. Descriptors are usually computed from key-points of the scene, so, they don't reach high accuracy when dealing with objects without texture and/or with few key-points on their surfaces \cite{bay}.
+
+On the other hand, object recognition based on depth focuses on geometric properties of the target, like curves or edges. An object can be identified based on its depth map.
+
 
 \section{Cameras}
 
@@ -276,6 +323,9 @@ The intrinsic parameters are those that describe the internal geometry of the ca
 
 \begin{center}
 $x = -(x_{im} - o_x)s_x$
+\end{center}
+
+\begin{center}
 $y = -(y_{im} - o_y)s_y$
 \end{center}
 
@@ -369,7 +419,9 @@ According to \cite{hanning2011high}, the calibration of a stereo camera system i
 
 So, in theory, calibration of a multi-camera system is possible by individually calibrating intrinsic and extrinsic parameters of all cameras involved with respect to the same world coordinate system using classical calibration methods. This just requires that all cameras observe a common calibration object or that a calibration object is moved to precisely known positions such that every camera can observe it. The first approach imposes very strict limitations on the allowable relative camera poses (relative orientation and position) or requires a very large calibration object, which is generally complicated \cite{Chen00widearea}.
 
-Once cameras are calibrated, they are ready to register objects from a mixed reality scene. In general, traditional methods can be classified into three types: sensor-based methods, image-based methods and hybrid methods \cite{shumaker2011virtual}. The first two will be covered in the next sections; the third, which is also applied by this work, won't be covered here since it's basically a combination of the first two methods.
+Once cameras are calibrated, they are ready to register objects from a mixed reality scene. In general, traditional methods can be classified into three types: sensor-based methods, image-based methods and hybrid methods \cite{shumaker2011virtual}. Sensors will be covered on the next chapter.
+
+\xchapter{RGB-D sensors on augmented reality}{This chapter explains how RGB-D sensors work and how they can be employed on augmented reality.} 
 
 \section{Sensor-based registration approach}
 
@@ -530,16 +582,16 @@ Mathematically, the goal of the Lucas-Kanade is to minimize the sum of squared e
   $\sum_{x}{[I(W(x;p))-T(x)]^2}$
 \end{center}
 
-Where $W(x;p)$ denote the parametrized set of allowed warps and where $p = (p_1,...,p_n)^T$ is a vector of parameters. The warp $W(w;p)$ takes the pixel $x$ in the coordinate frame of the template $T$ and maps it to the sub-pixel location $W(x;p)$ in the coordinate frame of the image $I$. In this context of optical flow computation, the warps $W(w;p)$ are the translations:
+where $W(x;p)$ denote the parametrized set of allowed warps and where $p = (p_1,...,p_n)^T$ is a vector of parameters. The warp $W(w;p)$ takes the pixel $x$ in the coordinate frame of the template $T$ and maps it to the sub-pixel location $W(x;p)$ in the coordinate frame of the image $I$. In this context of optical flow computation, the warps $W(w;p)$ are the translations:
 
 \begin{center}
-$W(w;p) = \begin{matrix}
+$W(w;p) = \begin{bmatrix}
           x + p_1 \\
           y + p_2 \\
-          \end{matrix}$
+          \end{bmatrix}$
 \end{center}
 
-Where the vector of parameters $p = (p_1, p_2)^T$ is then the optical flow.
+where the vector of parameters $p = (p_1, p_2)^T$ is then the optical flow.
 
 Warping $I$ back to compute $I(W(x;p))$ requires interpolating the image $I$ at the sub-pixel locations $W(x;p)$. The minimization is performed with respect to $p$ and the sum is performed over all of the pixels $x$ in the template image $T(x)$. Minimizing the expression is a non-linear optimization task even if $W(w;p)$ is linear in $p$ because the pixel values $I(x)$ are, in general, non-linear in $x$. In fact, the pixel values $I(x)$ are essentially unrelated to the pixel coordinates $x$. To optimize the expression, the Lucas-Kanade algorithm assumes that a current estimate of $p$ is known and then iteratively solves for increments to the parameters $\Delta{p}$, so the expression is (approximately) minimized:
 
@@ -580,47 +632,7 @@ The features to be tracked by the Lucas-Kanade algorithm can be manually defined
 
 So, the Lucas-Kanade algorithm, applied over a good set of feature points, is an efficient method for obtaining optical flow information at interesting points in an image and works for moderate object speeds.
 
-\xchapter{Related works}{This chapter presents some related works. Since it hasn't been found any work that uses a multi-view markerless augmented reality environment based on geometric models, this chapter is divided into subjects related to the this work: usage of multiple Kinects, optical flow, markerless augmented reality, multi-view environment, reconstruction, etc.}
-
-\section{Marker-based augmented reality}
-
-On the field of augmented reality, one of the first approaches was to track known patterns, that's how many fiducial markers work. The traditional ARToolKit \cite{artoolkit} is probably the most famous of them and augments virtual objects onto black and white square markers. Its advantage is simplicity and performance, since it works also with modest computers and commodity cameras. However, it doesn't support any kind of occlusion alone, since its fitting process is based on a four-lines approach that requires the marker to be fully visible by the camera. But occlusion can be achieved by using multiple markers.
-
-Many works are based on fiducial markers in order to calculate the camera's real position in relation to the marker's real position, like the system called ARBioMed \cite{arbiomed}. The idea of this system is to represent a virtual, three-dimensional heart over a marker placed on the target user's chest. This virtual heart has its pulsation simulated according to a received signal. From this system, the operator user can define, through a user interface, a fixed pulse rate to be simulated on the heart. In order to set the size of the heart based on the dimensions of the user chest, two other fiducial markers are used, as shown on Figure \ref{fig:arbiomed}. This architecture makes the implementation simpler, since it is based on ARToolKit \cite{artoolkit}, a popular and straightforward framework for augmented reality based on fiducial markers. However, the markers pollute the augmented reality scene and offer a less comfortable experience to the target user, since they are invasive.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{images/arbiomed.png}
-\caption{ARBioMed running, with three fiducial markers \cite{arbiomed}}
-\label{fig:arbiomed}
-\end{figure}
-
-Another work that is based on the traditional square fiducial markers is the motion capture system presented on \cite{fisio}, whose goal is to follow up physiotherapy exercises performed by patients. As shown on Figure \ref{fig:fisio}, fiducial markers are fixed on parts of the patient's body where motion will be captured. Based on trigonometric evaluation of the markers' position, it's possible to establish the range of motion that was executed.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{images/fisio.png}
-\caption{User under augmented virtual therapy \cite{fisio}}
-\label{fig:fisio}
-\end{figure}
-
-This study of related works showed that most of them are still based on fiducial markers. Works related to markerless augmented reality approaches will be studied on the next section.
-
-\section{Markerless augmented reality}
-
-On the last years, alternatives to the traditional fiducial markers started to emerge. One of the common problems related to fiducial markers is that the marker needs to be located on the field of view of the camera. A possible solution for this is presented on \cite{5739718}, that is able to track a camera based on plane tracking algorithm. This technique has been applied mainly due to its simple geometry. Results also show that 3D objects can be used on augmented reality applications with primitive-based modeling \cite{KimLW10}.
-
-One of the first works to propose an algorithm for markerless object tracking was \cite{Comport03d}, that suggests a tracking algorithm based on 3D models to calculate the distance between the camera and the objects. Based on this calculation, objects can be placed on the scene. Though this method seemed to be robust on handling occlusion and luminosity issues, which are weak points of the fiducial markers, it still had some limitations. This is an example of an application based on models, that already uses geometric 3D data to identify where to place a virtual image on the real scene.
-
-Other alternatives to fiducial markers are proposed on \cite{wuest}, that uses an adaptive edge detector, \cite{ferrari}, that renders planar textures over planar fragments previously identified, and on \cite{klein}, which proposed a multi-thread system to track a camera and to compute a three-dimensional map of the available marks, using a hand-held camera.
-
-The system designed on \cite{ZhangL12} allows any object from the environment to be used as a marker, instead of using a fiducial marker. Besides that, the system was designed to work with low-contrast surfaces (like human hand marks). In order to place a three-dimensional object, the system uses salient points from the environment combined with a local texture, which turns the detection much more stable.
-
-Like that work, other works show that feature detection on the target scene can achieve good performance. Descriptors are usually computed from key-points of the scene, so, they don't reach high accuracy when dealing with objects without texture and/or with few key-points on their surfaces \cite{bay}.
-
-On the other hand, object recognition based on depth focuses on geometric properties of the target, like curves or edges. An object can be identified based on its depth map.
-
-\section{Sensors}
+\section{Related works}
 
 Recent augmented reality works use sensors in order to capture scene data and use it for pose estimation, replacing the need for markers. Such sensors can capture real images from the scene in order to identify natural marks or features, or can even capture three-dimensional objects to be used as geometric markers.
 
@@ -679,7 +691,7 @@ An application of the hybrid-based tracking is also noticed on \cite{tryon}. It'
 
 \xchapter{Solution architecture}{This chapter explains in details the steps performed in order to implement the objective of this work.}
 
-In order to achieve the objectives of this work, it was necessary to implement some softwares and auxiliary codes, all of them based on other open source code or open source libraries. All the code implemented on this work was released under open licenses and is available on public repositories, which will be informed along this chapter.
+In order to achieve the objectives of this work, it was necessary to implement some softwares and auxiliary codes, all of them based on other open source code or open source libraries. All the code implemented on this work was released under open licenses and is available on public repositories, which will be informed along this chapter. This proposal was published on SIBGRAPI 2013 \cite{sibgrapi}.
 
 \section{Environment}
 \label{sec:env}
@@ -1318,7 +1330,7 @@ This approach has shown to be visually better for greater range of motion, altho
 
 The hybrid approach is just a combination of the two previous methods. On this approach, both threads (one for the glasses and the other for the Kinect that captures the observer) are kept running simultaneously. The glasses' data are used primarily since it has better performance. If the number of tracked features for the optical flow goes below eight points, the transformation calculated by the second Kinect is used in order to transform the target model. This method has the best accuracy since it applies each method to the situation they fit better. The results of running these methods with real people will be shown on the next section \ref{sec:results}. 
 
-\xchapter{Result}{This chapter presents the results of the procedure explained in the previous chapter. First, an example of the application of the first method (explained on section \ref{sec:method1}) will be presented; later on, an example of a similar use case, but using the second method (explained on section \ref{sec:method2}), will be presented. After that, the difference between them will be discussed, as well as the scope of these tests (limitations and assumptions). Videos showing the results are available at \cite{videos}. On all experiments, both observer and target move their heads.}
+\xchapter{Results}{This chapter presents the results of the procedure explained in the previous chapter. First, an example of the application of the first method (explained on section \ref{sec:method1}) will be presented; later on, an example of a similar use case, but using the second method (explained on section \ref{sec:method2}), will be presented. After that, the difference between them will be discussed, as well as the scope of these tests (limitations and assumptions). Videos showing the results are available at \cite{videos}. On all experiments, both observer and target move their heads.}
 \label{sec:results}
 
 On this experiment, two persons are involved: one acts as the observer, which wears the augmented reality glasses, the other acts as the target model, which is sit down in front of the observer. A Kinect is placed between them and captures the target model. Figure \ref{fig:method1} shows how the target model is tracked while the observer moves his head. It can be noticed that the reconstructed model remains aligned to what is shown on the glasses' video, according to the transformation based on the initial calibration and on the glasses' tracking information and optical flow. As expected, the result is not perfect due to the interferences suffered by the glasses and the normalization of its angle values (in order to reduce instabilities, as explained on section \ref{sec:glasses}). However, this method has shown to be reasonably fast (imperceptible delay) and works well if the movements are not so fast. On case of fast large range movements, the optical flow is not able to track enough feature points anymore and so the tracking is lost and needs to be restarted.
@@ -1408,9 +1420,7 @@ Working with multi-view environments brings lots of issues regarding calibration
 
 Following this concern, both proposed approaches were implemented and documented, and all theory on which they rely on was also explained. After that, an example of application of both approaches was presented, as well as a discussion about their accuracy and performance.
 
-However, some points are still open and can be widely explored for further research and development. The main goal here was to propose a multi-view environment for augmented reality and to show that it's feasible, by implementing two approaches over it and by running it in order to show that a target model can be tracked without any fiducial marker. So, each step of this work flow can be explored in a deeper manner and provide an overall better result for the whole process, for example: improve the initial calibration between the Kinect and the glasses, improve the performance of ICP's implementation inside KinectFusion, improve the accuracy of the alignment given by each of the proposed methods, among other points.
-
-Although more results need to be produced, the results that were generated so far were published on papers accepted at SIBGRAPI 2013 \cite{sibgrapi} and Medical Informatics Workshop 2014 \cite{wim}.
+However, some points are still open and can be widely explored for further research and development. The main goal here was to propose a multi-view environment for augmented reality and to show that it's feasible, by implementing two approaches over it and by running it in order to show that a target model can be tracked without any fiducial marker. So, each step of this work flow can be explored in a deeper manner and provide an overall better result for the whole process, for example: improve the initial calibration between the Kinect and the glasses, improve the performance of ICP's implementation inside KinectFusion, improve the accuracy of the alignment given by each of the proposed methods, among other points. Another point is that the environment here is heavily dependent on the configuration, and if the configuration changes, all devices need to be recalibrated. So, researching about auto-calibration strategies is another point for further investigation.
 
 \backmatter
 
